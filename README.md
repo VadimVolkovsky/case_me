@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 ### Команда проекта: 
 
-**Project manager **
+**Project manager:**
 
 - Анастасия @nastena_bl
 
