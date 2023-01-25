@@ -4,7 +4,7 @@
 ### Инструкция по запуску проекта
 **Клонируйте репозиторий:**
 ```
-git clone git@github.com:VadimVolkovsky/RazCase.git
+git clone git@github.com:VadimVolkovsky/case_me.git
 ```
 
 **Установите и активируйте виртуальное окружение:**
