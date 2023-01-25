@@ -30,7 +30,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'razcase.urls'
+ROOT_URLCONF = 'case_me.urls'
 
 TEMPLATES = [
     {
@@ -48,7 +48,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'razcase.wsgi.application'
+WSGI_APPLICATION = 'case_me.wsgi.application'
 
 
 DATABASES = {
