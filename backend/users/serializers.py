@@ -1,18 +1,20 @@
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
-from users.models import User
+
+from users.models import City, Profession, Skill, User
 
 
 class CustomUserSerializer(UserSerializer):
     """Сериализатор просмотра профиля пользователя"""
-    # email = serializers.EmailField(required=True)
-    # name = serializers.CharField(required=True)
+    city = serializers.StringRelatedField()
+    profession = serializers.StringRelatedField()
 
     class Meta:
         model = User
         fields = (
             'id', 'name', 'username', 'birthdate', 'gender',
-            'city', 'email', 'phone',
+            'city', 'email', 'phone', 'about', 'profession',
+            'skills',
         )
 
 
@@ -24,5 +26,24 @@ class CustomUserCreateSerializer(UserCreateSerializer):
         model = User
         fields = (
             'name', 'username', 'birthdate', 'gender',
-            'city', 'email', 'phone', 'password',
-        )
+            'city', 'email', 'phone', 'about', 'profession',
+            'skills', 'password',
+        ) # доработать редактирование профиля для полей FK
+
+
+class CitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = City
+        fields = ("id", "name")
+
+
+class ProfessionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profession
+        fields = ("id", "name")
+
+
+class SkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skill
+        fields = ("id", "name")
