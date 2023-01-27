@@ -4,8 +4,8 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 GENDER_CHOICES = (
-        ('мужской', 'мужской'),
-        ('женский', 'женский'),
+        ('m', 'мужской'),
+        ('f', 'женский'),
     )
 
 
@@ -101,6 +101,6 @@ class User(AbstractUser):
         blank=True,
         null=True
     )
-    vk_url = models.CharField(max_length=256, null=True, blank=True)
-    facebook_url = models.CharField(max_length=256, null=True, blank=True)
-    twitter_url = models.CharField(max_length=256, null=True, blank=True)
+    vk_url = models.URLField(max_length=256, null=True, blank=True)
+    facebook_url = models.URLField(max_length=256, null=True, blank=True)
+    twitter_url = models.URLField(max_length=256, null=True, blank=True)
