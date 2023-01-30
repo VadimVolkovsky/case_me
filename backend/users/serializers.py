@@ -2,6 +2,7 @@ from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
 
 from users.models import City, Profession, Skill, User
+from users.fields import Base64ImageField
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -24,18 +25,20 @@ class SkillSerializer(serializers.ModelSerializer):
 
 class CustomUserSerializer(UserSerializer):
     """Сериализатор просмотра профиля пользователя"""
+    image = Base64ImageField()
 
     class Meta:
         model = User
         fields = (
             'id', 'name', 'username', 'birthdate', 'gender',
             'city', 'email', 'phone', 'about', 'profession',
-            'skills', 'vk_url', 'facebook_url', 'twitter_url',
+            'skills', 'image', 'vk_url', 'facebook_url', 'twitter_url',
         )
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):
     """ Сериализатор создания пользователя """
+    image = Base64ImageField()
     password = serializers.CharField(write_only=True)
 
     class Meta:
@@ -43,6 +46,6 @@ class CustomUserCreateSerializer(UserCreateSerializer):
         fields = (
             'name', 'username', 'birthdate', 'gender',
             'city', 'email', 'phone', 'about', 'profession',
-            'skills', 'vk_url', 'facebook_url', 'twitter_url',
+            'skills', 'image', 'vk_url', 'facebook_url', 'twitter_url',
             'password',
         )
