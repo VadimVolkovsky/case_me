@@ -65,8 +65,16 @@ class User(AbstractUser):
         unique=True,
         validators=(UnicodeUsernameValidator(),)
     )
-    birthdate = models.DateField()
-    gender = models.CharField(max_length=7, choices=GENDER_CHOICES)
+    birthdate = models.DateField(
+        verbose_name="Дата рождения",
+        help_text="Формат даты YYYY.MM.DD",
+        blank=True,
+        null=True
+    )
+    gender = models.CharField(
+        max_length=7,
+        choices=GENDER_CHOICES
+    )
     city = models.ForeignKey(
         City,
         on_delete=models.SET_NULL,
@@ -80,7 +88,11 @@ class User(AbstractUser):
         unique=True
     )
     phone = PhoneNumberField(region="RU")
-    about = models.TextField(max_length=256, null=True, blank=True)
+    about = models.TextField(
+        max_length=256,
+        null=True,
+        blank=True
+    )
     profession = models.ForeignKey(
         Profession,
         on_delete=models.SET_NULL,
