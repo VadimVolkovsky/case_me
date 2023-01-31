@@ -49,3 +49,13 @@ class CustomUserCreateSerializer(UserCreateSerializer):
             'skills', 'image', 'vk_url', 'facebook_url', 'twitter_url',
             'password',
         )
+
+
+class SubscribeSerializer(UserSerializer):
+    """ Сериализатор для создания/получения подписок """
+
+    class Meta(UserSerializer.Meta):
+        fields = (
+            "id", 'name', 'username', 'email',
+        )
+        read_only_fields = ('name', 'username', 'email',)
