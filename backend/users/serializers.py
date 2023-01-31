@@ -1,8 +1,7 @@
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
-
-from users.models import City, Profession, Skill, User
 from users.fields import Base64ImageField
+from users.models import City, Profession, Skill, User
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -55,6 +54,7 @@ class SubscribeSerializer(UserSerializer):
     """ Сериализатор для создания/получения подписок """
 
     class Meta(UserSerializer.Meta):
+        # model = Follow
         fields = (
             "id", 'name', 'username', 'email',
         )

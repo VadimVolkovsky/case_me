@@ -106,3 +106,29 @@ class User(AbstractUser):
     vk_url = models.URLField(max_length=256, null=True, blank=True)
     facebook_url = models.URLField(max_length=256, null=True, blank=True)
     twitter_url = models.URLField(max_length=256, null=True, blank=True)
+
+
+class Follow(models.Model):
+    """Модель для подписки на пользователей"""
+    user = models.ForeignKey(
+        User,
+        related_name='follower',
+        on_delete=models.CASCADE
+    )
+    author = models.ForeignKey(
+        User,
+        related_name='following',
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['author', 'user'],
+                name='unique_following'
+            ),
+            models.CheckConstraint(
+                check=~models.Q(user=models.F('author')),
+                name='prevent_self_follow',
+            )
+        ]
