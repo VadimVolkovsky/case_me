@@ -38,7 +38,7 @@ class CustomUserSerializer(UserSerializer):
 
 class CustomUserCreateSerializer(UserCreateSerializer):
     """ Сериализатор создания пользователя """
-    image = Base64ImageField()
+    image = Base64ImageField(required=False)
     password = serializers.CharField(write_only=True)
 
     class Meta:

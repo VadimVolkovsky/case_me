@@ -4,11 +4,6 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from users.validators import username_me
 
-GENDER_CHOICES = (
-        ('M', 'Мужской'),
-        ('F', 'Женский'),
-    )
-
 
 class UserInformation(models.Model):
     """Абстрактная модель для моделей profession, skill, city"""
@@ -46,6 +41,10 @@ class City(UserInformation):
 
 class User(AbstractUser):
     """Модель пользователя"""
+    GENDER_CHOICES = (
+        ('M', 'Мужской'),
+        ('F', 'Женский'),
+    )
     name = models.CharField(
         verbose_name="Имя и Фамилия",
         max_length=50
@@ -64,13 +63,16 @@ class User(AbstractUser):
     )
     gender = models.CharField(
         max_length=7,
-        choices=GENDER_CHOICES
+        choices=GENDER_CHOICES,
+        blank=True,
+        null=True
     )
     city = models.ForeignKey(
         City,
         on_delete=models.SET_NULL,
         related_name="users",
-        null=True,
+        blank=True,
+        null=True
     )
     email = models.EmailField(
         verbose_name="Email",
