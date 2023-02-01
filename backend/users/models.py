@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+
 from users.validators import username_me
 
 
@@ -57,7 +58,7 @@ class User(AbstractUser):
     )
     birthdate = models.DateField(
         verbose_name="Дата рождения",
-        help_text="Формат даты YYYY.MM.DD",
+        help_text="Формат даты YYYY-MM-DD",
         blank=True,
         null=True
     )

@@ -3,8 +3,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-from users.views import CityViewSet, ProfessionViewSet, SkillViewSet, CustomUserViewSet
 
+from users.views import (CityViewSet, CustomUserViewSet, ProfessionViewSet,
+                         SkillViewSet)
 
 router = routers.DefaultRouter()
 router.register(r'city', CityViewSet)

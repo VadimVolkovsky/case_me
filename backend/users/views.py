@@ -4,7 +4,8 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from users.models import City, Profession, Skill, User, Follow
+
+from users.models import City, Follow, Profession, Skill, User
 from users.serializers import (CitySerializer, CustomUserCreateSerializer,
                                CustomUserSerializer, ProfessionSerializer,
                                SkillSerializer, SubscribeSerializer)
@@ -18,7 +19,7 @@ class CustomUserViewSet(UserViewSet):
         return User.objects.all()
 
     def get_serializer_class(self):
-        if self.request.method in ['POST', 'PUT', 'PATCH']:
+        if self.request.method in ['POST']:
             return CustomUserCreateSerializer
         return CustomUserSerializer
 
