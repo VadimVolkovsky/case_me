@@ -10,7 +10,7 @@ router = routers.DefaultRouter()
 router.register(r'city', CityViewSet)
 router.register(r'profession', ProfessionViewSet)
 router.register(r'skill', SkillViewSet)
-# router.register(r'users', CustomUserViewSet)
+router.register(r'users', CustomUserViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

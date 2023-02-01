@@ -1,7 +1,7 @@
 from djoser.serializers import UserCreateSerializer, UserSerializer
-from rest_framework import serializers
+from rest_framework import serializers, status
 from users.fields import Base64ImageField
-from users.models import City, Profession, Skill, User
+from users.models import City, Profession, Skill, User, Follow
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -52,10 +52,23 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 
 class SubscribeSerializer(UserSerializer):
     """ Сериализатор для создания/получения подписок """
-
     class Meta(UserSerializer.Meta):
-        # model = Follow
         fields = (
             "id", 'name', 'username', 'email',
         )
         read_only_fields = ('name', 'username', 'email',)
+
+    def validate(self, data):
+        author = self.instance
+        user = self.context.get('request').user
+        if Follow.objects.filter(author=author, user=user).exists():
+            raise serializers.ValidationError(
+                detail='Подписка уже существует',
+                code=status.HTTP_400_BAD_REQUEST,
+            )
+        if user == author:
+            raise serializers.ValidationError(
+                detail='Нельзя подписаться на самого себя',
+                code=status.HTTP_400_BAD_REQUEST,
+            )
+        return data

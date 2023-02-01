@@ -44,6 +44,17 @@ class CustomUserViewSet(UserViewSet):
             subscription.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
 
+    @action(detail=False, permission_classes=[IsAuthenticated])
+    def subscriptions(self, request):
+        """Метод для просмотра своих подписок"""
+        user = request.user
+        queryset = User.objects.filter(following__user=user)
+        pages = queryset  # self.paginate_queryset(queryset) Включить когда будет пагинация
+        serializer = SubscribeSerializer(
+            pages, many=True, context={'request': request}
+        )
+        return Response(serializer.data)  # self.get_paginated_response(serializer.data) Включить когда будет пагинация
+
 
 class CityViewSet(viewsets.ModelViewSet):
     queryset = City.objects.all()
