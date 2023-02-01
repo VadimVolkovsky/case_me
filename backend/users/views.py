@@ -1,10 +1,13 @@
+from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
-from rest_framework import viewsets
-
-from users.models import City, Profession, Skill, User
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from users.models import City, Profession, Skill, User, Follow
 from users.serializers import (CitySerializer, CustomUserCreateSerializer,
                                CustomUserSerializer, ProfessionSerializer,
-                               SkillSerializer)
+                               SkillSerializer, SubscribeSerializer)
 
 
 class CustomUserViewSet(UserViewSet):
@@ -18,6 +21,39 @@ class CustomUserViewSet(UserViewSet):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
             return CustomUserCreateSerializer
         return CustomUserSerializer
+
+    @action(detail=True, methods=['post', 'delete'],
+            permission_classes=[IsAuthenticated])
+    def subscribe(self, request, **kwargs):
+        """Метод для подписки/отписки на пользователей"""
+        user = get_object_or_404(User, username=request.user)
+        author = get_object_or_404(User, id=self.kwargs.get('id'))
+
+        if request.method == 'POST':
+            serializer = SubscribeSerializer(
+                author, data=request.data, context={'request': request}
+            )
+            serializer.is_valid(raise_exception=True)
+            Follow.objects.create(user=user, author=author)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        if request.method == 'DELETE':
+            subscription = get_object_or_404(
+                Follow, user=user, author=author
+            )
+            subscription.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=False, permission_classes=[IsAuthenticated])
+    def subscriptions(self, request):
+        """Метод для просмотра своих подписок"""
+        user = request.user
+        queryset = User.objects.filter(following__user=user)
+        pages = queryset  # self.paginate_queryset(queryset) Включить когда будет пагинация
+        serializer = SubscribeSerializer(
+            pages, many=True, context={'request': request}
+        )
+        return Response(serializer.data)  # self.get_paginated_response(serializer.data) Включить когда будет пагинация
 
 
 class CityViewSet(viewsets.ModelViewSet):

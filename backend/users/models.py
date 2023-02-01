@@ -2,68 +2,58 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-
-GENDER_CHOICES = (
-        ('m', 'мужской'),
-        ('f', 'женский'),
-    )
+from users.validators import username_me
 
 
-class Profession(models.Model):
-    """Модель специальностей/профессий"""
-    name = models.CharField(
-        verbose_name="Специальность",
-        max_length=50
-    )
+class UserInformation(models.Model):
+    """Абстрактная модель для моделей profession, skill, city"""
+    name = models.CharField(max_length=50)
 
     class Meta:
-        verbose_name = 'Специальность'
+        abstract = True
 
     def __str__(self):
         return self.name
 
 
-class Skill(models.Model):
-    """Модель навыков работы"""
-    name = models.CharField(
-        verbose_name="Навык",
-        max_length=50
-    )
+class Profession(UserInformation):
+    """Модель специальностей/профессий"""
+    class Meta(UserInformation.Meta):
+        verbose_name = 'Специальность'
+        default_related_name = "professions"
 
-    class Meta:
+
+class Skill(UserInformation):
+    """Модель навыков работы"""
+    class Meta(UserInformation.Meta):
         verbose_name = 'Навык'
         verbose_name_plural = 'Навыки'
-
-    def __str__(self):
-        return self.name
+        default_related_name = "skills"
 
 
-class City(models.Model):
+class City(UserInformation):
     """Модель городов"""
-    name = models.CharField(
-        verbose_name="Название города",
-        max_length=50
-    )
-
-    class Meta:
+    class Meta(UserInformation.Meta):
         verbose_name = 'Город'
         verbose_name_plural = 'Города'
-
-    def __str__(self):
-        return self.name
+        default_related_name = "cities"
 
 
 class User(AbstractUser):
     """Модель пользователя"""
+    GENDER_CHOICES = (
+        ('M', 'Мужской'),
+        ('F', 'Женский'),
+    )
     name = models.CharField(
         verbose_name="Имя и Фамилия",
         max_length=50
     )
     username = models.CharField(
-        verbose_name="Имя пользователя",
+        verbose_name="Никнейм",
         max_length=50,
         unique=True,
-        validators=(UnicodeUsernameValidator(),)
+        validators=(UnicodeUsernameValidator(), username_me)
     )
     birthdate = models.DateField(
         verbose_name="Дата рождения",
@@ -73,14 +63,16 @@ class User(AbstractUser):
     )
     gender = models.CharField(
         max_length=7,
-        choices=GENDER_CHOICES
+        choices=GENDER_CHOICES,
+        blank=True,
+        null=True
     )
     city = models.ForeignKey(
         City,
         on_delete=models.SET_NULL,
-        verbose_name="Город",
         related_name="users",
-        null=True,
+        blank=True,
+        null=True
     )
     email = models.EmailField(
         verbose_name="Email",
@@ -97,18 +89,16 @@ class User(AbstractUser):
         Profession,
         on_delete=models.SET_NULL,
         related_name="users",
-        verbose_name="Специальность",
         blank=True,
         null=True
     )
     skills = models.ManyToManyField(
         Skill,
         related_name="users",
-        verbose_name="Навык",
         blank=True
     )
     image = models.ImageField(
-        'Аватар',
+        verbose_name='Аватар',
         upload_to='users/images/',
         blank=True,
         null=True
@@ -116,3 +106,29 @@ class User(AbstractUser):
     vk_url = models.URLField(max_length=256, null=True, blank=True)
     facebook_url = models.URLField(max_length=256, null=True, blank=True)
     twitter_url = models.URLField(max_length=256, null=True, blank=True)
+
+
+class Follow(models.Model):
+    """Модель для подписки на пользователей"""
+    user = models.ForeignKey(
+        User,
+        related_name='follower',
+        on_delete=models.CASCADE
+    )
+    author = models.ForeignKey(
+        User,
+        related_name='following',
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['author', 'user'],
+                name='unique_following'
+            ),
+            models.CheckConstraint(
+                check=~models.Q(user=models.F('author')),
+                name='prevent_self_follow',
+            )
+        ]
