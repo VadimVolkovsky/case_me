@@ -1,6 +1,6 @@
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers, status
-from users.fields import Base64ImageField
+from users.fields import Base64ImageField, delete_previous_image
 from users.models import City, Profession, Skill, User, Follow
 
 
@@ -33,6 +33,10 @@ class CustomUserSerializer(UserSerializer):
             'city', 'email', 'phone', 'about', 'profession',
             'skills', 'image', 'vk_url', 'facebook_url', 'twitter_url',
         )
+
+    def update(self, instance, validated_data):
+        delete_previous_image(instance, validated_data)
+        return super().update(instance, validated_data)
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):

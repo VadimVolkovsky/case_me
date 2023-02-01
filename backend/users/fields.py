@@ -17,3 +17,11 @@ class Base64ImageField(serializers.ImageField):
             return super().to_internal_value(data)
         except ValueError:
             raise ValueError('Недопустимый формат изображения')
+
+
+def delete_previous_image(instance, validated_data):
+    """Функция для удаления прошлого изображения из базы данных"""
+    if 'image' in validated_data:
+        instance.image.delete()
+    else:
+        pass
