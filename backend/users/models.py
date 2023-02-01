@@ -57,7 +57,7 @@ class User(AbstractUser):
     )
     birthdate = models.DateField(
         verbose_name="Дата рождения",
-        help_text="Формат даты YYYY.MM.DD",
+        help_text="Формат даты YYYY-MM-DD",
         blank=True,
         null=True
     )

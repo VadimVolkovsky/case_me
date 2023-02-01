@@ -2,6 +2,7 @@ from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers, status
 from users.fields import Base64ImageField, delete_previous_image
 from users.models import City, Profession, Skill, User, Follow
+from datetime import date, timedelta
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -25,32 +26,40 @@ class SkillSerializer(serializers.ModelSerializer):
 class CustomUserSerializer(UserSerializer):
     """Сериализатор просмотра профиля пользователя"""
     image = Base64ImageField()
+    followers_count = serializers.SerializerMethodField()
+    age = serializers.SerializerMethodField()
+    birthdate = serializers.DateField(write_only=True)
 
     class Meta:
         model = User
         fields = (
-            'id', 'name', 'username', 'birthdate', 'gender',
+            'id', 'name', 'username', 'birthdate', 'gender', 'age',
             'city', 'email', 'phone', 'about', 'profession',
             'skills', 'image', 'vk_url', 'facebook_url', 'twitter_url',
+            'followers_count',
         )
 
     def update(self, instance, validated_data):
         delete_previous_image(instance, validated_data)
         return super().update(instance, validated_data)
 
+    def get_followers_count(self, obj):
+        """Отображает количество подписчиков текущего пользователя"""
+        return obj.follower.count()
+
+    def get_age(self, obj):
+        return (date.today() - obj.birthdate) // timedelta(days=365.2425)
+
 
 class CustomUserCreateSerializer(UserCreateSerializer):
     """ Сериализатор создания пользователя """
-    image = Base64ImageField(required=False)
     password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
         fields = (
             'name', 'username', 'birthdate', 'gender',
-            'city', 'email', 'phone', 'about', 'profession',
-            'skills', 'image', 'vk_url', 'facebook_url', 'twitter_url',
-            'password',
+            'city', 'email', 'phone', 'password',
         )
 
 
