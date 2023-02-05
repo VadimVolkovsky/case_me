@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'djoser',
     "phonenumber_field",
     'users.apps.UsersConfig',
+    'posts.apps.PostsConfig'
 ]
 
 MIDDLEWARE = [
