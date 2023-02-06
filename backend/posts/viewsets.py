@@ -1,6 +1,6 @@
-from rest_framework import mixins
+from rest_framework import mixins, viewsets
+
 from .utils import MixinPermission, MixinSerializer
-from rest_framework import viewsets
 
 
 class CustomPostViewSet(
