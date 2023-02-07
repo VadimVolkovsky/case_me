@@ -26,7 +26,7 @@ class Profession(UserInformation):
 
 class Skill(UserInformation):
     """Модель навыков работы"""
-    class Meta(UserInformation.Meta):
+    class Meta:
         verbose_name = 'Навык'
         verbose_name_plural = 'Навыки'
         default_related_name = "skills"
@@ -99,6 +99,7 @@ class User(AbstractUser):
         blank=True
     )
     image = models.ImageField(
+        default='users/images/default_image.png',
         verbose_name='Аватар',
         upload_to='users/images/',
         blank=True,

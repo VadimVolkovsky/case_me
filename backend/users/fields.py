@@ -22,6 +22,7 @@ class Base64ImageField(serializers.ImageField):
 def delete_previous_image(instance, validated_data):
     """Функция для удаления прошлого изображения из базы данных"""
     if 'image' in validated_data:
-        instance.image.delete()
+        if instance.image != 'users/images/default_image.png':
+            instance.image.delete()
     else:
         pass
