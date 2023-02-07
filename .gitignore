@@ -131,8 +131,6 @@ venv.bak/
 # Emails
 sent_emails/
 
-#users image
-images/
 
 # Spyder project settings
 .spyderproject
