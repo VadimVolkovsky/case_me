@@ -61,7 +61,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
     password = serializers.CharField(write_only=True)
     username = serializers.CharField(required=True)
     email = serializers.EmailField(required=True)
-    phone = PhoneNumberField(required=True)
+    phone = PhoneNumberField()
 
     class Meta:
         model = User
