@@ -50,6 +50,7 @@ class CustomUserSerializer(UserSerializer):
         return obj.follower.count()
 
     def get_age(self, obj):
+        """Отображает возраст пользователя"""
         return (date.today() - obj.birthdate) // timedelta(days=365.2425)
 
 

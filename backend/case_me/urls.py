@@ -12,11 +12,11 @@ from users.views import (CityViewSet, CustomUserViewSet, ProfessionViewSet,
                          SkillViewSet)
 
 router = routers.DefaultRouter()
-router.register(r'city', CityViewSet)
-router.register(r'profession', ProfessionViewSet)
-router.register(r'skill', SkillViewSet)
+router.register(r'cities', CityViewSet)
+router.register(r'professions', ProfessionViewSet)
+router.register(r'skills', SkillViewSet)
 router.register(r'users', CustomUserViewSet)
-router.register(r'post', PostViewSet, basename='post')
+router.register(r'posts', PostViewSet, basename='post')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
