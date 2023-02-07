@@ -16,7 +16,7 @@ router.register(r'cities', CityViewSet)
 router.register(r'professions', ProfessionViewSet)
 router.register(r'skills', SkillViewSet)
 router.register(r'users', CustomUserViewSet)
-router.register(r'posts', PostViewSet, basename='post')
+router.register(r'posts', PostViewSet, basename='posts')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
