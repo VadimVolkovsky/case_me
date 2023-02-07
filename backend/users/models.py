@@ -8,7 +8,10 @@ from users.validators import username_me
 
 class UserInformation(models.Model):
     """Абстрактная модель для моделей profession, skill, city"""
-    name = models.CharField(max_length=50)
+    name = models.CharField(
+        max_length=50,
+        unique=True
+    )
 
     class Meta:
         abstract = True

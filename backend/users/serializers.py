@@ -5,6 +5,7 @@ from rest_framework import serializers, status
 
 from users.fields import Base64ImageField, delete_previous_image
 from users.models import City, Follow, Profession, Skill, User
+from phonenumber_field.serializerfields import PhoneNumberField
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -26,11 +27,12 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class CustomUserSerializer(UserSerializer):
-    """Сериализатор просмотра профиля пользователя"""
+    """Сериализатор просмотра/редактирования профиля пользователя"""
     image = Base64ImageField()
-    followers_count = serializers.SerializerMethodField()
-    age = serializers.SerializerMethodField()
+    followers_count = serializers.SerializerMethodField(read_only=True)
+    age = serializers.SerializerMethodField(read_only=True)
     birthdate = serializers.DateField(write_only=True)
+    username = serializers.CharField(read_only=True)
 
     class Meta:
         model = User
@@ -57,6 +59,9 @@ class CustomUserSerializer(UserSerializer):
 class CustomUserCreateSerializer(UserCreateSerializer):
     """ Сериализатор создания пользователя """
     password = serializers.CharField(write_only=True)
+    username = serializers.CharField(required=True)
+    email = serializers.EmailField(required=True)
+    phone = PhoneNumberField(required=True)
 
     class Meta:
         model = User
@@ -65,9 +70,27 @@ class CustomUserCreateSerializer(UserCreateSerializer):
             'city', 'email', 'phone', 'password',
         )
 
+    def validate_username(self, value):
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError(
+                detail="Пользователь с таким ником уже существует"
+            )
+
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError(
+                detail="Пользователь с таким email уже существует"
+            )
+
+    def validate_phone(self, value):
+        if User.objects.filter(phone=value).exists():
+            raise serializers.ValidationError(
+                detail="Пользователь с таким номером телефона уже существует"
+            )
+
 
 class SubscribeSerializer(UserSerializer):
-    """ Сериализатор для создания/получения подписок """
+    """ Сериализатор для создания/получения подписок на пользователей """
     class Meta(UserSerializer.Meta):
         fields = (
             "id", 'name', 'username', 'email',
