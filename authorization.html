@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="authorization.css">
+    <title>Authorization</title>
+</head>
+<body class="page">
+  <header class="header">
+    <img class="header__logo" src="./image/LOGO.svg" alt="Логотип">
+  </header>
+  <main class="content">
+    <div class="authorize">
+      <div class="authorize__title-links">
+        <a class="authorize__title-link" href="#">Вход</a>
+        <a class="authorize__title-link" href="#">Регистрация</a>
+      </div>
+      <form class="form-authorize" novalidate>
+        <fieldset class="form-authorize__set">
+          <div class="form-authorize__field">
+            <label class="form-authorize__input-label" for="email">E-mail</label>
+            <input class="form-authorize__input form-authorize__input_type_email" placeholder="Введите e-mail" id="email" type="email" name="email" required>
+            <span class="form-authorize__input-error email-error"></span>
+          </div>
+          <div class="form-authorize__field">
+            <label class="form-authorize__input-label" for="email">Пароль</label>
+            <input class="form-authorize__input form-authorize__input_type_password" placeholder="Введите пароль" id="password" type="password" name="password" required>
+            <span class="form-authorize__input-error password-error"></span>
+          </div>
+          <button class="form-authorize__enter-btn" type="submit" disabled="true">Войти</button>
+        </fieldset>
+      </form>
+      <a class="authorize__link" href="#" target="_blank">Забыли пароль?</a>
+    </div>
+
+  </main>
+</body>
+</html>
