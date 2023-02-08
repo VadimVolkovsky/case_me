@@ -1,3 +1,6 @@
+@import url(./frontend/case_me/src/vendor/fonts/fonts.css);
+@import url(./frontend/case_me/src/vendor/normalize.css);
+
 .page {
   background-color: #FEFEFE;
   font-family: "Manrope", sans-serif;
