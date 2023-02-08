@@ -1,0 +1,44 @@
+.form__fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+  width: calc(100% - 2 * 96px);
+}
+
+.form__label {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.form__input-title {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: #666d7a;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.form__input {
+  width: 100%;
+  height: 48px;
+  border-radius: 4px;
+  margin: 0;
+  padding: 0 10px;
+  border:1px solid #ADB9C5;
+}
+.form__input:focus{
+  outline:1px solid #090A0D;
+
+}
+
+
+.form__input-error{
+  color: red;
+  padding: 0 0 40px 0;
+  margin: 0;
+}
