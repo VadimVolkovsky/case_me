@@ -4,6 +4,7 @@ import "./App.css";
 import Main from "../Main/Main";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
+import Popup from "../Popup/Popup";
 
 
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="/signup" element={<Register />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/" element={<Main />} />
+        <Route path="/popup" element={<Popup />}/>
       </Routes>
     </div>
   );
