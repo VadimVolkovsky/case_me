@@ -38,6 +38,7 @@
 
 .form__input:focus {
   outline: 1px solid #090a0d;
+  outline-offset: 0;
 }
 
 .form__input-error {
