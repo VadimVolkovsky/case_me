@@ -1,11 +1,11 @@
 from datetime import date, timedelta
 
 from djoser.serializers import UserCreateSerializer, UserSerializer
+from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers, status
 
 from users.fields import Base64ImageField, delete_previous_image
 from users.models import City, Follow, Profession, Skill, User
-from phonenumber_field.serializerfields import PhoneNumberField
 
 
 class CitySerializer(serializers.ModelSerializer):
