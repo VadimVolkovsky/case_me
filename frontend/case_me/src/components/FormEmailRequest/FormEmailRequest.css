@@ -50,3 +50,7 @@
   align-items: flex-start;
   display: flex;
 }
+
+.form__input_type_error{
+  border: 1.5px solid #c93434;
+}

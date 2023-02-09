@@ -1,11 +1,17 @@
 
 .form{
-  padding: 144px 0 230px 0;
+  /* padding: 144px 0 230px 0; */
   margin: 0 auto;
   color: #000;
   background-color: #FEFEFE;
+}
 
+.form_type_email{
+  padding: 144px 0 230px 0;
+}
 
+.form_type_password{
+  padding: 91px 0 179px 0;
 }
 
 .form__content{

@@ -1,8 +1,13 @@
 .popup {
-  padding: 144px 0 230px 0;
+  position: fixed;
+  top:0;
+  left: 0;
+  padding: 274px 0 230px 0;
   margin: 0 auto;
   color: #090A0D;
-  background-color: #FEFEFE;
+  background-color: rgba(102, 109, 122, 20%);
+  width: 100vw;
+  height: 100vh;
 }
 
 .popup__content {
@@ -12,9 +17,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 0 20px rgba(173, 185, 197, 0.2);
+  box-shadow: 5px 10px 70px rgba(173, 185, 197, 0.2);
   border-radius: 16px;
   position: relative;
+  background-color: #FEFEFE;
 }
 
 .popup__title {
@@ -37,6 +43,7 @@
   background-repeat: no-repeat;
   background-position: center;
   border: none;
+  cursor: pointer;
 }
 
 .popup__link {

@@ -5,6 +5,7 @@ function FormRequest(props) {
 
 const {name, title, textSubmit, children} = props
 
+
   return (
     <div className={`form form_type_${name}`}>
       <form className="form__content" noValidate>
