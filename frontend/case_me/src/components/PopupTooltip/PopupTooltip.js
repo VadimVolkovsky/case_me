@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./InfoTooltip.css";
+import "./PopupTooltip.css";
 
-function InfoTooltip() {
+function PopupTooltip() {
   return (
     <div className="popup">
       <div className="popup__content">
@@ -14,4 +14,4 @@ function InfoTooltip() {
   );
 }
 
-export default InfoTooltip;
+export default PopupTooltip;
