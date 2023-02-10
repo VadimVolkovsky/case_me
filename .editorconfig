@@ -42,4 +42,4 @@ trim_trailing_whitespace = true
 
 # Possible values - true, false
 
-insert_final_newline = true
+insert_final_newline = false
