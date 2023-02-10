@@ -1050,8 +1050,10 @@ components:
         skills:
           description: 'Список навыков'
           type: array
+          example: [1, 2, 3]
           items:
-            $ref: '#/components/schemas/Skill'
+            type: integer
+            # $ref: '#/components/schemas/Skill'
           uniqueItems: true
         image:
           title: Image
