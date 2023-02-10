@@ -985,10 +985,12 @@ components:
       properties:
         id:
           title: ID
+          example: 1
           type: integer
           readOnly: true
         name:
           title: Имя и Фамилия
+          example: Вася Пупкин
           type: string
           maxLength: 50
           
@@ -999,10 +1001,12 @@ components:
           
         birthdate:
           title: Birthdate
+          description: Дата рождения
           type: string
           format: date
         gender:
           title: Gender
+          description: Пол
           type: string
           enum:
             - M
@@ -1010,11 +1014,15 @@ components:
           x-nullable: true
         age:
           title: Age
-          type: string
+          description: Возраст
+          type: integer
+          example: 25
           readOnly: true
         city:
           title: City
+          description: Город
           type: integer
+          example: 5
           x-nullable: true
         email:
           title: Email
@@ -1024,22 +1032,26 @@ components:
           
         phone:
           title: Phone
+          example: "+79035558822"
           type: string
           maxLength: 128
           
         about:
           title: About
+          example: 'Информация о пользователе'
           type: string
           maxLength: 256
           x-nullable: true
         profession:
           title: Profession
+          example: 2
           type: integer
           x-nullable: true
         skills:
+          description: 'Список навыков'
           type: array
           items:
-            type: integer
+            $ref: '#/components/schemas/Skill'
           uniqueItems: true
         image:
           title: Image
@@ -1066,7 +1078,13 @@ components:
           x-nullable: true
         followers_count:
           title: Followers count
-          type: string
+          description: 'Количество подписчиков текущего пользователя'
+          type: integer
+          readOnly: true
+        is_subscribed:
+          title: is_subscribed
+          description: Проверяет подписку на текущего пользователя
+          type: boolean
           readOnly: true
 
     CustomUserMini:
@@ -1115,13 +1133,13 @@ components:
       properties:
         name:
           title: Имя и Фамилия
-          example: Дмитрий Степной
+          example: Вася Пупкин
           type: string
           maxLength: 50
           
         username:
           title: Username
-          example: DmitStep
+          example: VasyaPupkin
           description: Уникальный юзернейм
           type: string
           
@@ -1169,11 +1187,13 @@ components:
       properties:
         name:
           title: Имя и Фамилия
+          example: Вася Пупкин
           type: string
           maxLength: 50
           
         username:
           title: Username
+          example: VasyaPupkin
           description: Уникальный юзернейм
           type: string
           
