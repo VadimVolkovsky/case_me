@@ -1,7 +1,7 @@
 import React from "react";
 import PasswordTooltip from "../PasswordTooltip/PasswordTooltip";
 
-function RecoveryPassword() {
+function PasswordRecovery() {
   return (
     <PasswordTooltip
     name="recovery"
@@ -14,4 +14,4 @@ function RecoveryPassword() {
   );
 }
 
-export default RecoveryPassword;
+export default PasswordRecovery;

@@ -50,6 +50,7 @@
   font-weight: 400;
   align-items: flex-start;
   display: flex;
+  text-align: left;
 }
 
 .form__input_type_error{

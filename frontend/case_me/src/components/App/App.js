@@ -8,13 +8,15 @@ import Login from "../Login/Login";
 import FormEmailRequest from "../FormEmailRequest/FormEmailRequest";
 import FormPasswordRequest from "../FormPasswordRequest/FormPasswordRequest";
 import PasswordUpdate from "../PasswordUpdate/PasswordUpdate";
-import RecoveryPassword from "../RecoveryPassword/RecoveryPassword";
+import PasswordRecovery from "../PasswordRecovery/PasswordRecovery";
 import PopupTooltip from "../PopupTooltip/PopupTooltip";
 
 
 function App() {
 
+  // Переменные состояния 
 // const[isInfoTooltip, setIsInfoTooltip] = useState(false);
+
 
   return (
     <div className="App">
@@ -24,9 +26,13 @@ function App() {
         <Route path="/signin" element={<Login />} />
         <Route path="/" element={<Main />} />
         <Route path="/emailform" element={<FormEmailRequest />}/>
-        <Route path="/passwordform" element={<FormPasswordRequest />}/>
-        <Route path="/updatepassword" element={<PasswordUpdate />}/>
-        <Route path="/recoverypassword" element={<RecoveryPassword/>}/>
+        <Route
+         path="/passwordform"
+         element={
+         <FormPasswordRequest 
+         />}/>
+        <Route path="/passwordupdate" element={<PasswordUpdate />}/>
+        <Route path="/passwordrecovery" element={<PasswordRecovery/>}/>
         <Route path="/info" element={<PopupTooltip/>}/>
       </Routes>
     </div>

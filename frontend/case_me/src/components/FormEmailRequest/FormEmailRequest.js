@@ -1,18 +1,22 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./FormEmailRequest.css";
 import FormRequest from "../FormRequest/FormRequest";
 
 function FormEmailRequest() {
 
+    //Переменные состояния
   const [email, setEmail] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [emailError, setEmailError] = useState("");
 
+  // Навигация по сайту
+  let navigate = useNavigate();
+
+  // Валидация поля email
   function handleChangeEmail(e) {
     setEmail(e.target.value);
-
     const regexEmail = /^([\w]+@([\w-]+\.)+[\w-]{2,4})?$/;
-
     if(e.target.value.length === 0){
       setFormValid(false);
       setEmailError('Поле не может быть пустым');
@@ -25,7 +29,23 @@ function FormEmailRequest() {
     }
   }
 
+  // Функция проверки на ошибки
+  function checkForm(){
+    if( formValid !== true){
+      console.log("Отправить сообщение на почту не удалось");
+    } else {
+      setFormValid(true);
+      setEmailError('');
+      navigate("/passwordrecovery");
+      console.log("Обновление почты прошло успешно");
+    }
+  }
 
+  // Отправка формы
+  function handleSubmit(e) {
+    e.preventDefault();
+    checkForm();
+  }
 
   return (
     <FormRequest
@@ -33,6 +53,7 @@ function FormEmailRequest() {
       title="Восстановление пароля"
       textSubmit="Отправить"
       formValid={formValid}
+      onSubmit={handleSubmit}
       children={
         <fieldset className="form__fieldset">
           <label className="form__label">

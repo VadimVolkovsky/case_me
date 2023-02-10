@@ -50,7 +50,7 @@
   margin: 0;
   padding: 12px 0;
   background-color: #fefefe;
-  color: #BA2849;
+  color: #00A2C9;
   width: 352px;
   border-radius: 8px;
   font-size: 18px;
@@ -58,16 +58,15 @@
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  border: 1.5px solid #BA2849;
+  border: 1.5px solid #00A2C9;
 }
 
 .popup__link:hover {
-  border: 1.5px solid #DB486A;
-  color:#DB486A;
-  transition: 0.4s linear 0.1s;
+  border: 1.5px solid #00A2C9;
+  color:#00A2C9;
 }
 
 .popup__link_disabled{
-  border: 1.5px solid #F888A1;
-  color:#F888A1;
+  border: 1px solid #11B5DD;
+  color:#11B5DD;
 }

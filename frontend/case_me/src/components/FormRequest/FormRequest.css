@@ -46,20 +46,20 @@ border:none;
 }
 
 .form__button_active{
-  background-color: #BA2849;
+  background-color: #00a2c9;
   cursor: pointer;
 }
 
 .form__button_active:hover{
-  background-color: #DB486A;
-  transition:  0.4s linear 0.1s;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
 }
 
-.form__button::after{
-  background-color: #852C40;
+.form__button:focus{
+  background-color: #0094b8;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.2);
 }
 
 .form__button_disabled{
-  background-color:#F888A1;
+  background-color: #11b5dd;
 }
 

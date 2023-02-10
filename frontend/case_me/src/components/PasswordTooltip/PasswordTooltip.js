@@ -6,6 +6,7 @@ function PasswordTooltip(props) {
 
   const{name, title, text, link, textLink} = props
 
+
   return (
     <div className={`passwordTooltip passwordTooltip_type_${name}`}>
       <div className="passwordTooltip__content">
