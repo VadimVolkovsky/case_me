@@ -159,11 +159,13 @@
 .form-authorize__enter-btn:hover {
   background-color: #00A2C9;
   color: #FEFEFE;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: 0.4s linear 0.1s;
 }
 .form-authorize__enter-btn_active:focus {
   background-color: #0094B8;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.2);
 }
 
 .authorize__link {
