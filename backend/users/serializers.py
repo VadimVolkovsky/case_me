@@ -30,6 +30,7 @@ class CustomUserSerializer(UserSerializer):
     """Сериализатор просмотра/редактирования профиля пользователя"""
     image = Base64ImageField()
     followers_count = serializers.SerializerMethodField(read_only=True)
+    is_subscribed = serializers.SerializerMethodField(read_only=True)
     age = serializers.SerializerMethodField(read_only=True)
     birthdate = serializers.DateField(write_only=True)
     username = serializers.CharField(read_only=True)
@@ -40,7 +41,7 @@ class CustomUserSerializer(UserSerializer):
             'id', 'name', 'username', 'birthdate', 'gender', 'age',
             'city', 'email', 'phone', 'about', 'profession',
             'skills', 'image', 'vk_url', 'facebook_url', 'twitter_url',
-            'followers_count',
+            'is_subscribed','followers_count',
         )
 
     def update(self, instance, validated_data):
@@ -54,6 +55,13 @@ class CustomUserSerializer(UserSerializer):
     def get_age(self, obj):
         """Отображает возраст пользователя"""
         return (date.today() - obj.birthdate) // timedelta(days=365.2425)
+    
+    def get_is_subscribed(self, obj):
+        """Проверяет подписку на текущего пользователя"""
+        user = self.context.get('request').user
+        if user.is_anonymous:
+            return False
+        return user.follower.filter(author=obj).exists()
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):
