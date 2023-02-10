@@ -1,0 +1,201 @@
+@import url(../case_me/src/vendor/normalize.css);
+@import url(../case_me/src/vendor/fonts/fonts.css);
+
+.page {
+  font-family: 'Manrope', 'Arial', sans-serif;
+  background: #FEFEFE;
+  ;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  min-width: 320px;
+  max-width: 1440px;
+}
+
+.header {
+  background: #F8FAFD;
+  width: 100%;
+}
+
+.header__logo {
+  display: block;
+  width: 55px;
+  height: 15px;
+  object-fit: cover;
+  padding: 31px 0 34px 162px;
+}
+
+.content {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.registration {
+  max-width: 544px;
+  margin: 32px auto 0;
+  box-shadow: 5px 5px 70px rgba(173, 185, 197, 0.2);
+  border-radius: 16px;
+}
+
+.registration__info {
+  max-width: 352px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.registration__links {
+  list-style: none;
+  padding: 56px 0 40px;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.registration__enter-link {
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 24px;
+  color: #ADB9C5;
+}
+
+.registration__reg-link {
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 24px;
+  color: #090A0D;
+}
+
+.registration__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.registration__form-label {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #666D7A;
+}
+
+.registration__input {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #090A0D;
+  border: 1px solid #ADB9C5;
+  border-radius: 4px;
+  height: 48px;
+}
+
+.registration__input::placeholder {
+  color: #ADB9C5;
+}
+
+.registration__checkbox-form {
+  display: flex;
+  flex-direction: row;
+}
+
+.registration__checkbox {
+  height: 23.33px;
+  width: 23.33px;
+  color: #666D7A;
+  margin-right: 10px;
+}
+
+.registration__policy-text {
+  color: #090A0D;
+}
+
+.registration__policy-link {
+  text-decoration: underline;
+  text-decoration-thickness: .4px;
+}
+
+.registration__input-error {
+  max-width: 352px;
+  font-weight: 400;
+  font-size: 12px;
+  color: #f00;
+  opacity: 0;
+  min-height: 30px;
+}
+
+.registration__submit-button {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: #E6EDF4;
+  background: #11B5DD;
+  max-width: 100%;
+  padding: 12px 83px;
+  margin: 36px 0 56px;
+  border-radius: 8px;
+  border: none;
+}
+
+.registration__submit-button_active {
+  background: #00A2C9;
+  color: #FEFEFE;
+}
+
+.registration__submit-button_active:focus {
+  background: #0094B8;
+  color: #FEFEFE;
+}
+
+.registration__submit-button:hover {
+  color: #00A2C9;
+  color: #FEFEFE;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  transition: .4s linear .1s;
+  cursor: pointer;
+}
+
+
+/* чекбокс будет допиливаться. Это лишь один из вариантов решения
+input[type="checkbox"] { display: none; }
+
+input[type="checkbox"] + label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 20px;
+  font: 14px/20px;
+  color: #ddd;
+  cursor: pointer;
+}
+
+
+input[type="checkbox"] + label:last-child { margin-bottom: 0; }
+
+input[type="checkbox"] + label:before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 2.7px solid #666D7A;
+  border-radius: 4px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: .6;
+  -webkit-transition: all .12s, border-color .08s;
+  transition: all .12s, border-color .08s;
+}
+
+input[type="checkbox"]:checked + label:before {
+  width: 10px;
+  top: -5px;
+  left: 5px;
+  border-radius: 0;
+  opacity: 1;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+*/
