@@ -1129,7 +1129,6 @@ components:
         - name
         - username
         - email
-        - phone
         - password
       type: object
       properties:
@@ -1144,40 +1143,13 @@ components:
           example: VasyaPupkin
           description: Уникальный юзернейм
           type: string
-          
-        birthdate:
-          title: Дата рождения
-          description: Формат даты YYYY-MM-DD
-          type: string
-          format: date
-          x-nullable: true
-        gender:
-          title: Gender
-          description: Пол
-          example: F
-          type: string
-          enum:
-            - M
-            - F
-          x-nullable: true
-        city:
-          title: City
-          description: Город
-          example: 3
-          type: integer
-          x-nullable: true
+
         email:
           title: Email
           description: Адрес электронной почты
           type: string
           format: email
-          
-        phone:
-          title: Phone
-          description: Номер телефона в RU формате (+7)
-          example: "+79035558822"
-          type: string
-          
+
         password:
           title: Password
           description: Пароль
@@ -1192,46 +1164,18 @@ components:
           example: Вася Пупкин
           type: string
           maxLength: 50
-          
+
         username:
           title: Username
           example: VasyaPupkin
           description: Уникальный юзернейм
           type: string
-          
-        birthdate:
-          title: Дата рождения
-          description: Формат даты YYYY-MM-DD
-          type: string
-          format: date
-          x-nullable: true
-        gender:
-          title: Gender
-          description: Пол
-          example: F
-          type: string
-          enum:
-            - M
-            - F
-          x-nullable: true
-        city:
-          title: City
-          description: Город
-          example: 3
-          type: integer
-          x-nullable: true
+ 
         email:
           title: Email
           description: Адрес электронной почты
           type: string
           format: email
-          
-        phone:
-          title: Phone
-          description: Номер телефона в RU формате (+7)
-          example: "+79035558822"
-          type: string
-          
 
     Activation:
       required:
