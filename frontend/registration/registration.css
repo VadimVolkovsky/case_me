@@ -16,7 +16,8 @@
   background: #FEFEFE;
   width: 100%;
   border-bottom: 1px solid #D2D9E0;
-  ;
+  margin: 0;
+  padding: 0;
 }
 
 .header__logo {
@@ -25,6 +26,7 @@
   height: 20px;
   object-fit: cover;
   padding: 30px 84px;
+  margin: 0;
 }
 
 .content {
@@ -54,25 +56,31 @@
   justify-content: space-between;
 }
 
-.registration__enter-link {
+.registration__link {
   text-decoration: none;
   font-weight: 800;
   font-size: 24px;
   line-height: 24px;
   color: #ADB9C5;
+  margin: 0;
+  padding: 0;
 }
 
-.registration__reg-link {
+.registration__link_active {
   text-decoration: none;
   font-weight: 800;
   font-size: 24px;
   line-height: 24px;
   color: #090A0D;
+  margin: 0;
+  padding: 0;
 }
 
 .registration__form {
   display: flex;
   flex-direction: column;
+  margin: 0;
+  padding: 0;
 }
 
 .registration__form-label {
@@ -80,6 +88,8 @@
   font-size: 16px;
   line-height: 24px;
   color: #666D7A;
+  margin: 0;
+  padding: 0;
 }
 
 .registration__input {
@@ -91,6 +101,7 @@
   border-radius: 4px;
   height: 48px;
   padding-left: 12px;
+  margin: 0;
 }
 
 .registration__input::placeholder {
@@ -114,6 +125,8 @@
 .registration__checkbox-form {
   display: flex;
   flex-direction: row;
+  margin: 0;
+  padding: 0;
 }
 
 .registration__checkbox {
@@ -122,18 +135,29 @@
   color: #666D7A;
   margin-right: 10px;
   cursor: pointer;
+  padding: 0;
 }
+
+/*
+.registration__checkbox:hover {
+  background-image: url(./reg-images/checkbox-hover.svg);
+  cursor: pointer;
+  transition: .4s linear .1s;
+  z-index: 1;
+} */
 
 .registration__policy-text {
   color: #090A0D;
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
+  margin: 0;
+  padding: 0;
+  min-width: 389px;
 }
 
 .registration__policy-link {
-  text-decoration: underline;
-  text-decoration-thickness: .4px;
+border-bottom: 1px solid #090A0D;
 }
 
 .registration__policy-link:hover {
@@ -149,6 +173,8 @@
   color: #C93434;
   opacity: 0;
   min-height: 30px;
+  margin: 0;
+  padding: 0;
 }
 
 .registration__input-error_active {
@@ -192,68 +218,3 @@
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* стили для чекбокса для 1 варианта кода из файла registration.js
-
-.checkbox-container {
-  display: inline-block;
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 22px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.checkbox-container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
-  border-radius: 5px;
-}
-
-.checkbox-container:hover input ~ .checkmark {
-  background-color: #ccc;
-}
-
-.checkbox-container input:checked ~ .checkmark {
-  background-color: #2196F3;
-}
-
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-.checkbox-container input:checked ~ .checkmark:after {
-  display: block;
-}
-
-.checkbox-container .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-
-*/
