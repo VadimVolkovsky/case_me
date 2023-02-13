@@ -1,0 +1,1462 @@
+openapi: 3.0.2
+info:
+  title: CaseMe API
+  description: Документация API для проекта CaseMe (написана ручками, тестовая версия)
+  contact:
+    email: admin@caseme.ru
+  license:
+    name: BSD License
+  version: v1
+
+paths:
+  /auth/users/:
+    get:
+      security:
+       - Token: []
+      operationId: Список пользователей
+      description: ''
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: Номер страницы.
+          schema:
+            type: integer
+        - name: limit
+          required: false
+          in: query
+          description: Количество объектов на странице.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                    description: 'Общее количество объектов в базе'
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://caseme.ru/api/users/?page=4
+                    description: 'Ссылка на следующую страницу'
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://caseme.ru/api/users/?page=2
+                    description: 'Ссылка на предыдущую страницу'
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CustomUser'
+      tags:
+        - Пользователи
+    post:
+      operationId: Регистрация пользователя
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomUserCreate'
+      responses:
+        '201':
+          description: 'Пользователь успешно создан'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomUserResponseOnCreate'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+      tags:
+        - Пользователи
+    parameters: []
+
+  /auth/users/{id}/:
+    get:
+      operationId: Профиль пользователя
+      description: ''
+      parameters: 
+      - name: id
+        in: path
+        required: true
+        description: "Уникальный идентификатор этого пользователя."
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomUser'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/AuthenticationError'
+      tags:
+        - Пользователи
+
+  # /auth/users/activation/:
+  #   post:
+  #     operationId: auth_users_activation
+  #     description: ''
+  #     parameters:
+  #       - name: data
+  #         in: body
+  #         required: true
+  #         schema:
+  #           $ref: '#/components/schemas/Activation'
+  #     responses:
+  #       '201':
+  #         description: ''
+  #         schema:
+  #           $ref: '#/components/schemas/Activation'
+  #     tags:
+  #       - Пользователи
+  #   parameters: []
+  /auth/users/me/:
+    get:
+      security:
+       - Token: []
+      operationId: Текущий пользователь
+      description: 'Отображает профиль текущего пользователя'
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomUser'
+      tags:
+        - Пользователи
+
+  /auth/users/set_password/:
+    post:
+      security:
+       - Token: []
+      operationId: Изменение пароля
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetPassword'
+      responses:
+        '201':
+          description: 'Пароль успешно изменен'
+          # schema:
+          #   $ref: '#/components/schemas/SetPassword'
+      tags:
+        - Пользователи
+    parameters: []
+    
+    # put:
+    #   operationId: Обновление профиля
+    #   description: ''
+    #   parameters: []
+    #   requestBody:
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: '#/components/schemas/CustomUser'
+    #   responses:
+    #     '200':
+    #       description: ''
+    #       schema:
+    #         $ref: '#/components/schemas/CustomUser'
+    #   tags:
+    #     - Пользователи
+    patch:
+      operationId: Обновление профиля
+      security:
+        - Token: [ ]
+      description: 'Обновление личных данных текущего пользователя'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomUser'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomUser'
+      tags:
+        - Пользователи
+    # delete:
+    #   operationId: auth_users_me_delete
+    #   description: ''
+    #   parameters: []
+    #   responses:
+    #     '204':
+    #       description: ''
+    #   tags:
+    #     - Пользователи
+    # parameters: []
+  # /auth/users/resend_activation/:
+  #   post:
+  #     operationId: auth_users_resend_activation
+  #     description: ''
+  #     parameters:
+  #       - name: data
+  #         in: body
+  #         required: true
+  #         schema:
+  #           $ref: '#/components/schemas/SendEmailReset'
+  #     responses:
+  #       '201':
+  #         description: ''
+  #         schema:
+  #           $ref: '#/components/schemas/SendEmailReset'
+  #     tags:
+  #       - Пользователи
+  #   parameters: []
+
+  /auth/jwt/create/:
+      post:
+        operationId: Получение токена
+        description: |-
+          Используется для авторизации по username и password, чтобы далее использовать токен при запросах
+        parameters: []
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+        responses:
+          '201':
+            description: ''
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/TokenGetResponse'
+        tags:
+          - Пользователи
+      parameters: []
+
+  /auth/jwt/refresh/:
+    post:
+      security:
+       - Token: []
+      operationId: Обновление токена
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefreshResponse'
+      tags:
+        - Пользователи
+    parameters: []
+
+  /auth/users/reset_password/:
+    post:
+      security:
+       - Token: []
+      operationId: Сброс пароля
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+      responses:
+        '204':
+          description: 'На email пользователя успешно отправлена ссылка для изменения пароля'
+          # content:
+            # application/json:
+            #   schema:
+            #     $ref: '#/components/schemas/SendEmailReset'
+      tags:
+        - Пользователи
+    parameters: []
+  /auth/users/reset_password_confirm/:
+    post:
+      security:
+       - Token: []
+      operationId: Подтверждение сброса пароля
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+      responses:
+        '204':
+          description: 'Пароль успешно изменен'
+          # schema:
+          #   $ref: '#/components/schemas/PasswordResetConfirm'
+      tags:
+        - Пользователи
+    parameters: []
+  # /auth/users/reset_username/:
+  #   post:
+  #     operationId: auth_users_reset_username
+  #     description: ''
+  #     parameters:
+  #       - name: data
+  #         in: body
+  #         required: true
+  #         schema:
+  #           $ref: '#/components/schemas/SendEmailReset'
+  #     responses:
+  #       '201':
+  #         description: ''
+  #         schema:
+  #           $ref: '#/components/schemas/SendEmailReset'
+  #     tags:
+  #       - Пользователи
+  #   parameters: []
+  # /auth/users/reset_username_confirm/:
+  #   post:
+  #     operationId: auth_users_reset_username_confirm
+  #     description: ''
+  #     parameters:
+  #       - name: data
+  #         in: body
+  #         required: true
+  #         schema:
+  #           $ref: '#/components/schemas/UsernameResetConfirm'
+  #     responses:
+  #       '201':
+  #         description: ''
+  #         schema:
+  #           $ref: '#/components/schemas/UsernameResetConfirm'
+  #     tags:
+  #       - Пользователи
+  #   parameters: []
+  
+  # /auth/users/set_username/:
+  #   post:
+  #     operationId: auth_users_set_username
+  #     description: ''
+  #     parameters:
+  #       - name: data
+  #         in: body
+  #         required: true
+  #         schema:
+  #           $ref: '#/components/schemas/SetUsername'
+  #     responses:
+  #       '201':
+  #         description: ''
+  #         schema:
+  #           $ref: '#/components/schemas/SetUsername'
+  #     tags:
+  #       - Пользователи
+  #   parameters: []
+
+    # put:
+    #   operationId: auth_users_update
+    #   description: ''
+    #   parameters:
+    #     - name: data
+    #       in: body
+    #       required: true
+    #       schema:
+    #         $ref: '#/components/schemas/CustomUser'
+    #   responses:
+    #     '200':
+    #       description: ''
+    #       schema:
+    #         $ref: '#/components/schemas/CustomUser'
+    #   tags:
+    #     - Пользователи
+    # patch:
+    #   operationId: auth_users_partial_update
+    #   description: ''
+    #   parameters:
+    #     - name: data
+    #       in: body
+    #       required: true
+    #       schema:
+    #         $ref: '#/components/schemas/CustomUser'
+    #   responses:
+    #     '200':
+    #       description: ''
+    #       schema:
+    #         $ref: '#/components/schemas/CustomUser'
+    #   tags:
+    #     - Пользователи
+    # delete:
+    #   operationId: auth_users_delete
+    #   description: ''
+    #   parameters: []
+    #   responses:
+    #     '204':
+    #       description: ''
+    #   tags:
+    #     - Пользователи
+    # parameters:
+    #   - name: id
+    #     in: path
+    #     description: A unique integer value identifying this user.
+    #     required: true
+    #     type: integer
+  
+  /users/subscriptions/:
+    get:
+      security:
+       - Token: []
+      operationId: Мои подписки
+      description: Метод для просмотра своих подписок
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                    description: 'Общее количество объектов в базе'
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://caseme.ru/api/users/?page=4
+                    description: 'Ссылка на следующую страницу'
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://caseme.ru/api/users/?page=2
+                    description: 'Ссылка на предыдущую страницу'
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CustomUserMini'
+      tags:
+        - Подписки на пользователей
+    parameters: []
+  
+  /users/{id}/subscribe/:
+    post:
+      security:
+        - Token: [ ]
+      operationId: Подписаться на пользователя
+      description: ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "Уникальный идентификатор этого пользователя."
+          schema:
+            type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomUserMini'
+        '400':
+          description: 'Ошибка подписки (Например, если уже подписан или при подписке на себя самого)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SelfMadeError'
+        '401':
+          $ref: '#/components/responses/AuthenticationError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - Подписки на пользователей
+    delete:
+      security:
+       - Token: []
+      operationId: Отписаться от пользователя
+      description: ''
+      parameters: 
+      - name: id
+        in: path
+        required: true
+        description: "Уникальный идентификатор этого пользователя."
+        schema:
+          type: string 
+      responses:
+        '204':
+          description: 'Успешная отписка от пользователя'
+        '400':
+          description: 'Ошибка отписки (Например, если не был подписан)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SelfMadeError'
+        '401':
+          $ref: '#/components/responses/AuthenticationError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - Подписки на пользователей
+
+    # post:
+    #   operationId: cities_create
+    #   description: ''
+    #   parameters:
+    #     - name: data
+    #       in: body
+    #       required: true
+    #       schema:
+    #         $ref: '#/components/schemas/City'
+    #   responses:
+    #     '201':
+    #       description: ''
+    #       schema:
+    #         $ref: '#/components/schemas/City'
+    #   tags:
+    #     - Города
+    # parameters: []
+  /posts/:
+    get:
+      operationId: Список статей
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SerializerPost'
+      tags:
+        - Статьи
+    post:
+      operationId: Создание статьи
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SerializerPost'
+      responses:
+        '201':
+          description: 'Статья успешно создана'
+      tags:
+        - Статьи
+    parameters: []
+  /posts/{id}/:
+    get:
+      operationId: Просмотр статьи
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SerializerPost'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - Статьи
+    # put:
+    #   operationId: posts_update
+    #   description: ''
+    #   parameters: []
+    #   responses:
+    #     '200':
+    #       description: ''
+    #   tags:
+    #     - Статьи
+    patch:
+      operationId: Обновление статьи
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SerializerPost'
+      tags:
+        - Статьи
+    delete:
+      operationId: Удаление статьи
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: 'Статья успешно удалена'
+        '401':
+          $ref: '#/components/responses/AuthenticationError'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - Статьи
+    parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/SerializerPost'
+
+  /cities/:
+    get:
+      operationId: Список городов
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/City'
+      tags:
+        - Города
+  /cities/{id}/:
+    get:
+      operationId: Получение города
+      description: ''
+      parameters: 
+      - name: id
+        in: path
+        required: true
+        description: "Уникальный идентификатор этого Города."
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+      - Города
+    # put:
+    #   operationId: cities_update
+    #   description: ''
+    #   parameters:
+    #     - name: data
+    #       in: body
+    #       required: true
+    #       schema:
+    #         $ref: '#/components/schemas/City'
+    #   responses:
+    #     '200':
+    #       description: ''
+    #       schema:
+    #         $ref: '#/components/schemas/City'
+    #   tags:
+    #     - Города
+    # patch:
+    #   operationId: cities_partial_update
+    #   description: ''
+    #   parameters:
+    #     - name: data
+    #       in: body
+    #       required: true
+    #       schema:
+    #         $ref: '#/components/schemas/City'
+    #   responses:
+    #     '200':
+    #       description: ''
+    #       schema:
+    #         $ref: '#/components/schemas/City'
+    #   tags:
+    #     - Города
+    # delete:
+    #   operationId: cities_delete
+    #   description: ''
+    #   parameters: []
+    #   responses:
+    #     '204':
+    #       description: ''
+    #   tags:
+    #     - Города
+    # parameters:
+    #   - name: id
+    #     in: path
+    #     description: A unique integer value identifying this Город.
+    #     required: true
+    #     type: integer
+
+  /professions/:
+    get:
+      operationId: Список профессий
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Profession'
+      tags:
+        - Профессии
+    # post:
+    #   operationId: professions_create
+    #   description: ''
+    #   parameters:
+    #     - name: data
+    #       in: body
+    #       required: true
+    #       schema:
+    #         $ref: '#/components/schemas/Profession'
+    #   responses:
+    #     '201':
+    #       description: ''
+    #       schema:
+    #         $ref: '#/components/schemas/Profession'
+    #   tags:
+    #     - Профессии
+    # parameters: []
+  /professions/{id}/:
+    get:
+      operationId: Получение профессии
+      description: ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "Уникальный идентификатор этой Профессии."
+          schema:
+            type: inger
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profession'
+        '404':
+          $ref: '#/components/schemas/NotFound'
+      tags:
+        - Профессии
+  
+    # put:
+    #   operationId: professions_update
+    #   description: ''
+    #   parameters:
+    #     - name: data
+    #       in: body
+    #       required: true
+    #       schema:
+    #         $ref: '#/components/schemas/Profession'
+    #   responses:
+    #     '200':
+    #       description: ''
+    #       schema:
+    #         $ref: '#/components/schemas/Profession'
+    #   tags:
+    #     - Профессии
+    # patch:
+    #   operationId: professions_partial_update
+    #   description: ''
+    #   parameters:
+    #     - name: data
+    #       in: body
+    #       required: true
+    #       schema:
+    #         $ref: '#/components/schemas/Profession'
+    #   responses:
+    #     '200':
+    #       description: ''
+    #       schema:
+    #         $ref: '#/components/schemas/Profession'
+    #   tags:
+    #     - Профессии
+    # delete:
+    #   operationId: professions_delete
+    #   description: ''
+    #   parameters: []
+    #   responses:
+    #     '204':
+    #       description: ''
+    #   tags:
+    #     - Профессии
+    # parameters:
+    #   - name: id
+    #     in: path
+    #     description: A unique integer value identifying this Специальность.
+    #     required: true
+    #     type: integer
+  /skills/:
+    get:
+      operationId: Список навыков
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Skill'
+      tags:
+        - Навыки
+    # post:
+    #   operationId: skills_create
+    #   description: ''
+    #   parameters:
+    #     - name: data
+    #       in: body
+    #       required: true
+    #       schema:
+    #         $ref: '#/components/schemas/Skill'
+    #   responses:
+    #     '201':
+    #       description: ''
+    #       schema:
+    #         $ref: '#/components/schemas/Skill'
+    #   tags:
+    #     - Навыки
+    # parameters: []
+  
+  /skills/{id}/:
+    get:
+      operationId: Получение навыка
+      description: ''
+      parameters: 
+      - name: id
+        in: path
+        required: true
+        description: "Уникальный идентификатор этого Навыка."
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skill'
+        '404':
+          $ref: '#/components/schemas/NotFound'
+      tags:
+        - Навыки
+    # put:
+    #   operationId: skills_update
+    #   description: ''
+    #   parameters:
+    #     - name: data
+    #       in: body
+    #       required: true
+    #       schema:
+    #         $ref: '#/components/schemas/Skill'
+    #   responses:
+    #     '200':
+    #       description: ''
+    #       schema:
+    #         $ref: '#/components/schemas/Skill'
+    #   tags:
+    #     - Навыки
+    # patch:
+    #   operationId: skills_partial_update
+    #   description: ''
+    #   parameters:
+    #     - name: data
+    #       in: body
+    #       required: true
+    #       schema:
+    #         $ref: '#/components/schemas/Skill'
+    #   responses:
+    #     '200':
+    #       description: ''
+    #       schema:
+    #         $ref: '#/components/schemas/Skill'
+    #   tags:
+    #     - Навыки
+    # delete:
+    #   operationId: skills_delete
+    #   description: ''
+    #   parameters: []
+    #   responses:
+    #     '204':
+    #       description: ''
+    #   tags:
+    #     - Навыки
+    # parameters:
+    #   - name: id
+    #     in: path
+    #     description: A unique integer value identifying this Навык.
+    #     required: true
+    #     type: integer
+
+components:
+  schemas:
+
+    TokenObtainPair:
+      required:
+        - username
+        - password
+      type: object
+      properties:
+        username:
+          title: Username
+          type: string
+          
+        password:
+          title: Password
+          type: string
+          
+    TokenGetResponse:
+        type: object
+        properties:
+          access:
+            type: string
+          refresh:
+            type: string
+    TokenRefresh:
+      required:
+        - refresh
+      type: object
+      properties:
+        refresh:
+          title: Refresh
+          type: string
+          
+        access:
+          title: Access
+          type: string
+          readOnly: true
+    TokenRefreshResponse:
+      type: object
+      properties:
+        access:
+          type: string
+    TokenVerify:
+      required:
+        - token
+      type: object
+      properties:
+        token:
+          title: Token
+          type: string
+          
+    CustomUser:
+      required:
+        - name
+        - birthdate
+        - email
+        - phone
+      type: object
+      properties:
+        id:
+          title: ID
+          example: 1
+          type: integer
+          readOnly: true
+        name:
+          title: Имя и Фамилия
+          example: Вася Пупкин
+          type: string
+          maxLength: 50
+          
+        username:
+          title: Username
+          type: string
+          readOnly: true
+          
+        birthdate:
+          title: Birthdate
+          description: Дата рождения
+          type: string
+          format: date
+        gender:
+          title: Gender
+          description: Пол
+          type: string
+          enum:
+            - M
+            - F
+          x-nullable: true
+        age:
+          title: Age
+          description: Возраст
+          type: integer
+          example: 25
+          readOnly: true
+        city:
+          title: City
+          description: Город
+          type: integer
+          example: 5
+          x-nullable: true
+        email:
+          title: Email
+          type: string
+          format: email
+          maxLength: 50
+          
+        phone:
+          title: Phone
+          example: "+79035558822"
+          type: string
+          maxLength: 128
+          
+        about:
+          title: About
+          example: 'Информация о пользователе'
+          type: string
+          maxLength: 256
+          x-nullable: true
+        profession:
+          title: Profession
+          example: 2
+          type: integer
+          x-nullable: true
+        skills:
+          description: 'Список навыков'
+          type: array
+          example: [1, 2, 3]
+          items:
+            type: integer
+            # $ref: '#/components/schemas/Skill'
+          uniqueItems: true
+        image:
+          title: Image
+          type: string
+          readOnly: true
+          format: uri
+        vk_url:
+          title: Vk url
+          type: string
+          format: uri
+          maxLength: 256
+          x-nullable: true
+        facebook_url:
+          title: Facebook url
+          type: string
+          format: uri
+          maxLength: 256
+          x-nullable: true
+        twitter_url:
+          title: Twitter url
+          type: string
+          format: uri
+          maxLength: 256
+          x-nullable: true
+        followers_count:
+          title: Followers count
+          description: 'Количество подписчиков текущего пользователя'
+          type: integer
+          readOnly: true
+        is_subscribed:
+          title: is_subscribed
+          description: Проверяет подписку на текущего пользователя
+          type: boolean
+          readOnly: true
+
+    CustomUserMini:
+      type: object
+      properties:
+        id:
+          title: ID
+          description: "Уникальный идентификатор этого пользователя."
+          example: 1
+          type: integer
+          readOnly: true
+        name:
+          title: Имя и Фамилия
+          example: Сергей Иванов
+          type: string
+          maxLength: 50
+        username:
+          title: Username
+          example: "SergIvanov"
+          type: string
+          readOnly: true
+        city:
+          title: City
+          example: "Москва"
+          type: integer
+          x-nullable: true
+        profession:
+          title: Profession
+          example: "Дизайнер"
+          type: integer
+          x-nullable: true
+        image:
+          title: Image
+          type: string
+          readOnly: true
+          format: uri
+
+    CustomUserCreate:
+      required:
+        - name
+        - username
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          title: Имя и Фамилия
+          example: Вася Пупкин
+          type: string
+          maxLength: 50
+          
+        username:
+          title: Username
+          example: VasyaPupkin
+          description: Уникальный юзернейм
+          type: string
+
+        email:
+          title: Email
+          description: Адрес электронной почты
+          type: string
+          format: email
+
+        password:
+          title: Password
+          description: Пароль
+          example: "Qwerty123"
+          type: string
+          
+    CustomUserResponseOnCreate:
+      type: object
+      properties:
+        name:
+          title: Имя и Фамилия
+          example: Вася Пупкин
+          type: string
+          maxLength: 50
+
+        username:
+          title: Username
+          example: VasyaPupkin
+          description: Уникальный юзернейм
+          type: string
+ 
+        email:
+          title: Email
+          description: Адрес электронной почты
+          type: string
+          format: email
+
+    Activation:
+      required:
+        - uid
+        - token
+      type: object
+      properties:
+        uid:
+          title: Uid
+          type: string
+          
+        token:
+          title: Token
+          type: string
+          
+    SendEmailReset:
+      required:
+        - email
+      type: object
+      properties:
+        email:
+          title: Email
+          type: string
+          format: email
+          
+    PasswordResetConfirm:
+      required:
+        - uid
+        - token
+        - new_password
+      type: object
+      properties:
+        uid:
+          title: Uid
+          type: string
+          
+        token:
+          title: Token
+          type: string
+          
+        new_password:
+          title: New password
+          type: string
+          
+    UsernameResetConfirm:
+      required:
+        - new_username
+      type: object
+      properties:
+        new_username:
+          title: Никнейм
+          type: string
+          pattern: ^[\w.@+-]+$
+          maxLength: 50
+          
+    SetPassword:
+      required:
+        - new_password
+        - current_password
+      type: object
+      properties:
+        new_password:
+          title: New password
+          type: string
+          
+        current_password:
+          title: Current password
+          type: string
+          
+    SetUsername:
+      required:
+        - current_password
+        - new_username
+      type: object
+      properties:
+        current_password:
+          title: Current password
+          type: string
+          
+        new_username:
+          title: Никнейм
+          type: string
+          pattern: ^[\w.@+-]+$
+          maxLength: 50
+          
+    City:
+      type: object
+      properties:
+        id:
+          title: ID
+          example: 1
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          description: Название города
+          example: Москва
+          type: string
+          maxLength: 50
+    SerializerPost:
+      required:
+        - url
+        - title
+        - content
+        - is_private
+        - user
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        url:
+          title: Url
+          type: string
+          maxLength: 255
+          
+        created_at:
+          title: Дата создания
+          type: string
+          format: date
+          readOnly: true
+        update_at:
+          title: Дата обновления
+          type: string
+          format: date
+          readOnly: true
+        title:
+          title: Заголовок
+          type: string
+          maxLength: 100
+          
+        content:
+          title: Контент
+          type: string
+          
+        main_image:
+          title: Main image
+          type: string
+          readOnly: true
+          x-nullable: true
+          format: uri
+        is_private:
+          title: Статус приватности
+          type: boolean
+        user:
+          title: User
+          type: integer
+    Profession:
+      type: object
+      properties:
+        id:
+          title: ID
+          description: "Уникальный идентификатор этой Профессии"
+          example: 3
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          description: "Название профессии"
+          example: "Дизайнер"
+          type: string
+          maxLength: 50
+          
+    Skill:
+      type: object
+      properties:
+        id:
+          title: ID
+          description: "Уникальный идентификатор этого Навыка."
+          example: 2
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          description: 'Название навыка'
+          example: 'HTML'
+          type: string
+          maxLength: 50
+    
+    ValidationError:
+      description: Стандартные ошибки валидации DRF
+      type: object
+      properties:
+        field_name:
+          description: 'Название поля, в котором произошли ошибки. Таких полей может быть несколько'
+          example: [ 'Обязательное поле.' ]
+          type: array
+          items:
+            type: string
+    NestedValidationError:
+      description: Стандартные ошибки валидации DRF
+      type: object
+      properties:
+        ingredients:
+          description: ''
+          example: ''
+          type: array
+          items:
+            type: object
+            properties:
+              amount:
+                type: array
+                items:
+                  type: string
+
+    SelfMadeError:
+      description: Ошибка
+      type: object
+      properties:
+        errors:
+          description: 'Описание ошибки'
+          type: string
+
+    AuthenticationError:
+      description: Пользователь не авторизован
+      type: object
+      properties:
+        detail:
+          description: 'Описание ошибки'
+          example: "Учетные данные не были предоставлены."
+          type: string
+
+    PermissionDenied:
+      description: Недостаточно прав
+      type: object
+      properties:
+        detail:
+          description: 'Описание ошибки'
+          example: "У вас недостаточно прав для выполнения данного действия."
+          type: string
+    NotFound:
+      description: Объект не найден
+      type: object
+      properties:
+        detail:
+          description: 'Описание ошибки'
+          example: "Страница не найдена."
+          type: string
+
+
+  responses:
+    ValidationError:
+      description: 'Ошибки валидации в стандартном формате DRF'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationError'
+    NestedValidationError:
+      description: 'Ошибки валидации в стандартном формате DRF, в том числе с внутренними элементами.'
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/NestedValidationError'
+              - $ref: '#/components/schemas/ValidationError'
+
+    AuthenticationError:
+      description: Пользователь не авторизован
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthenticationError'
+
+    PermissionDenied:
+      description: Недостаточно прав
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PermissionDenied'
+
+    NotFound:
+      description: Объект не найден
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotFound'
+  
+  securitySchemes:
+    Token:
+      description: 'Авторизация по токену. <br> Все запросы от имени пользователя должны выполняться с заголовком   "Authorization: Bearer TOKENVALUE"'
+      type: http
+      scheme: token
+
