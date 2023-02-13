@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import User, Group
 
 from .models import User, Profession, Skill, City
 
@@ -32,3 +33,4 @@ class CityAdmin(admin.ModelAdmin):
 
 
 admin.site.site_header = 'Админ-панель сайта CASE-ME'
+admin.site.unregister(Group)
