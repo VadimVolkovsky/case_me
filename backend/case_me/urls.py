@@ -7,7 +7,7 @@ from rest_framework import routers
 
 from posts.views import PostViewSet
 from users.views import (CityViewSet, CustomUserViewSet, ProfessionViewSet,
-                         SkillViewSet)
+                         SkillViewSet, CustomTokenObtainPairView)
 
 router = routers.DefaultRouter()
 router.register(r'cities', CityViewSet)
@@ -19,6 +19,7 @@ router.register(r'posts', PostViewSet, basename='posts')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/auth/jwt/create/', CustomTokenObtainPairView.as_view()),
     path('api/auth/', include('djoser.urls')),
     path('api/auth/', include('djoser.urls.jwt')),
     path('redoc/', TemplateView.as_view(
