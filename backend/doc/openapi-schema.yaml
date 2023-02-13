@@ -232,7 +232,7 @@ paths:
       post:
         operationId: Получение токена
         description: |-
-          Используется для авторизации по username и password, чтобы далее использовать токен при запросах
+          Используется для авторизации по email и password, чтобы далее использовать токен при запросах
         parameters: []
         requestBody:
           content:
@@ -250,30 +250,30 @@ paths:
           - Пользователи
       parameters: []
 
-  /api/auth/jwt/refresh/:
-    post:
-      security:
-       - Token: []
-      operationId: Обновление токена
-      description: |-
-        Takes a refresh type JSON web token and returns an access type JSON web
-        token if the refresh token is valid.
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TokenRefresh'
-      responses:
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TokenRefreshResponse'
-      tags:
-        - Пользователи
-    parameters: []
+  # /api/auth/jwt/refresh/:
+  #   post:
+  #     security:
+  #      - Token: []
+  #     operationId: Обновление токена
+  #     description: |-
+  #       Takes a refresh type JSON web token and returns an access type JSON web
+  #       token if the refresh token is valid.
+  #     parameters: []
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/TokenRefresh'
+  #     responses:
+  #       '201':
+  #         description: ''
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/TokenRefreshResponse'
+  #     tags:
+  #       - Пользователи
+  #   parameters: []
 
   /api/auth/users/reset_password/:
     post:
@@ -929,16 +929,18 @@ components:
 
     TokenObtainPair:
       required:
-        - username
+        - email
         - password
       type: object
       properties:
-        username:
-          title: Username
+        email:
+          title: Email
+          example: vasyapupkin@mail.ru
           type: string
           
         password:
           title: Password
+          example: "12345qwE"
           type: string
           
     TokenGetResponse:
@@ -946,8 +948,10 @@ components:
         properties:
           access:
             type: string
+            example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY3NjM5MzUyMSwianRpIjoiM2Q5ZjE4YmI0MmIxNGEzZThlZDY3ZDE3NWEyYjFmY2EiLCJ1c2VyX2lkIjozfQ.6J9xeUFq_JbRdM9BonUpPnU4vQU9RvOB2xVCupVj-Jw"
           refresh:
             type: string
+            example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2OTExOTIxLCJqdGkiOiI0ODFjNTg1ZjAwYmY0ZjY2OTI5NDFjODkzYWRlNzYzMSIsInVzZXJfaWQiOjN9.HsjpOKFkOM6HfEL5pPI_pZxn8YnX0_L3b3Exny4YfhE"
     TokenRefresh:
       required:
         - refresh
@@ -1185,10 +1189,12 @@ components:
       properties:
         uid:
           title: Uid
+          example: "MQ"
           type: string
           
         token:
           title: Token
+          example: "jkmol-0de2e9a0c23a242d2d646f0095de66ee"
           type: string
           
     SendEmailReset:
@@ -1210,14 +1216,17 @@ components:
       properties:
         uid:
           title: Uid
+          example: "MQ"
           type: string
           
         token:
           title: Token
+          example: "jkmol-0de2e9a0c23a242d2d646f0095de66ee"
           type: string
           
         new_password:
           title: New password
+          example: "12345qwE_changed"
           type: string
           
     UsernameResetConfirm:

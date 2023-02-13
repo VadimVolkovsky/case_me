@@ -52,6 +52,8 @@ class User(AbstractUser):
         ('M', 'Мужской'),
         ('F', 'Женский'),
     )
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
     name = models.CharField(
         verbose_name="Имя и Фамилия",
         max_length=50
