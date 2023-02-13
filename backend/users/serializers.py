@@ -79,14 +79,14 @@ class CustomUserCreateSerializer(UserCreateSerializer):
     def validate_username(self, value):
         if User.objects.filter(username=value).exists():
             raise serializers.ValidationError(
-                detail="Пользователь с таким ником уже существует"
+                detail="Пользователь с таким ником уже зарегистрирован"
             )
         return value
 
     def validate_email(self, value):
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError(
-                detail="Пользователь с таким email уже существует"
+                detail="Пользователь с такой почтой уже зарегистрирован"
             )
         return value
 
