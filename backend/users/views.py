@@ -4,9 +4,11 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.models import City, Follow, Profession, Skill, User
-from users.serializers import (CitySerializer, CustomUserCreateSerializer,
+from users.serializers import (CitySerializer, CustomTokenObtainPairSerializer,
+                               CustomUserCreateSerializer,
                                CustomUserSerializer, ProfessionSerializer,
                                SkillSerializer, SubscribeSerializer)
 
@@ -67,3 +69,8 @@ class ProfessionViewSet(viewsets.ModelViewSet):
 class SkillViewSet(viewsets.ModelViewSet):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    """Получения JWT токена при авторизации пользователя"""
+    serializer_class = CustomTokenObtainPairSerializer

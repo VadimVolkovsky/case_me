@@ -2,6 +2,7 @@ from datetime import date, timedelta
 
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers, status
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, RefreshToken
 
 from users.fields import Base64ImageField, delete_previous_image
 from users.models import City, Follow, Profession, Skill, User
@@ -112,4 +113,26 @@ class SubscribeSerializer(UserSerializer):
                 detail='Нельзя подписаться на самого себя',
                 code=status.HTTP_400_BAD_REQUEST,
             )
+        return data
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """Сериалайзер получения JWT токена с кастомной ошибкой"""
+    default_error_messages = {
+        'no_active_account': ('Неверный email или пароль')
+    }
+    username_field = User.email
+
+    @classmethod
+    def get_token(cls, user):
+        return RefreshToken.for_user(user)
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        refresh = self.get_token(self.user)
+
+        data["refresh"] = str(refresh)
+        data["access"] = str(refresh.access_token)
+
         return data
