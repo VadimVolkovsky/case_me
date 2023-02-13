@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
+from django.urls import reverse
 from phonenumber_field.modelfields import PhoneNumberField
 
 from users.validators import username_me
@@ -14,6 +15,7 @@ class UserInformation(models.Model):
     )
 
     class Meta:
+        ordering = ['id']
         abstract = True
 
     def __str__(self):
@@ -24,12 +26,13 @@ class Profession(UserInformation):
     """Модель специальностей/профессий"""
     class Meta(UserInformation.Meta):
         verbose_name = 'Специальность'
+        verbose_name_plural = 'Специальности'
         default_related_name = "professions"
 
 
 class Skill(UserInformation):
     """Модель навыков работы"""
-    class Meta:
+    class Meta(UserInformation.Meta):
         verbose_name = 'Навык'
         verbose_name_plural = 'Навыки'
         default_related_name = "skills"
@@ -66,6 +69,7 @@ class User(AbstractUser):
         null=True
     )
     gender = models.CharField(
+        verbose_name='Пол',
         max_length=7,
         choices=GENDER_CHOICES,
         blank=True,
@@ -108,6 +112,15 @@ class User(AbstractUser):
         blank=True,
         null=True
     )
+
+    def get_absolute_url(self):
+        return f'/users/{self.pk}/'
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+        ordering = ['id']
+
     vk_url = models.URLField(max_length=256, null=True, blank=True)
     facebook_url = models.URLField(max_length=256, null=True, blank=True)
     twitter_url = models.URLField(max_length=256, null=True, blank=True)
