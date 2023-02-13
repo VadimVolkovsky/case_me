@@ -11,7 +11,8 @@ class UserInformation(models.Model):
     """Абстрактная модель для моделей profession, skill, city"""
     name = models.CharField(
         max_length=50,
-        unique=True
+        unique=True,
+        verbose_name="Название"
     )
 
     class Meta:
@@ -80,50 +81,71 @@ class User(AbstractUser):
         on_delete=models.SET_NULL,
         related_name="users",
         blank=True,
-        null=True
+        null=True,
+        verbose_name='Город',
     )
     email = models.EmailField(
         verbose_name="Email",
         max_length=50,
         unique=True
     )
-    phone = PhoneNumberField(region="RU")
+    phone = PhoneNumberField(
+        region="RU",
+        blank=True,
+        null=True,
+        verbose_name='Телефон',
+        )
     about = models.TextField(
         max_length=256,
         null=True,
-        blank=True
+        blank=True,
+        verbose_name='О себе'
     )
     profession = models.ForeignKey(
         Profession,
         on_delete=models.SET_NULL,
         related_name="users",
         blank=True,
-        null=True
+        null=True,
+        verbose_name='Специальность'
     )
     skills = models.ManyToManyField(
         Skill,
         related_name="users",
-        blank=True
+        blank=True,
+        verbose_name='Навык',
     )
     image = models.ImageField(
         default='users/images/default_image.png',
         verbose_name='Аватар',
         upload_to='users/images/',
         blank=True,
-        null=True
+        null=True,
     )
+    vk_url = models.URLField(
+        max_length=256,
+        null=True,
+        blank=True,
+        verbose_name="ВКонтакте")
+    facebook_url = models.URLField(
+        max_length=256,
+        null=True,
+        blank=True,
+        verbose_name="Facebook")
+    twitter_url = models.URLField(
+        max_length=256,
+        null=True,
+        blank=True,
+        verbose_name='Twitter'
+        )
 
     def get_absolute_url(self):
-        return f'/users/{self.pk}/'
+        return f'/api/auth/users/{self.pk}/'
 
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
         ordering = ['id']
-
-    vk_url = models.URLField(max_length=256, null=True, blank=True)
-    facebook_url = models.URLField(max_length=256, null=True, blank=True)
-    twitter_url = models.URLField(max_length=256, null=True, blank=True)
 
 
 class Follow(models.Model):
