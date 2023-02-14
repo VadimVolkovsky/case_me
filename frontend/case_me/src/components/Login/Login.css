@@ -68,7 +68,7 @@
 }
 
 .form-authorize__field:last-of-type {
-  margin-bottom: 40px;
+  margin-bottom: 55px;
 }
 
 .form-authorize__input-label {
@@ -119,6 +119,7 @@
 }
 
 .form-authorize__enter-btn {
+  background-color: #11B5DD;
   border-radius: 8px;
   border: none;
   font-weight: 600;

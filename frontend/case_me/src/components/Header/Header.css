@@ -6,8 +6,8 @@
 }
 
 .header__logo {
-  max-width: 140px;
-  max-height: 20px;
-  padding: 30px 0;
-  margin-left: 84px;
+  display: block;
+  width: 140px;
+  height: 20px;
+  padding: 30px 84px;
 }

@@ -13,17 +13,15 @@ function Login() {
   const [passwordDirty, setPasswordDirty] = useState(false);
   const [emailError, setEmailError] = useState("Поле не может быть пустым");
   const [passwordError, setPasswordError] = useState("Поле не может быть пустым");
+  const [formValid, setFormValid] = useState(false);
 
-  const blurHandler = (e) => {
-    switch(e.target.name) {
-      case "email":
-        setEmailDirty(true)
-        break
-      case "password":
-        setPasswordDirty(true)
-        break
+  useEffect( () => {
+    if(emailError || passwordError) {
+      setFormValid(false)
+    } else {
+      setFormValid(true)
     }
-  }
+  }, [emailError, passwordError])
 
   const emailHandler = (e) => {
     setEmail(e.target.value)
@@ -50,6 +48,16 @@ function Login() {
     }
   }
 
+  const blurHandler = (e) => {
+    switch(e.target.name) {
+      case "email":
+        setEmailDirty(true)
+        break
+      case "password":
+        setPasswordDirty(true)
+        break
+    }
+  }
 
   return (
     <main className="content">
@@ -70,7 +78,7 @@ function Login() {
               <input value={password} onBlur={e => blurHandler(e)} onChange={e => passwordHandler(e)} className="form-authorize__input form-authorize__input_type_password" placeholder="Введите пароль" id="password" type="password" name="password" required />
               {(passwordDirty && passwordError) && <span className="form-authorize__input-error password-error">{passwordError}</span>}
             </div>
-            <button type="submit" className="form-authorize__enter-btn">Войти</button>
+            <button disabled={!formValid} type="submit" className="form-authorize__enter-btn">Войти</button>
           </fieldset>
         </form>
         <Link to="/passwordform" className="authorize__link">Забыли пароль?</Link>
