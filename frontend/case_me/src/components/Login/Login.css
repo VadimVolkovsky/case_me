@@ -160,9 +160,11 @@
 
 .authorize__link:hover {
   color: #00A2C9;
+  border-bottom: 1px solid #00A2C9;
   transition: 0.4s linear 0.1s;
 }
 
 .authorize__link:focus {
   color: #0094B8;
+  border-bottom: 1px solid #0094B8;
 }
