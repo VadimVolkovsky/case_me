@@ -9,7 +9,7 @@ function Login() {
   /**переменные состояния*/
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailDrty, setEmailDirty] = useState(false);
+  const [emailDirty, setEmailDirty] = useState(false);
   const [passwordDirty, setPasswordDirty] = useState(false);
   const [emailError, setEmailError] = useState("Поле не может быть пустым");
   const [passwordError, setPasswordError] = useState("Поле не может быть пустым");
@@ -24,12 +24,19 @@ function Login() {
     }
   }, [emailError, passwordError])
 
+  /**изменить стиль инпута*/
+  /* const setInputErrorStyle = (error) => {
+    const input = document.querySelector(".form-authorize__input")
+    if (error.length === 0) {
+      input.className.add("form-authorize__input_type_error")
+  } */
+
   /**изменить состояние инпутов, когда пользователь что-то вводит */
   const emailHandler = (e) => {
     setEmail(e.target.value)
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if(!re.test(String(e.target.value).toLowerCase())) {
-      setEmailError("Введите корректный e-mail")
+      setEmailError("Введите корректный e-mail");
       if(!e.target.value) {
         setEmailError("Поле не может быть пустым")
       }
@@ -53,10 +60,10 @@ function Login() {
   const blurHandler = (e) => {
     switch(e.target.name) {
       case "email":
-        setEmailDirty(true)
+        setEmailDirty(true);
         break
       case "password":
-        setPasswordDirty(true)
+        setPasswordDirty(true);
         break
     }
   }
@@ -89,7 +96,7 @@ function Login() {
                 onBlur={e => blurHandler(e)}
                 required
               />
-              {(emailDrty && emailError) && <span className="form-authorize__input-error email-error">{emailError}</span>}
+              {(emailDirty && emailError) && <span className="form-authorize__input-error email-error">{emailError}</span>}
             </div>
             <div className="form-authorize__field">
               <label className="form-authorize__input-label" for="password">Пароль</label>
