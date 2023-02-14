@@ -1,5 +1,13 @@
-.header{
+.header {
+  background-color: #FEFEFE;
   width: 100%;
-  height: 80px;
-  background-color: #F8FAFD;
+  border-bottom: 1px solid #D2D9E0;
+  text-align: start;
+}
+
+.header__logo {
+  max-width: 140px;
+  max-height: 20px;
+  padding: 30px 0;
+  margin-left: 84px;
 }

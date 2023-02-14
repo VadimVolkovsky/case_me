@@ -37,7 +37,11 @@
 }
 
 .authorize__title-link_active {
-  color: #090a0d;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1;
+  color: #090A0D;
 }
 
 .form-authorize {
