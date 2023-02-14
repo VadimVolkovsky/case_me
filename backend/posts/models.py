@@ -1,7 +1,7 @@
 from django.db import models
-
+from django.contrib.postgres.fields import ArrayField
 from users.models import User
-
+from slugify import slugify
 from .utils import user_directory_path
 
 
@@ -10,6 +10,15 @@ class Post(models.Model):
         to=User,
         on_delete=models.CASCADE,
         related_name='user',
+    )
+    title = models.CharField(
+        max_length=255,
+        verbose_name='Заголовок',
+    )
+    slug = models.SlugField(
+        max_length=255,
+        verbose_name='Слаг',
+        blank=True,
     )
     url = models.CharField(
         max_length=255,
@@ -24,22 +33,21 @@ class Post(models.Model):
         verbose_name='Дата обновления',
         # editable=False
     )
-    title = models.CharField(
-        max_length=100,
-        verbose_name='Заголовок',
-    )
-    content = models.TextField(
-        verbose_name='Контент',
-    )
+
+    # content = ArrayField(models.TextField(), verbose_name='Контекст', null=True)
+    content = models.TextField()
     main_image = models.FileField(
         upload_to=user_directory_path,
         null=True,  # ask for front
         # default=...,
-        blank=True
     )
     is_private = models.BooleanField(
         verbose_name='Статус приватности',
     )
+    is_main = models.BooleanField(
+        verbose_name='Закрепить на странице'
+    )
+
     # amount_like = models.ForeignKey(
     #     to=Like,
     #     on_delete=models.CASCADE,
@@ -69,7 +77,11 @@ class Post(models.Model):
     # )
 
     def __str__(self):
-        return f'owner: {self.user.username} / post: {self.title}'  # ask for front
+        return f'owner: {self.user.username}/post: {self.title}'  # ask for front
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title, entities=False, decimal=False, max_length=255,)
+        super(Post, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Статья'
