@@ -68,7 +68,7 @@
 }
 
 .form-authorize__field:last-of-type {
-  margin-bottom: 55px;
+  margin-bottom: 56px;
 }
 
 .form-authorize__input-label {
@@ -119,7 +119,6 @@
 }
 
 .form-authorize__enter-btn {
-  background-color: #11B5DD;
   border-radius: 8px;
   border: none;
   font-weight: 600;
@@ -132,22 +131,20 @@
 .form-authorize__enter-btn_active {
   background-color: #00A2C9;
   color: #FEFEFE;
-}
-
-.form-authorize__enter-btn_disabled {
-  background-color: #11B5DD;
-}
-
-.form-authorize__enter-btn:hover {
-  background-color: #00A2C9;
-  color: #FEFEFE;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+}
+
+.form-authorize__enter-btn_active:hover {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
   transition: 0.4s linear 0.1s;
 }
 .form-authorize__enter-btn_active:focus {
   background-color: #0094B8;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.form-authorize__enter-btn_disabled {
+  background-color: #11B5DD;
 }
 
 .authorize__link {
@@ -156,8 +153,9 @@
   font-size: 16px;
   line-height: 1.5;
   align-self: center;
-  padding-bottom: 64px;
-  margin-top: 44px;
+  margin: 44px 0 64px;
+  text-decoration: none;
+  border-bottom: 1px solid #090A0D;
 }
 
 .authorize__link:hover {
