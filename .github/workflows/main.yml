@@ -30,3 +30,14 @@ jobs:
       run: |
         python -m flake8 
         # python manage.py test
+
+  send_message: 
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: send message
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO_VADIM }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: ${{ github.workflow }} успешно выполнен! 
