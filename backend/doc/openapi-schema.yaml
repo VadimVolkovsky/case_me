@@ -1147,6 +1147,8 @@ components:
           example: VasyaPupkin
           description: Уникальный юзернейм
           type: string
+          minLength: 3
+          maxLength: 20
 
         email:
           title: Email

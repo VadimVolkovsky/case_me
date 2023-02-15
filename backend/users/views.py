@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
+
 from users.models import City, Follow, Profession, Skill, User
 from users.serializers import (CitySerializer, CustomTokenObtainPairSerializer,
                                CustomUserCreateSerializer,
@@ -25,7 +26,7 @@ class CustomUserViewSet(UserViewSet):
             permission_classes=[IsAuthenticated])
     def subscribe(self, request, **kwargs):
         """Метод для подписки/отписки на пользователей"""
-        user = get_object_or_404(User, username=request.user)
+        user = get_object_or_404(User, username=request.user.username)
         author = get_object_or_404(User, id=self.kwargs.get('id'))
 
         if request.method == 'POST':

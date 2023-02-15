@@ -2,6 +2,9 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from users.validators import UsernameRegexValidator
+from django.core.validators import RegexValidator
+
 from users.validators import username_me
 
 
@@ -59,9 +62,9 @@ class User(AbstractUser):
     )
     username = models.CharField(
         verbose_name="Никнейм",
-        max_length=50,
+        max_length=20,
         unique=True,
-        validators=(UnicodeUsernameValidator(), username_me)
+        validators=[UsernameRegexValidator()]
     )
     birthdate = models.DateField(
         verbose_name="Дата рождения",
