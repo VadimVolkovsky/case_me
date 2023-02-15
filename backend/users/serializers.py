@@ -56,6 +56,8 @@ class CustomUserSerializer(UserSerializer):
         """Отображает возраст пользователя"""
         if obj.birthdate:
             return (date.today() - obj.birthdate) // timedelta(days=365.2425)
+        else:
+            return None
 
     def get_is_subscribed(self, obj):
         """Проверяет подписку на текущего пользователя"""
