@@ -1,7 +1,7 @@
 from django.contrib import admin
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group, User
 
-from .models import User, Profession, Skill, City
+from .models import City, Profession, Skill, User
 
 
 @admin.register(User)

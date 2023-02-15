@@ -1,7 +1,6 @@
 from djoser.permissions import CurrentUserOrAdmin
-from rest_framework import permissions
-
 from posts.models import Post
+from rest_framework import permissions
 
 from .serializers import SerializerPost
 from .viewsets import CustomPostViewSet
