@@ -1,15 +1,16 @@
 from datetime import date, timedelta
 
+from django.conf import settings
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import (RefreshToken,
                                                   TokenObtainPairSerializer)
 
+import users.exceptions as exceptions
 from users.fields import Base64ImageField, delete_previous_image
 from users.models import City, Profession, Skill, User
 from users.validators import (email_already_exists, subscribe_already_exists,
-                              subscribe_myself, username_already_exists,
-                              username_max_length, username_min_lenght)
+                              subscribe_myself, username_already_exists)
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -72,8 +73,11 @@ class CustomUserSerializer(UserSerializer):
 class CustomUserCreateSerializer(UserCreateSerializer):
     """ Сериализатор создания пользователя """
     password = serializers.CharField(write_only=True)
-    username = serializers.RegexField(required=True, regex=r'[a-zA-Z0-9]{3,20}',)
-    #дописать валидацию username
+    username = serializers.RegexField(
+        required=True,
+        regex=settings.USERNAME_REGEX,
+        error_messages={'invalid': exceptions.invalid_username}
+    )
     email = serializers.EmailField(required=True)
 
     class Meta:
@@ -84,8 +88,6 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 
     def validate_username(self, value):
         username_already_exists(self, value)
-        username_min_lenght(self, value)
-        username_max_length(self, value)
         return value
 
     def validate_email(self, value):
