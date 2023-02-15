@@ -95,7 +95,7 @@ class User(AbstractUser):
         blank=True,
         null=True,
         verbose_name='Телефон',
-        )
+    )
     about = models.TextField(
         max_length=256,
         null=True,
@@ -138,7 +138,7 @@ class User(AbstractUser):
         null=True,
         blank=True,
         verbose_name='Twitter'
-        )
+    )
 
     def get_absolute_url(self):
         return f'/api/auth/users/{self.pk}/'

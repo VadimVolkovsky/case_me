@@ -49,11 +49,11 @@ class CustomUserViewSet(UserViewSet):
         """Метод для просмотра своих подписок"""
         user = request.user
         queryset = User.objects.filter(following__user=user)
-        pages = queryset  # self.paginate_queryset(queryset) Включить когда будет пагинация
+        pages = queryset
         serializer = SubscribeSerializer(
             pages, many=True, context={'request': request}
         )
-        return Response(serializer.data)  # self.get_paginated_response(serializer.data) Включить когда будет пагинация
+        return Response(serializer.data)
 
 
 class CityViewSet(viewsets.ModelViewSet):
