@@ -1,4 +1,4 @@
-name: Django-app workflow CI
+name: backend_develop branch workflow
 
 on:
   push:

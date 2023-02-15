@@ -37,8 +37,6 @@ pip install -r requirements.txt
 
 - Никита @NickShinkov
 
-- Роман @RBychin
-
 - Александр @al_petrovv
 
 - Вадим @Vadim_Volkovsky
@@ -59,7 +57,7 @@ pip install -r requirements.txt
 
 **Дизайнеры:**
 
-- UX/UI: Егор @egvikhrov
+- UX/UI: Катя @akimova_e_a 
 
 - Графический: Елена @elenkoshe
 
