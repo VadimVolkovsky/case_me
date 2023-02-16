@@ -139,6 +139,10 @@ color: #090A0D;
   padding: 0;
 }
 
+.password-error {
+  margin: 28px 0 0 0;
+}
+
 .registration__submit-button {
   font-weight: 600;
   font-size: 18px;
@@ -154,25 +158,20 @@ color: #090A0D;
 
 .registration__submit-button_disabled {
   background: #11B5DD;
-  color: #E6EDF4;
-
-}
-
-.registration__submit-button:hover {
-  background: #00A2C9;
-  color: #FEFEFE;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-  transition: .4s linear .1s;
-  cursor: pointer;
 }
 
 .registration__submit-button_active {
   background: #00A2C9;
   color: #FEFEFE;
+  cursor: pointer;
+}
+
+.registration__submit-button_active:hover {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  transition: .4s linear .1s;
 }
 
 .registration__submit-button_active:focus {
   background: #0094B8;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.2);
 }
-

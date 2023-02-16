@@ -7,8 +7,10 @@ import './Register.css';
 
 function Register() {
 
+  // класс применяется для подсвечивания той ссылки, на странице которой находится пользователь
   const activeLink = ({ isActive }) => (isActive) ? 'registration__link_active' : 'registration__link';
 
+  // переменные состояния
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,8 +23,11 @@ function Register() {
   const [emailError, setEmailError] = useState('Поле не может быть пустым');
   const [passwordError, setPasswordError] = useState('Поле не может быть пустым');
 
+  const [checkbox, setCheckbox] = useState(false);
+
   const [formValid, setFormValid] = useState(false);
 
+  // функция для валидации инпутов формы
   useEffect(() => {
     if (nicknameError || emailError || passwordError) {
       setFormValid(false)
@@ -31,21 +36,31 @@ function Register() {
     }
   }, [nicknameError, emailError, passwordError])
 
+  // функция для валидация инпута никнейма с автоматическим добавление @, если пользователь ее не добавил самостоятельно
   const nicknameHandler = (e) => {
     setNickname(e.target.value);
+    const inputVal = e.target.value;
+    let formattedVal = inputVal;
+
+    // Добавляем @ в начало значения если его не существует
+    if (inputVal.length > 0 && inputVal[0] !== "@") {
+      formattedVal = `@${inputVal}`;
+    }
+
+    // Валидируем значение инпута никнейма
     const re = /^@[a-zA-Z0-9_.-]{2,19}$/;
-    if (!re.test(`@${e.target.value}`)) {
+    if (!re.test(formattedVal)) {
       setNicknameError('Только латиница (a-z), цифры (0-9), символы (_-.@), не меньше 3 и не больше 20 символов');
-      if (!e.target.value) {
+      if (!inputVal) {
         setNicknameError('Поле не может быть пустым');
       }
     } else {
       setNicknameError('');
-      setNickname(`@${e.target.value}`);
+      setNickname(formattedVal);
     }
-  }
+  };
 
-
+  // функция для валидации инпута email
   const emailHandler = (e) => {
     setEmail(e.target.value);
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -59,7 +74,7 @@ function Register() {
     }
   }
 
-
+  // функция для валидации инпута пароля
   const passwordHandler = (e) => {
     setPassword(e.target.value);
     if (e.target.value.length < 8 || e.target.value.length > 50) {
@@ -72,6 +87,7 @@ function Register() {
     }
   }
 
+  // Обработчик события при потере фокуса инпута
   const blurHandler = (e) => {
     switch (e.target.name) {
       case 'nickname':
@@ -83,6 +99,8 @@ function Register() {
       case 'password':
         setPasswordDirty(true);
         break;
+        default:
+          // Ничего не делаем. Добавление default является хорошей практикой.
     }
   }
 
@@ -98,10 +116,9 @@ function Register() {
               </ul>
             </nav>
 
-            <form action="/" novalidate>
+            <form action="/" noValidate>
               <div className="registration__input-container">
-                <label className="registration__form-label" for="nickname">Никнейм</label>
-
+                <label className="registration__form-label" htmlFor="nickname">Никнейм</label>
                 <input
                   onChange={e => {nicknameHandler(e);}}
                   value={nickname}
@@ -115,7 +132,7 @@ function Register() {
               </div>
 
               <div className="registration__input-container">
-                <label className="registration__form-label" for="email">E-mail</label>
+                <label className="registration__form-label" htmlFor="email">E-mail</label>
                 <input
                   onChange={e => emailHandler(e)}
                   value={email}
@@ -129,7 +146,7 @@ function Register() {
               </div>
 
               <div className="registration__input-container">
-                <label className="registration__form-label" for="password">Пароль</label>
+                <label className="registration__form-label" htmlFor="password">Пароль</label>
                 <input
                   onChange={e => passwordHandler(e)}
                   value={password}
@@ -144,7 +161,10 @@ function Register() {
               </div>
 
               <div className="registration__checkbox-form">
-                <Checkbox id="checkbox" name="checkbox" required={true} />
+                <Checkbox
+                id="checkbox"
+                name="checkbox"
+                required={true} />
                 <p class="registration__policy-text">Я согласен с <Link class="registration__policy-link" to="">Политикой конфиденциальности</Link> и <Link class="registration__policy-link" to="">Пользовательским соглашением</Link></p>
               </div>
 
