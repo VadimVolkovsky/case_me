@@ -193,7 +193,7 @@ function Register() {
                 checked={isChecked}
                 id="checkbox"
                 name="checkbox" />
-                <p class="registration__policy-text">Я согласен с <Link class="registration__policy-link" to="">Политикой конфиденциальности</Link> и <Link class="registration__policy-link" to="">Пользовательским соглашением</Link></p>
+                <p class="registration__policy-text">Я согласен с <Link class="registration__policy-link" to="/privacypolicy">Политикой конфиденциальности</Link>{" "}и{" "}<Link class="registration__policy-link" to="">Пользовательским соглашением</Link></p>
                 {checkboxError && <p>{checkboxError}</p>}
               </div>
 

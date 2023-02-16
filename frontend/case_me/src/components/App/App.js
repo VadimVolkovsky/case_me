@@ -10,11 +10,12 @@ import FormPasswordRequest from "../FormPasswordRequest/FormPasswordRequest";
 import PasswordUpdate from "../PasswordUpdate/PasswordUpdate";
 import PasswordRecovery from "../PasswordRecovery/PasswordRecovery";
 import PopupTooltip from "../PopupTooltip/PopupTooltip";
-
+import PrivacyPolicy from "../PrivacyPolicy/PrivacyPolicy";
+import UserAgreement from "../UserAgreement/UserAgreement";
 
 function App() {
 
-  // Переменные состояния 
+  // Переменные состояния
 // const[isInfoTooltip, setIsInfoTooltip] = useState(false);
 
 
@@ -29,11 +30,13 @@ function App() {
         <Route
          path="/passwordform"
          element={
-         <FormPasswordRequest 
+         <FormPasswordRequest
          />}/>
         <Route path="/passwordupdate" element={<PasswordUpdate />}/>
         <Route path="/passwordrecovery" element={<PasswordRecovery/>}/>
         <Route path="/info" element={<PopupTooltip/>}/>
+        <Route path="/privacypolicy" element={<PrivacyPolicy/>}/>
+        <Route path="/useragreement" element={<UserAgreement/>}/>
       </Routes>
     </div>
   );

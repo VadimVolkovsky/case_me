@@ -125,7 +125,13 @@ color: #090A0D;
 .registration__policy-link:hover {
   transition: .4s linear .1s;
   cursor: pointer;
-  opacity: .5;
+  color: #00A2C9;
+  border-bottom: 1px solid #00A2C9;
+}
+
+.registration__policy-link:focus {
+  color: #0094B8;
+  border-bottom: 1px solid #0094B8;
 }
 
 .registration__input-error {
