@@ -4,11 +4,11 @@ import "./FormEmailRequest.css";
 import FormRequest from "../FormRequest/FormRequest";
 
 function FormEmailRequest() {
-
-    //Переменные состояния
+  //Переменные состояния
   const [email, setEmail] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [emailError, setEmailError] = useState("");
+  const [emailDirty, setEmailDirty] = useState(false);
 
   // Навигация по сайту
   let navigate = useNavigate();
@@ -17,25 +17,35 @@ function FormEmailRequest() {
   function handleChangeEmail(e) {
     setEmail(e.target.value);
     const regexEmail = /^([\w]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    if(e.target.value.length === 0){
+    if (e.target.value.length === 0) {
       setFormValid(false);
-      setEmailError('Поле не может быть пустым');
-    } else if (!regexEmail.test(String(e.target.value).toLocaleLowerCase())){
+      setEmailError("Поле не может быть пустым");
+    } else if (!regexEmail.test(String(e.target.value).toLocaleLowerCase())) {
       setFormValid(false);
-      setEmailError('Некорректный email');
+      setEmailError("Введите корректный e-mail");
     } else {
       setFormValid(true);
-      setEmailError('');
+      setEmailError("");
+    }
+  }
+
+  //Функция слежения за фокусом
+  function blurHandler(e) {
+    switch (e.target.name) {
+      case "email":
+        setEmailDirty(true);
+        break;
     }
   }
 
   // Функция проверки на ошибки
-  function checkForm(){
-    if( formValid !== true){
+  function checkForm() {
+    if (formValid !== true) {
       console.log("Отправить сообщение на почту не удалось");
     } else {
       setFormValid(true);
-      setEmailError('');
+      setEmailError("");
+      setEmailDirty(false);
       navigate("/passwordrecovery");
       console.log("Обновление почты прошло успешно");
     }
@@ -46,6 +56,9 @@ function FormEmailRequest() {
     e.preventDefault();
     checkForm();
   }
+
+  const inputClass =
+    emailDirty && emailError ? "form__input_type_error" : "form__input";
 
   return (
     <FormRequest
@@ -63,12 +76,15 @@ function FormEmailRequest() {
               name="email"
               id="email__input"
               placeholder="Введите почту"
-              className="form__input"
+              className={inputClass}
               value={email}
               onChange={handleChangeEmail}
+              onBlur={blurHandler}
               required
             />
-            <span className="form__input-error">{emailError}</span>
+            {emailDirty && emailError && (
+              <span className="form__input-error">{emailError}</span>
+            )}
           </label>
         </fieldset>
       }
