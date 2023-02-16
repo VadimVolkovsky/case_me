@@ -4,15 +4,15 @@ import "./FormPasswordRequest.css";
 import FormRequest from "../FormRequest/FormRequest";
 
 function FormPasswordRequest() {
-
   //Переменные состояния
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [passwordRepeatError, setPasswordRepeatError] = useState("");
+  const [passwordlDirty, setPasswordDirty] = useState(false);
+  const [passwordRepeatDirty, setPasswordRepeatDirty] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const [messageError, setMessageError] = useState("");
   // заглушка для проверки навигации, пока не прописаны запросы к бэку
   const [isUpdatePassword, setIsUpdatePassword] = useState(false);
 
@@ -21,18 +21,48 @@ function FormPasswordRequest() {
 
   // Валидация первого поля формы
   function handleChangePassword(e) {
-    setMessageError("");
     setPassword(e.target.value);
-    setFormValid(e.target.closest("form").checkValidity());
-    setPasswordError(e.target.validationMessage);
+    if (e.target.value.length < 8 || e.target.value.length > 50) {
+      setPasswordError(
+        "Длина пароля не может быть меньше 8 и больше 50 символов"
+      );
+      setFormValid(false);
+    } else if (e.target.value.length === 0) {
+      setPasswordError("Поле не может быть пустым");
+      setFormValid(false);
+    } else {
+      setPasswordError("");
+      setFormValid(true)
+    }
   }
 
   // Валидация второго поля формы
   function handleChangeRepeatPassword(e) {
-    setMessageError("");
     setRepeatPassword(e.target.value);
-    setFormValid(e.target.closest("form").checkValidity());
-    setPasswordRepeatError(e.target.validationMessage);
+    if (e.target.value.length < 8 || e.target.value.length > 50) {
+      setPasswordRepeatError(
+        "Длина пароля не может быть меньше 8 и больше 50 символов"
+      );
+      setFormValid(false);
+    } else if (e.target.value.length === 0) {
+      setPasswordRepeatError("Поле не может быть пустым");
+      setFormValid(false);
+    } else {
+      setPasswordRepeatError("");
+      setFormValid(true);
+    }
+  }
+
+  //Функция слежения за фокусом
+  function blurHandler(e) {
+    switch (e.target.name) {
+      case "password":
+        setPasswordDirty(true);
+        break
+      case "password-repeat":
+        setPasswordRepeatDirty(true);
+        break
+    }
   }
 
   // функция проверки на все ошибки
@@ -40,12 +70,14 @@ function FormPasswordRequest() {
     if (password !== repeatPassword) {
       setFormValid(false);
       setButtonDisabled(true);
-      setMessageError("Пароли не совпадают");
+      setPasswordRepeatError("Пароли не совпадают");
     } else if (formValid !== true) {
       setIsUpdatePassword(false);
       console.log("Обновление почты не удалось");
     } else {
       setIsUpdatePassword(true);
+      setPasswordDirty(false);
+      setPasswordRepeatDirty(false);
       navigate("/passwordupdate");
       console.log("Обновление почты прошло успешно");
     }
@@ -69,34 +101,39 @@ function FormPasswordRequest() {
           <label className="form__label">
             <span className="form__input-title">Новый пароль</span>
             <input
-              type="text"
+              type="password"
               name="password"
               id="password__input"
               placeholder="Введите новый пароль"
               className="form__input"
               value={password}
               onChange={handleChangePassword}
+              onBlur={blurHandler}
               minLength={8}
               required
             />
-            <span className="form__input-error">{passwordError}</span>
+            {(passwordError && passwordlDirty) &&
+              <span className="form__input-error">{passwordError}</span>
+            }
           </label>
           <label className="form__label">
             <span className="form__input-title">Повторите пароль</span>
             <input
-              type="text"
+              type="password"
               name="password-repeat"
               id="password-repeat__input"
               placeholder="Введите новый пароль"
               className="form__input"
               value={repeatPassword}
               onChange={handleChangeRepeatPassword}
+              onBlur={blurHandler}
               minLength={8}
               required
             />
-            <span className="form__input-error">{passwordRepeatError}</span>
+            {(passwordRepeatDirty && passwordRepeatError) &&
+              <span className="form__input-error">{passwordRepeatError}</span>
+            }
           </label>
-          <p>{messageError}</p>
         </fieldset>
       }
     />
