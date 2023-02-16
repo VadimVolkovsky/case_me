@@ -23,18 +23,19 @@ function Register() {
   const [emailError, setEmailError] = useState('Поле не может быть пустым');
   const [passwordError, setPasswordError] = useState('Поле не может быть пустым');
 
-  const [checkbox, setCheckbox] = useState(false);
+  const [checkboxError, setCheckboxError] = useState('');
+  const [isChecked, setIsChecked] = useState(false);
 
   const [formValid, setFormValid] = useState(false);
 
   // функция для валидации инпутов формы
   useEffect(() => {
-    if (nicknameError || emailError || passwordError) {
+    if (nicknameError || emailError || passwordError || !isChecked) {
       setFormValid(false)
     } else {
       setFormValid(true)
     }
-  }, [nicknameError, emailError, passwordError])
+  }, [nicknameError, emailError, passwordError, isChecked])
 
   // функция для валидация инпута никнейма с автоматическим добавление @, если пользователь ее не добавил самостоятельно
   const nicknameHandler = (e) => {
@@ -48,7 +49,7 @@ function Register() {
     }
 
     // Валидируем значение инпута никнейма
-    const re = /^@[a-zA-Z0-9_.-]{2,19}$/;
+    const re = /^@[a-zA-Z0-9_.-]{3,20}$/;
     if (!re.test(formattedVal)) {
       setNicknameError('Только латиница (a-z), цифры (0-9), символы (_-.@), не меньше 3 и не больше 20 символов');
       if (!inputVal) {
@@ -86,6 +87,14 @@ function Register() {
       setPasswordError('');
     }
   }
+
+    // функция для валидации чекбокса (используем isChecked, чтобы связать с событием  компонента Checkbox)
+    const checkboxHandler = (isChecked) => {
+      if (!isChecked)  {
+        setCheckboxError('');
+      } 
+      setIsChecked(isChecked);
+    };
 
   // Обработчик события при потере фокуса инпута
   const blurHandler = (e) => {
@@ -170,16 +179,18 @@ function Register() {
 
               <div className="registration__checkbox-form">
                 <Checkbox
+                onChange={e => checkboxHandler(e)}
+                checked={isChecked}
                 id="checkbox"
-                name="checkbox"
-                required={true} />
+                name="checkbox" />
                 <p class="registration__policy-text">Я согласен с <Link class="registration__policy-link" to="">Политикой конфиденциальности</Link> и <Link class="registration__policy-link" to="">Пользовательским соглашением</Link></p>
+                {checkboxError && <p>{checkboxError}</p>}
               </div>
 
               <button
                 type="submit"
-                className={`registration__submit-button ${formValid ? "registration__submit-button_active" : "form-authorize__enter-btn_disabled"}`}
-                disabled={!formValid}>Зарегистрироваться</button>
+                className={`registration__submit-button ${formValid && isChecked ? "registration__submit-button_active" : "registration__submit-button_disabled"}`}
+                disabled={!formValid || !isChecked}>Зарегистрироваться</button>
             </form>
           </section>
         </div>
