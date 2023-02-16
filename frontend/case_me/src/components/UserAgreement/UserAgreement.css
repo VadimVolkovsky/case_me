@@ -1,0 +1,49 @@
+.content {
+  font-family: 'Manrope';
+  margin: 0 auto 92px;
+  max-width: 846px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  color: #000000;
+  line-height: 24px;
+  text-align: left;
+}
+
+.title {
+  font-weight: 800;
+  font-size: 24px;
+  padding: 0;
+  margin: 84px 0 28px;
+}
+
+.paragraphs {
+  padding: 0;
+  margin: 0 auto;
+}
+
+.paragraphs__list {
+  list-style: none;
+}
+
+.paragraphs__list-title {
+  font-weight: 600;
+  font-size: 18px;
+  margin: 48px auto;
+  padding: 0;
+}
+
+.paragraphs__list-item {
+  padding: 0;
+}
+
+.paragraphs__point {
+  list-style: none;
+}
+
+.paragraphs__point-text {
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0;
+  margin: 0 auto 24px;
+}

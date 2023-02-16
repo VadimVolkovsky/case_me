@@ -94,13 +94,13 @@ function Register() {
     }
   }
 
-    // функция для валидации чекбокса (используем isChecked, чтобы связать с событием  компонента Checkbox)
-    const checkboxHandler = (isChecked) => {
-      if (!isChecked)  {
-        setCheckboxError('');
-      }
-      setIsChecked(isChecked);
-    };
+  // функция для валидации чекбокса (используем isChecked, чтобы связать с событием  компонента Checkbox)
+  const checkboxHandler = (isChecked) => {
+    if (!isChecked) {
+      setCheckboxError('');
+    }
+    setIsChecked(isChecked);
+  };
 
   // Обработчик события при потере фокуса инпута
   const blurHandler = (e) => {
@@ -117,8 +117,8 @@ function Register() {
         setPasswordDirty(true);
         setPasswordFocused(false);
         break;
-        default:
-          // Ничего не делаем. Добавление default является хорошей практикой.
+      default:
+      // Ничего не делаем. Добавление default является хорошей практикой.
     }
   }
 
@@ -138,7 +138,7 @@ function Register() {
               <div className="registration__input-container">
                 <label className="registration__form-label" htmlFor="nickname">Никнейм</label>
                 <input
-                  onChange={e => {nicknameHandler(e);}}
+                  onChange={e => { nicknameHandler(e); }}
                   value={nickname}
                   onBlur={e => blurHandler(e)}
                   onFocus={() => setNicknameFocused(true)}
@@ -149,7 +149,7 @@ function Register() {
                   type="text"
                   name="nickname"
                   placeholder="@" required />
-                {(nicknameDirty && nicknameError && !nicknameFocused) && <span className= {`registration__input-error nickname-error
+                {(nicknameDirty && nicknameError && !nicknameFocused) && <span className={`registration__input-error nickname-error
                 ${nicknameError === 'Только латиница (a-z), цифры (0-9), символы (_-.@), не меньше 3 и не больше 20 символов' ? 'registration__input-error-big' : ''}`}>{nicknameError}</span>}
               </div>
 
@@ -183,24 +183,26 @@ function Register() {
                   type="password"
                   name="password"
                   required />
-                {(passwordDirty && passwordError && !passwordFocused) && <span className= {`registration__input-error password-error
+                {(passwordDirty && passwordError && !passwordFocused) && <span className={`registration__input-error password-error
                 ${passwordError === 'Длина пароля не может быть меньше 8 и больше 50 символов' ? 'registration__input-error-big' : ''}`}>{passwordError}</span>}
               </div>
 
               <div className="registration__checkbox-form">
                 <Checkbox
-                onChange={e => checkboxHandler(e)}
-                checked={isChecked}
-                id="checkbox"
-                name="checkbox" />
-                <p class="registration__policy-text">Я согласен с <Link class="registration__policy-link" to="/privacypolicy">Политикой конфиденциальности</Link>{" "}и{" "}<Link class="registration__policy-link" to="">Пользовательским соглашением</Link></p>
+                  onChange={e => checkboxHandler(e)}
+                  checked={isChecked}
+                  id="checkbox"
+                  name="checkbox" />
+                <p class="registration__policy-text">Я согласен с <Link class="registration__policy-link" to="/privacypolicy" target="_blank">Политикой конфиденциальности</Link>{" "}и{" "}<Link class="registration__policy-link" to="/useragreement" target="_blank">Пользовательским соглашением</Link></p>
                 {checkboxError && <p>{checkboxError}</p>}
               </div>
 
-              <button
-                type="submit"
-                className={`registration__submit-button ${formValid && isChecked ? "registration__submit-button_active" : "registration__submit-button_disabled"}`}
-                disabled={!formValid || !isChecked}>Зарегистрироваться</button>
+              <Link to="/info">
+                <button
+                  type="submit"
+                  className={`registration__submit-button ${formValid && isChecked ? "registration__submit-button_active" : "registration__submit-button_disabled"}`}
+                  disabled={!formValid || !isChecked}>Зарегистрироваться</button>
+              </Link>
             </form>
           </section>
         </div>
