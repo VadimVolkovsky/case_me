@@ -73,7 +73,7 @@
   border-radius: 4px;
   height: 48px;
   padding: 0 0 0 12px;
-  margin: 0 0 56px 0;
+  margin: 0 0 28px 0;
 }
 
 .registration__input::placeholder {
@@ -92,6 +92,10 @@
 .registration__input_type_error {
   border: 1.5px solid #C93434;
   outline: none;
+}
+
+.registration__input_type_error-big {
+  margin-bottom: 56px;
 }
 
 .registration__checkbox-form {
@@ -126,7 +130,7 @@ color: #090A0D;
 
 .registration__input-error {
   position: absolute;
-  top: calc(100% - 50px);
+  top: calc(100% - 24px);
   left: 0;
   max-width: 352px;
   font-weight: 400;
@@ -139,8 +143,19 @@ color: #090A0D;
   padding: 0;
 }
 
-.password-error {
-  margin: 28px 0 0 0;
+.registration__input-error-big {
+  position: absolute;
+  top: calc(100% - 50px);
+  left: 0;
+  max-width: 352px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #C93434;
+  min-height: 30px;
+  text-align: start;
+  margin: 0;
+  padding: 0;
 }
 
 .registration__submit-button {

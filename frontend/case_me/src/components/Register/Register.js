@@ -123,12 +123,17 @@ function Register() {
                   onChange={e => {nicknameHandler(e);}}
                   value={nickname}
                   onBlur={e => blurHandler(e)}
-                  className={`registration__input ${nicknameDirty && nicknameError ? 'registration__input_type_error' : ''}`}
+                  className={`registration__input
+                  ${nicknameDirty && nicknameError ? 'registration__input_type_error' : ''}
+                  ${nicknameError === 'Только латиница (a-z), цифры (0-9), символы (_-.@), не меньше 3 и не больше 20 символов' ? 'registration__input_type_error-big' : ''}`}
+
                   id="nickname"
                   type="text"
                   name="nickname"
                   placeholder="@" required />
-                {(nicknameDirty && nicknameError) && <span className="registration__input-error nickname-error">{nicknameError}</span>}
+                {(nicknameDirty && nicknameError) && <span
+                className={`${nicknameDirty && nicknameError ? 'registration__input-error nickname-error' : ''}
+                ${nicknameError === 'Только латиница (a-z), цифры (0-9), символы (_-.@), не меньше 3 и не больше 20 символов' ? 'registration__input-error-big' : ''}`}>{nicknameError}</span>}
               </div>
 
               <div className="registration__input-container">
@@ -151,13 +156,16 @@ function Register() {
                   onChange={e => passwordHandler(e)}
                   value={password}
                   onBlur={e => blurHandler(e)}
-                  className={`registration__input ${passwordDirty && passwordError ? 'registration__input_type_error' : ''}`}
+                  className={`registration__input
+                  ${passwordDirty && passwordError ? 'registration__input_type_error' : ''}
+                  ${passwordError === 'Длина пароля не может быть меньше 8 и больше 50 символов' ? 'registration__input_type_error-big' : ''}`}
                   placeholder="Не менее 8 символов"
                   id="password"
                   type="password"
                   name="password"
                   required />
-                {(passwordDirty && passwordError) && <span className="registration__input-error password-error">{passwordError}</span>}
+                {(passwordDirty && passwordError) && <span className={`${passwordDirty && passwordError ? 'registration__input-error nickname-error' : ''}
+                ${passwordError === 'Длина пароля не может быть меньше 8 и больше 50 символов' ? 'registration__input-error-big' : ''}`}>{passwordError}</span>}
               </div>
 
               <div className="registration__checkbox-form">
