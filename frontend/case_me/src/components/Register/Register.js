@@ -10,7 +10,7 @@ function Register() {
   // класс применяется для подсвечивания той ссылки, на странице которой находится пользователь
   const activeLink = ({ isActive }) => (isActive) ? 'registration__link_active' : 'registration__link';
 
-  // переменные состояния
+  // переменные состояния для валидации инпутов и чекбокса
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,9 +26,15 @@ function Register() {
   const [checkboxError, setCheckboxError] = useState('');
   const [isChecked, setIsChecked] = useState(false);
 
+  // переменные состояния для общей валидации
   const [formValid, setFormValid] = useState(false);
 
-  // функция для валидации инпутов формы
+  // переменные состояния для отслеживания фокуса при валидации инпутов
+  const [nicknameFocused, setNicknameFocused] = useState(false);
+  const [emailFocused, setEmailFocused] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(false);
+
+  // общая функция для валидации инпутов и чекбокса формы
   useEffect(() => {
     if (nicknameError || emailError || passwordError || !isChecked) {
       setFormValid(false)
@@ -92,7 +98,7 @@ function Register() {
     const checkboxHandler = (isChecked) => {
       if (!isChecked)  {
         setCheckboxError('');
-      } 
+      }
       setIsChecked(isChecked);
     };
 
@@ -101,12 +107,15 @@ function Register() {
     switch (e.target.name) {
       case 'nickname':
         setNicknameDirty(true);
+        setNicknameFocused(false);
         break;
       case 'email':
         setEmailDirty(true);
+        setEmailFocused(false);
         break;
       case 'password':
         setPasswordDirty(true);
+        setPasswordFocused(false);
         break;
         default:
           // Ничего не делаем. Добавление default является хорошей практикой.
@@ -132,15 +141,15 @@ function Register() {
                   onChange={e => {nicknameHandler(e);}}
                   value={nickname}
                   onBlur={e => blurHandler(e)}
+                  onFocus={() => setNicknameFocused(true)}
                   className={`registration__input
                   ${nicknameDirty && nicknameError ? 'registration__input_type_error' : ''}
                   ${nicknameError === 'Только латиница (a-z), цифры (0-9), символы (_-.@), не меньше 3 и не больше 20 символов' ? 'registration__input_type_error-big' : ''}`}
-
                   id="nickname"
                   type="text"
                   name="nickname"
                   placeholder="@" required />
-                {(nicknameDirty && nicknameError) && <span
+                {(nicknameDirty && nicknameError && !nicknameFocused) && <span
                 className={`${nicknameDirty && nicknameError ? 'registration__input-error nickname-error' : ''}
                 ${nicknameError === 'Только латиница (a-z), цифры (0-9), символы (_-.@), не меньше 3 и не больше 20 символов' ? 'registration__input-error-big' : ''}`}>{nicknameError}</span>}
               </div>
@@ -151,12 +160,13 @@ function Register() {
                   onChange={e => emailHandler(e)}
                   value={email}
                   onBlur={e => blurHandler(e)}
+                  onFocus={() => setEmailFocused(true)}
                   className={`registration__input ${emailDirty && emailError ? 'registration__input_type_error' : ''}`}
                   id="email"
                   type="email"
                   name="email"
                   required />
-                {(emailDirty && emailError) && <span className="registration__input-error email-error">{emailError}</span>}
+                {(emailDirty && emailError && !emailFocused) && <span className="registration__input-error email-error">{emailError}</span>}
               </div>
 
               <div className="registration__input-container">
@@ -165,6 +175,7 @@ function Register() {
                   onChange={e => passwordHandler(e)}
                   value={password}
                   onBlur={e => blurHandler(e)}
+                  onFocus={() => setPasswordFocused(true)}
                   className={`registration__input
                   ${passwordDirty && passwordError ? 'registration__input_type_error' : ''}
                   ${passwordError === 'Длина пароля не может быть меньше 8 и больше 50 символов' ? 'registration__input_type_error-big' : ''}`}
@@ -173,7 +184,7 @@ function Register() {
                   type="password"
                   name="password"
                   required />
-                {(passwordDirty && passwordError) && <span className={`${passwordDirty && passwordError ? 'registration__input-error nickname-error' : ''}
+                {(passwordDirty && passwordError && !passwordFocused) && <span className={`${passwordDirty && passwordError ? 'registration__input-error nickname-error' : ''}
                 ${passwordError === 'Длина пароля не может быть меньше 8 и больше 50 символов' ? 'registration__input-error-big' : ''}`}>{passwordError}</span>}
               </div>
 
