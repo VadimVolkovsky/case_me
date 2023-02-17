@@ -5,10 +5,14 @@
   text-align: start;
 }
 
+.header__link {
+  display: block;
+  max-width: 140px;
+  margin: 30px 84px;
+}
 
 .header__logo {
   display: block;
   width: 140px;
   height: 20px;
-  padding: 30px 84px;
 }

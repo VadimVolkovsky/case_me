@@ -14,6 +14,8 @@ function Login() {
   const [emailError, setEmailError] = useState("Поле не может быть пустым");
   const [passwordError, setPasswordError] = useState("Поле не может быть пустым");
   const [formValid, setFormValid] = useState(false);
+  const [emailFocused, setEmailFocused] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(false);
 
   /**изменить состояние кнопки*/
   useEffect( () => {
@@ -24,19 +26,12 @@ function Login() {
     }
   }, [emailError, passwordError])
 
-  /**изменить стиль инпута*/
-  /* const setInputErrorStyle = (error) => {
-    const input = document.querySelector(".form-authorize__input")
-    if (error.length === 0) {
-      input.className.add("form-authorize__input_type_error")
-  } */
-
   /**изменить состояние инпутов, когда пользователь что-то вводит */
   const emailHandler = (e) => {
     setEmail(e.target.value)
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if(!re.test(String(e.target.value).toLowerCase())) {
-      setEmailError("Введите корректный e-mail");
+      setEmailError("Введите корректный e-mail")
       if(!e.target.value) {
         setEmailError("Поле не может быть пустым")
       }
@@ -61,9 +56,11 @@ function Login() {
     switch(e.target.name) {
       case "email":
         setEmailDirty(true);
+        setEmailFocused(false);
         break
       case "password":
         setPasswordDirty(true);
+        setPasswordFocused(false);
         break
     }
   }
@@ -90,13 +87,14 @@ function Login() {
                 name="email"
                 id="email"
                 placeholder="Введите e-mail"
-                className="form-authorize__input form-authorize__input_type_email"
+                className={`form-authorize__input ${emailDirty && emailError ? "form-authorize__input_type_error" : ""}`}
                 value={email}
                 onChange={e => emailHandler(e)}
                 onBlur={e => blurHandler(e)}
+                onFocus={() => setEmailFocused(true)}
                 required
               />
-              {(emailDirty && emailError) && <span className="form-authorize__input-error email-error">{emailError}</span>}
+              {(emailDirty && emailError && !emailFocused) && <span className="form-authorize__input-error email-error">{emailError}</span>}
             </div>
             <div className="form-authorize__field">
               <label className="form-authorize__input-label" for="password">Пароль</label>
@@ -105,13 +103,14 @@ function Login() {
                 name="password"
                 id="password"
                 placeholder="Введите пароль"
-                className="form-authorize__input form-authorize__input_type_password"
+                className={`form-authorize__input ${passwordDirty && passwordError ? "form-authorize__input_type_error" : ""}`}
                 value={password}
                 onChange={e => passwordHandler(e)}
                 onBlur={e => blurHandler(e)}
+                onFocus={() => setPasswordFocused(true)}
                 required
               />
-              {(passwordDirty && passwordError) && <span className="form-authorize__input-error password-error">{passwordError}</span>}
+              {(passwordDirty && passwordError && !passwordFocused) && <span className="form-authorize__input-error password-error">{passwordError}</span>}
             </div>
             <button
               type="submit"
