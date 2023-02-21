@@ -1,11 +1,16 @@
 from datetime import date, timedelta
 
+from django.conf import settings
 from djoser.serializers import UserCreateSerializer, UserSerializer
-from rest_framework import serializers, status
+from rest_framework import serializers
 from rest_framework_simplejwt.serializers import (RefreshToken,
                                                   TokenObtainPairSerializer)
+
+import users.exceptions as exceptions
 from users.fields import Base64ImageField, delete_previous_image
-from users.models import City, Follow, Profession, Skill, User
+from users.models import City, Profession, Skill, User
+from users.validators import (email_already_exists, subscribe_already_exists,
+                              subscribe_myself, username_already_exists)
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -68,7 +73,11 @@ class CustomUserSerializer(UserSerializer):
 class CustomUserCreateSerializer(UserCreateSerializer):
     """ Сериализатор создания пользователя """
     password = serializers.CharField(write_only=True)
-    username = serializers.CharField(required=True)
+    username = serializers.RegexField(
+        required=True,
+        regex=settings.USERNAME_REGEX,
+        error_messages={'invalid': exceptions.invalid_username}
+    )
     email = serializers.EmailField(required=True)
 
     class Meta:
@@ -78,17 +87,11 @@ class CustomUserCreateSerializer(UserCreateSerializer):
         )
 
     def validate_username(self, value):
-        if User.objects.filter(username=value).exists():
-            raise serializers.ValidationError(
-                detail="Пользователь с таким ником уже зарегистрирован"
-            )
+        username_already_exists(self, value)
         return value
 
     def validate_email(self, value):
-        if User.objects.filter(email=value).exists():
-            raise serializers.ValidationError(
-                detail="Пользователь с такой почтой уже зарегистрирован"
-            )
+        email_already_exists(self, value)
         return value
 
 
@@ -103,23 +106,16 @@ class SubscribeSerializer(UserSerializer):
     def validate(self, data):
         author = self.instance
         user = self.context.get('request').user
-        if Follow.objects.filter(author=author, user=user).exists():
-            raise serializers.ValidationError(
-                detail='Подписка уже существует',
-                code=status.HTTP_400_BAD_REQUEST,
-            )
-        if user == author:
-            raise serializers.ValidationError(
-                detail='Нельзя подписаться на самого себя',
-                code=status.HTTP_400_BAD_REQUEST,
-            )
+        subscribe_already_exists(author, user)
+        subscribe_myself(author, user)
         return data
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    """Сериалайзер получения JWT токена с кастомной ошибкой"""
+    """Сериалайзер получения JWT токена с кастомной ошибкой и
+        возможностью авторизации по email"""
     default_error_messages = {
-        'no_active_account': ('Неверный email или пароль')
+        'no_active_account': exceptions.invalid_email_password
     }
     username_field = User.email
 
@@ -129,10 +125,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
     def validate(self, attrs):
         data = super().validate(attrs)
-
         refresh = self.get_token(self.user)
-
         data["refresh"] = str(refresh)
         data["access"] = str(refresh.access_token)
-
         return data

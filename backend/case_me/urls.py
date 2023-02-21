@@ -3,8 +3,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
-from posts.views import PostViewSet
 from rest_framework import routers
+
+from posts.views import PostViewSet
 from users.views import (CityViewSet, CustomUserViewSet, ProfessionViewSet,
                          SkillViewSet)
 
