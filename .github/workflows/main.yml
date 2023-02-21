@@ -23,15 +23,12 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        # pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
+        pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
         pip install -r backend/requirements.txt
     - name: Test with flake8
-      uses: isort/isort-action@master
-      with:
-          requirementsFiles: backend/requirements.txt
-      # run: |
-      #   python -m flake8 
-      #   # python manage.py test
+      run: |
+        python -m flake8 
+        # python manage.py test
 
   send_message: 
     runs-on: ubuntu-latest
