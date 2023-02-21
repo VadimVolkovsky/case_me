@@ -49,31 +49,3 @@ def subscribe_myself(author, user):
             detail='Нельзя подписаться на самого себя',
             code=status.HTTP_400_BAD_REQUEST,
         )
-
-
-
-# def username_me(value):
-#     """Запрещает регистрацию пользователя с username 'me'
-#     для избежания конфликтов с эндпоинтом "/users/me/" (djoser) """
-#     if value == 'me':
-#         raise exceptions.ValidationError(
-#             'Имя пользователя "me" запрещено. '
-#             'Пожалуйста, используйте другое имя пользователя.'
-#         )
-
-
-# def username_min_lenght(self, value):
-#     mig_length = settings.USERNAME_MIN_LENGTH
-#     if len(value) < mig_length:
-#         raise serializers.ValidationError(
-#             detail=f'Никнейм не может быть короче {mig_length} символов'
-#         )
-
-
-# def username_max_length(self, value):
-#     max_length = settings.USERNAME_MAX_LENGTH
-#     if len(value) > max_length:
-#         raise serializers.ValidationError(
-#             detail=f'Никнейм не может быть длинее {max_length} символов'
-#         )
-#     return value
