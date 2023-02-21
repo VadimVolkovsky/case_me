@@ -16,6 +16,7 @@ class UsernameRegexValidator(RegexValidator):
 
 
 def username_already_exists(self, value):
+    """Проверяет уникальность никнейма и отображает кастомную ошибку"""
     if model.User.objects.filter(username=value).exists():
         raise serializers.ValidationError(
             detail=f'Пользователь с ником {value} уже зарегистрирован'
@@ -23,6 +24,7 @@ def username_already_exists(self, value):
 
 
 def email_already_exists(self, value):
+    """Проверяет уникальность email и отображает кастомную ошибку"""
     if model.User.objects.filter(email=value).exists():
         raise serializers.ValidationError(
             detail=f'Пользователь с почтой {value} уже зарегистрирован'
@@ -30,6 +32,7 @@ def email_already_exists(self, value):
 
 
 def subscribe_already_exists(author, user):
+    """Проверяет, существует ли подписка на данного пользователя"""
     if model.Follow.objects.filter(author=author, user=user).exists():
         raise serializers.ValidationError(
             detail=(
@@ -40,6 +43,7 @@ def subscribe_already_exists(author, user):
 
 
 def subscribe_myself(author, user):
+    """Предовращает подписку на самого себя"""
     if user == author:
         raise serializers.ValidationError(
             detail='Нельзя подписаться на самого себя',

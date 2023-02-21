@@ -115,7 +115,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     """Сериалайзер получения JWT токена с кастомной ошибкой и
         возможностью авторизации по email"""
     default_error_messages = {
-        'no_active_account': ('Неверный email или пароль')
+        'no_active_account': exceptions.invalid_email_password
     }
     username_field = User.email
 
