@@ -82,14 +82,15 @@ function Register() {
   }
 
   // функция для валидации инпута пароля
+  const passwordRegex = /^[a-zA-Z0-9_-]+$/;
+
   const passwordHandler = (e) => {
     setPassword(e.target.value);
-    if (e.target.value.length < 8 || e.target.value.length > 50) {
-      setPasswordError('Длина пароля не может быть меньше 8 и больше 50 символов');
-      if (!e.target.value) {
-        setPasswordError('Поле не может быть пустым');
-      }
-    } else {
+    if (!e.target.value) {
+      setPasswordError('Поле не может быть пустым');
+    } else if (e.target.value.length < 8 || e.target.value.length > 50 || !passwordRegex.test(e.target.value)) {
+      setPasswordError('Только латиница (a-z), цифры (0-9), символы (_-), не меньше 8 и не больше 50 символов');
+    } else  {
       setPasswordError('');
     }
   }
@@ -186,6 +187,7 @@ function Register() {
                 {(passwordDirty && passwordError && !passwordFocused) && <span className={`registration__input-error password-error
                 ${passwordError === 'Длина пароля не может быть меньше 8 и больше 50 символов' ? 'registration__input-error-big' : ''}`}>{passwordError}</span>}
               </div>
+
 
               <div className="registration__checkbox-form">
                 <Checkbox

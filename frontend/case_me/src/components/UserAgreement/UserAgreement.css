@@ -10,6 +10,23 @@
   text-align: left;
 }
 
+@media (max-width: 1024px) {
+  .content {
+    max-width: 732px;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    max-width: 728px;
+  }
+}
+@media (max-width: 360px) {
+  .content {
+    max-width: 328px;
+  }
+}
+
 .title {
   font-weight: 800;
   font-size: 24px;
