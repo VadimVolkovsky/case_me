@@ -10,9 +10,11 @@ function FormPasswordRequest() {
   const [formValid, setFormValid] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [passwordRepeatError, setPasswordRepeatError] = useState("");
-  const [passwordlDirty, setPasswordDirty] = useState(false);
+  const [passwordDirty, setPasswordDirty] = useState(false);
   const [passwordRepeatDirty, setPasswordRepeatDirty] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [passwordFocused, setPasswordFocused] = useState(false);
+  const [passwordRepeatFocused, setPasswordRepeatFocused] = useState(false);
   // заглушка для проверки навигации, пока не прописаны запросы к бэку
   const [isUpdatePassword, setIsUpdatePassword] = useState(false);
 
@@ -32,7 +34,7 @@ function FormPasswordRequest() {
       setFormValid(false);
     } else {
       setPasswordError("");
-      setFormValid(true)
+      setFormValid(true);
     }
   }
 
@@ -58,10 +60,12 @@ function FormPasswordRequest() {
     switch (e.target.name) {
       case "password":
         setPasswordDirty(true);
-        break
+        setPasswordFocused(false);
+        break;
       case "password-repeat":
         setPasswordRepeatDirty(true);
-        break
+        setPasswordRepeatFocused(false);
+        break;
     }
   }
 
@@ -89,6 +93,7 @@ function FormPasswordRequest() {
     checkForm();
   }
 
+
   return (
     <FormRequest
       name="password"
@@ -105,16 +110,16 @@ function FormPasswordRequest() {
               name="password"
               id="password__input"
               placeholder="Введите новый пароль"
-              className="form__input"
+              className={`form__input ${(passwordDirty && passwordError && !passwordFocused) ? "form__input_type_error" : ""}`}
               value={password}
               onChange={handleChangePassword}
               onBlur={blurHandler}
+              onFocus={()=> setPasswordFocused(true)}
               minLength={8}
               required
             />
-            {(passwordError && passwordlDirty) &&
-              <span className="form__input-error">{passwordError}</span>
-            }
+            {(passwordError && passwordDirty && !passwordFocused) &&
+              <span className="form__input-error">{passwordError}</span>}
           </label>
           <label className="form__label">
             <span className="form__input-title">Повторите пароль</span>
@@ -123,16 +128,17 @@ function FormPasswordRequest() {
               name="password-repeat"
               id="password-repeat__input"
               placeholder="Введите новый пароль"
-              className="form__input"
+              className={`form__input ${(passwordRepeatDirty && passwordRepeatError && !passwordRepeatFocused) ? "form__input_type_error"
+              : ""}`}
               value={repeatPassword}
               onChange={handleChangeRepeatPassword}
               onBlur={blurHandler}
+              onFocus={()=>setPasswordRepeatFocused(true)}
               minLength={8}
               required
             />
-            {(passwordRepeatDirty && passwordRepeatError) &&
-              <span className="form__input-error">{passwordRepeatError}</span>
-            }
+            {(passwordRepeatDirty && passwordRepeatError && !passwordRepeatFocused) &&
+              <span className="form__input-error">{passwordRepeatError}</span>}
           </label>
         </fieldset>
       }

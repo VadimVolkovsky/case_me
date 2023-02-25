@@ -27,11 +27,7 @@ function App() {
         <Route path="/signin" element={<Login />} />
         <Route path="/" element={<Main />} />
         <Route path="/emailform" element={<FormEmailRequest />}/>
-        <Route
-         path="/passwordform"
-         element={
-         <FormPasswordRequest
-         />}/>
+        <Route path="/passwordform" element={<FormPasswordRequest/>}/>
         <Route path="/passwordupdate" element={<PasswordUpdate />}/>
         <Route path="/passwordrecovery" element={<PasswordRecovery/>}/>
         <Route path="/info" element={<PopupTooltip/>}/>

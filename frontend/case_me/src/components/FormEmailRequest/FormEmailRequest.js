@@ -9,9 +9,12 @@ function FormEmailRequest() {
   const [formValid, setFormValid] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [emailDirty, setEmailDirty] = useState(false);
+  const [emailFocused, setEmailFocused]=useState(false);
 
   // Навигация по сайту
   let navigate = useNavigate();
+
+
 
   // Валидация поля email
   function handleChangeEmail(e) {
@@ -34,6 +37,7 @@ function FormEmailRequest() {
     switch (e.target.name) {
       case "email":
         setEmailDirty(true);
+        setEmailFocused(false);
         break;
     }
   }
@@ -57,9 +61,6 @@ function FormEmailRequest() {
     checkForm();
   }
 
-  const inputClass =
-    emailDirty && emailError ? "form__input_type_error" : "form__input";
-
   return (
     <FormRequest
       name="email"
@@ -76,15 +77,16 @@ function FormEmailRequest() {
               name="email"
               id="email__input"
               placeholder="Введите почту"
-              className={inputClass}
+              className={`form__input ${(emailDirty && emailError && !emailFocused) ? "form__input_type_error" : ""}`}
               value={email}
+              onFocus={()=>setEmailFocused(true)}
               onChange={handleChangeEmail}
               onBlur={blurHandler}
               required
             />
-            {emailDirty && emailError && (
+            {(emailDirty && emailError && !emailFocused) &&
               <span className="form__input-error">{emailError}</span>
-            )}
+            }
           </label>
         </fieldset>
       }

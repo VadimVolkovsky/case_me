@@ -1,63 +1,100 @@
-.form{
+.form {
   margin: 0 auto;
   color: #000;
-  background-color: #FEFEFE;
+  background-color: #fefefe;
 }
 
-.form_type_email{
-  padding: 144px 0 230px 0;
+.form_type_email {
+  padding: 188px 0 188px 0;
 }
 
-.form_type_password{
-  padding: 91px 0 179px 0;
+.form_type_password {
+  padding: 136px 0 136px 0;
 }
 
-.form__content{
-width: 544px;
-padding: 48px 0 56px 0;
-margin: 0 auto;
-display: flex;
-flex-direction: column;
-align-items: center;
-box-shadow:  0 0 20px rgba(173,185,197,0.2);
-border-radius: 16px;
-
+.form__content {
+  width: 544px;
+  padding: 48px 0 56px 0;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 20px rgba(173, 185, 197, 0.2);
+  border-radius: 16px;
 }
 
-.form__title{
-padding: 0 0 32px 0;
-margin: 0;
-font-weight: 800;
-font-size: 24px;
-line-height: 24px;
+.form__title {
+  padding: 0 0 32px 0;
+  margin: 0;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 24px;
 }
 
-.form__button{
-width: 352px;
-height: 48px;
-border-radius: 8px;
-margin: 0;
-padding: 0;
-font-size: 18px;
-line-height: 24px;
-font-weight: 600;
-border:none;
+.form__button {
+  width: 352px;
+  height: 48px;
+  border-radius: 8px;
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  border: none;
 }
-.form__button_active{
+
+.form__button_active {
   background-color: #00a2c9;
-  color: #FEFEFE;
+  color: #fefefe;
   cursor: pointer;
 }
-.form__button_active:hover{
+.form__button_active:hover {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-  transition: .4s linear .1s;
+  transition: 0.4s linear 0.1s;
 }
-.form__button_active:focus{
+.form__button_active:focus {
   background-color: #0094b8;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.2);
 }
-.form__button_disabled{
+.form__button_disabled {
   background-color: #11b5dd;
-  color: #E6EDF4;
+  color: #e6edf4;
 }
 
+@media (max-width: 1024px) {
+  .form_type_email {
+    padding: 182px 0 182px 0;
+  }
+  .form_type_password {
+    padding: 130px 0 130px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .form_type_email {
+    padding: 310px 0 310px 0;
+  }
+  .form_type_password {
+    padding: 258px 0 258px 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .form_type_email {
+    padding: 208px 0 208px 0;
+  }
+  .form_type_password {
+    padding: 156px 0 156px 0;
+  }
+  .form__content {
+    width: 328px;
+    padding: 40px 0 52px 0;
+  }
+  .form__title {
+    font-size: 22px;
+  }
+  .form__button {
+    width: 288px;
+    font-size: 16px;
+  }
+}

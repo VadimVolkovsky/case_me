@@ -37,7 +37,7 @@
 }
 
 .form__input:focus {
-  outline: 1px solid #090a0d;
+  outline: 1.5px solid #090a0d;
   outline-offset: 0;
 }
 
@@ -55,14 +55,12 @@
 
 .form__input_type_error {
   border: 1.5px solid #c93434;
-  height: 48px;
-  border-radius: 4px;
-  margin: 0;
-  padding: 0 12px;
-  color: #090a0d;
+  outline: none;
 }
 
-.form__input_type_error:focus {
-  outline: 1.5px solid #c93434;
-  outline-offset: 0;
+
+@media (max-width: 600px) {
+  .form__fieldset {
+    width: calc(100% - 2 * 20px);
+  }
 }
