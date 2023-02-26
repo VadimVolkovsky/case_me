@@ -3,12 +3,6 @@
   width: 100%;
 }
 
-@media (max-width: 600px) {
-  .content {
-    max-width: 500px;
-  }
-}
-
 .registration {
   min-width: 544px;
   height: 656px;
@@ -34,6 +28,12 @@
   }
 }
 
+@media (max-width: 359px) {
+  .registration {
+    min-width: 304px;
+  }
+}
+
 .registration__info {
   max-width: 352px;
   height: 348px;
@@ -42,10 +42,21 @@
   position: relative;
 }
 
+@media (max-width: 1023px) {
+  .registration__info {
+    height: 284px;
+  }
+}
 @media (max-width: 600px) {
   .registration__info {
     max-width: 288px;
-    height: 284px;
+  }
+}
+
+@media (max-width: 359px) {
+  .registration__info {
+    max-width: 264px;
+    height: 260px;
   }
 }
 
@@ -57,12 +68,6 @@
   flex-direction: row;
   justify-content: space-between;
 }
-/*
-@media (max-width: 1024px) {
-  .registration__links {
-    padding-top: 0;
-  }
-}*/
 
 .registration__link {
   text-decoration: none;
@@ -159,10 +164,23 @@
   max-width: 350px;
 }
 
+@media (max-width: 1023px) {
+  .registration__checkbox-form {
+    max-width: 352px;
+    bottom: -222px;
+  }
+}
 @media (max-width: 600px) {
   .registration__checkbox-form {
     max-width: 291px;
-    bottom: -231px;
+    bottom: -240px;
+  }
+}
+
+@media (max-width: 359px) {
+  .registration__checkbox-form {
+    max-width: 267px;
+    bottom: -267px;
   }
 }
 
@@ -177,12 +195,24 @@
   text-align: left;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1023px) {
   .registration__policy-text {
+    min-width: 232px;
+    line-height: 24px;
     font-weight: 400;
     font-size: 14px;
-    line-height: 24px;
-    min-width: 221px;
+    padding-right: 12px;
+  }
+}
+@media (max-width: 600px) {
+  .registration__policy-text {
+    min-width: 232px;
+  }
+}
+
+@media (max-width: 359px) {
+  .registration__policy-text {
+    min-width: 232px;
   }
 }
 
@@ -250,13 +280,27 @@
   border: none;
 }
 
+@media (max-width: 1023px) {
+  .registration__submit-button {
+    bottom: -292px;
+  }
+}
+
 @media (max-width: 600px) {
   .registration__submit-button {
-    bottom: -307px;
-    max-width: 288px;
-    padding: 12px 62.5px;
     font-size: 16px;
     font-weight: 500;
+    bottom: -316px;
+    max-width: 288px;
+    padding: 12px 62.5px;
+  }
+}
+
+@media (max-width: 359px) {
+  .registration__submit-button {
+    bottom: -339px;
+    max-width: 264px;
+    padding: 12px 50.5px;
   }
 }
 
