@@ -3,9 +3,15 @@
   width: 100%;
 }
 
+@media (max-width: 600px) {
+  .content {
+    max-width: 500px;
+  }
+}
+
 .registration {
   min-width: 544px;
-  height: 660px;
+  height: 656px;
   margin: 16px auto 0;
   padding: 48px 0 0;
   box-shadow: 5px 5px 70px rgba(173, 185, 197, 0.2);
@@ -22,22 +28,9 @@
   }
 }
 
-@media (max-width: 768px) {
-  .registration {
-    height: 656px;
-  }
-}
-
 @media (max-width: 600px) {
   .registration {
-    min-width: 436px;
-  }
-}
-
-@media (max-width: 360px) {
-  .registration {
     min-width: 328px;
-    height: 640px;
   }
 }
 
@@ -49,7 +42,7 @@
   position: relative;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 600px) {
   .registration__info {
     max-width: 288px;
     height: 284px;
@@ -64,12 +57,12 @@
   flex-direction: row;
   justify-content: space-between;
 }
-
+/*
 @media (max-width: 1024px) {
   .registration__links {
     padding-top: 0;
   }
-}
+}*/
 
 .registration__link {
   text-decoration: none;
@@ -81,7 +74,7 @@
   padding: 0 0 0 8px;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 600px) {
   .registration__link {
     font-size: 22px;
   }
@@ -95,6 +88,12 @@
   color: #090A0D;
   margin: 0;
   padding: 0;
+}
+
+@media (max-width: 600px) {
+  .registration__link_active {
+    font-size: 22px;
+  }
 }
 
 .registration__input-container {
@@ -160,11 +159,10 @@
   max-width: 350px;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 600px) {
   .registration__checkbox-form {
     max-width: 291px;
     bottom: -231px;
-
   }
 }
 
@@ -179,7 +177,7 @@
   text-align: left;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 600px) {
   .registration__policy-text {
     font-weight: 400;
     font-size: 14px;
@@ -252,7 +250,7 @@
   border: none;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 600px) {
   .registration__submit-button {
     bottom: -307px;
     max-width: 288px;
