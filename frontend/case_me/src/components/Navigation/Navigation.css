@@ -1,17 +1,23 @@
 .navigation {
-  margin-right: 80px;
   display: flex;
 }
 
-.navigation_logout {
-
+.navigation_block {
+  display: none;
 }
 
-.navigation_logged {
+.navigation__account-logout {}
 
+.navigation__account-logged {
+  max-width: 254px;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-template-rows: 1fr;
+  align-items: center;
+  margin-right: 80px;
 }
 
-.navigation__enter-btn {
+.navigation__enter-link {
   color: #fefefe;
   font-size: 18px;
   line-height: 1.3;
@@ -21,10 +27,72 @@
   border: none;
   border-radius: 8px;
   margin: 0;
-  cursor: pointer;
-  display: none;
+  text-decoration: none;
+  margin-right: 80px;
 }
 
-.navigation__enter-btn_active {
-  display: block;
+.navigation__btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  padding: 0;
+}
+
+.navigation__btn_add {
+  background: url(../../img/plus-circle.svg) center;
+  background-size: cover;
+  background-color: transparent;
+  margin-right: 40px;
+}
+
+.navigation__btn_setting {
+  background: url(../../img/settings.svg) center;
+  background-size: cover;
+  background-color: transparent;
+  margin-right: 38px;
+}
+
+.navigation__userAvatar {
+  margin-right: 6px;
+}
+
+.navigation__userName {
+  text-decoration: none;
+  border-bottom: 1px solid #090a0d;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #090a0d;
+}
+
+@media screen and (max-width: 1023px) {
+  .navigation__account-logged {
+    margin-right: 20px;
+  }
+  .navigation__enter-link {
+    margin-right: 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .navigation__account-logged {
+    margin-right: 16px;
+  }
+  .navigation__enter-link {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-right: 16px;
+  }
+  .navigation__btn_add {
+    margin-right: 24px;
+  }
+  .navigation__btn_setting {
+    margin-right: 20px;
+  }
+  .navigation__userAvatar {
+    margin-right: 0;
+  }
+  .navigation__userName {
+    display: none;
+  }
 }

@@ -216,7 +216,7 @@
 
 @media screen and (max-width: 345px) {
   .authorize {
-    max-width: 300px;
+    max-width: 304px;
   }
   .authorize__title-links {
     width: 90%;

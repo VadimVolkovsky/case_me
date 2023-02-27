@@ -6,7 +6,13 @@ import Navigation from "../Navigation/Navigation.js";
 
 function Header({ loggedIn }) {
   const location = useLocation();
-  const headerClass = (location.pathname === '/main'|| location.pathname === '/privacypolicy' || location.pathname === '/useragreement') ? 'header header_nav' : 'header';
+  const headerClass = (
+    location.pathname === '/signin'
+    || location.pathname === '/signup'
+    || location.pathname === '/emailform'
+    || location.pathname === '/passwordform'
+    || location.pathname === '/passwordupdate'
+    || location.pathname === '/passwordrecovery')  ? 'header' : 'header header_nav';
 
   return (
     <header className={headerClass}>
