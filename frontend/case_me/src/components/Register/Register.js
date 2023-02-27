@@ -1,5 +1,6 @@
 import React from "react";
 import Checkbox from '../Checkbox/Checkbox';
+import PopupTooltip from "../PopupTooltip/PopupTooltip";
 import { NavLink, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import './Register.css';
@@ -33,6 +34,9 @@ function Register() {
   const [nicknameFocused, setNicknameFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
+
+  // переменные для попапа успешной регистрации
+  const [showPopup, setShowPopup] = useState(false);
 
   // общая функция для валидации инпутов и чекбокса формы
   useEffect(() => {
@@ -123,6 +127,14 @@ function Register() {
     }
   }
 
+  // Функция для обработки отправки формы
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formValid && isChecked) {
+      setShowPopup(true);
+    }
+  };
+
   return (
     <div>
       <main className="content-registration">
@@ -135,7 +147,7 @@ function Register() {
               </ul>
             </nav>
 
-            <form action="/" noValidate>
+            <form onSubmit={handleSubmit} noValidate>
               <div className="registration__input-container">
                 <label className="registration__form-label" htmlFor="nickname">Никнейм</label>
                 <input
@@ -199,13 +211,12 @@ function Register() {
                 {checkboxError && <p>{checkboxError}</p>}
               </div>
 
-              <Link to="/info">
                 <button
                   type="submit"
                   className={`registration__submit-button ${formValid && isChecked ? "registration__submit-button_active" : "registration__submit-button_disabled"}`}
                   disabled={!formValid || !isChecked}>Зарегистрироваться</button>
-              </Link>
             </form>
+            {showPopup && (<PopupTooltip isOpen={true} onClose={() => setShowPopup(false)}/>)}
           </section>
         </div>
 

@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./PopupTooltip.css";
 
-function PopupTooltip() {
+function PopupTooltip({onClose}) {
   return (
     <div className="popup">
       <div className="popup__content">
-        <button type="button" className="popup__button-close"></button>
+        <button type="button" className="popup__button-close" onClick={onClose}></button>
         <h2 className="popup__title">Вы успешно <br/>зарегистрированы!</h2>
         <Link to="/" className="popup__link">Перейти в личный кабинет</Link>
       </div>
