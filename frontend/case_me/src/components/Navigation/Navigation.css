@@ -1,0 +1,13 @@
+.navigation {
+}
+
+.navigation__enter-btn {
+  color: #fefefe;
+  font-size: 18px;
+  line-height: 1.3;
+  text-align: center;
+  padding: 8px 16px;
+  background-color: #00A2C9;
+  border: none;
+  border-radius: 8px;
+}

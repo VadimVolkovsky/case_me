@@ -72,7 +72,7 @@ function Login() {
   }*/
 
   return (
-    <main className="content">
+    <main className="content-auth">
       <div className="authorize">
         <div className="authorize__title-links">
           <NavLink to="/signin" className={setActive}>Вход</NavLink>

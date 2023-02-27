@@ -1,4 +1,4 @@
-.content {
+.content-auth {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -167,4 +167,58 @@
 .authorize__link:focus {
   color: #0094B8;
   border-bottom: 1px solid #0094B8;
+}
+
+@media screen and (max-width: 1023px) {
+  .authorize__title-links {
+    margin-top: 48px;
+    margin-bottom: 40px;
+    width: 63%;
+  }
+  .form-authorize__field:last-of-type {
+    margin-bottom: 40px;
+  }
+  .authorize__link {
+    margin-top: 36px;
+    margin-bottom: 56px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .authorize {
+    max-width: 328px;
+  }
+  .authorize__title-links {
+    margin-top: 40px;
+    width: 85%;
+  }
+  .authorize__title-link {
+    font-size: 22px;
+  }
+  .form-authorize {
+    max-width: 328px;
+  }
+  .form-authorize__set {
+    max-width: 288px;
+    margin: auto;
+  }
+  .form-authorize__input {
+    height: 40px;
+  }
+  .form-authorize__enter-btn {
+    padding-left: 117px;
+    padding-right: 117px;
+  }
+  .authorize__link {
+    margin-bottom: 52px;
+  }
+}
+
+@media screen and (max-width: 345px) {
+  .authorize {
+    max-width: 300px;
+  }
+  .authorize__title-links {
+    width: 90%;
+  }
 }
