@@ -120,7 +120,7 @@ function Login() {
             </button>
           </fieldset>
         </form>
-        <Link to="/passwordform" className="authorize__link">Забыли пароль?</Link>
+        <Link to="/emailform" className="authorize__link">Забыли пароль?</Link>
       </div>
     </main>
   );

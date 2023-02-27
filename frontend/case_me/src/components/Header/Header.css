@@ -3,6 +3,9 @@
   width: 100%;
   border-bottom: 1px solid #D2D9E0;
   text-align: start;
+}
+
+.header_nav {
   display: flex;
   justify-content: space-between;
   align-items: center;

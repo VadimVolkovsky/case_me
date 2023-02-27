@@ -5,11 +5,17 @@ import { Link, useLocation } from "react-router-dom";
 
 function Navigation ({ loggedIn }) {
   const location = useLocation();
-  const enterButtons = (location.pathname === '/main') ? "navigation__enter-btn" : "";
+  const navigationClass = (`navigation ${loggedIn ? '' : 'navigation_logout'}`);
+  const enterButton = (location.pathname === '/main' || location.pathname === '/privacypolicy' || location.pathname === '/useragreement') ? "navigation__enter-btn_active" : "";
 
   return (
-    <nav className="navigation">
-      <button className="{`navigation__enter-btn ${enterButtons}`}" type="button">Войти</button>
+    <nav className={navigationClass}>
+
+      {!loggedIn && <div className="navigation__logout">
+        <button className={`navigation__enter-btn ${enterButton}`} type="button">Войти</button>
+      </div>}
+
+
     </nav>
   )
 }
