@@ -125,7 +125,7 @@ function Register() {
 
   return (
     <div>
-      <main className="content">
+      <main className="content-registration">
         <div className="registration">
           <section className="registration__info">
             <nav>

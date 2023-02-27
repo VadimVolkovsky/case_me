@@ -1,4 +1,4 @@
-.content {
+.content-user-agreement {
   font-family: 'Manrope';
   padding: 0 297px 92px;
   margin: 0 auto;
@@ -7,23 +7,23 @@
   color: #000000;
   line-height: 24px;
   text-align: left;
-  width: 100%;
+  max-width: fit-content;
 }
 
 @media (max-width: 1439px) {
-  .content {
+  .content-user-agreement {
     padding: 0 146px;
   }
 }
 
 @media (max-width: 1023px) {
-  .content {
+  .content-user-agreement {
     padding: 0 20px;
   }
 }
 
 @media (max-width: 600px) {
-  .content {
+  .content-user-agreement {
     padding: 0 16px;
   }
 }
