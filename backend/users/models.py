@@ -1,7 +1,8 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
+from users.managers import UserManager
 from users.validators import UsernameRegexValidator
 
 
@@ -45,14 +46,16 @@ class City(UserInformation):
         default_related_name = "cities"
 
 
-class User(AbstractUser):
+class User(AbstractBaseUser):
     """Модель пользователя"""
     GENDER_CHOICES = (
         ('M', 'Мужской'),
         ('F', 'Женский'),
     )
+    objects = UserManager()
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
+
     name = models.CharField(
         verbose_name="Имя и Фамилия",
         max_length=50
@@ -138,6 +141,15 @@ class User(AbstractUser):
         blank=True,
         verbose_name='Twitter'
     )
+
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
 
     def get_absolute_url(self):
         return f'/api/auth/users/{self.pk}/'
