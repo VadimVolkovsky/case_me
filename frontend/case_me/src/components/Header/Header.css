@@ -3,6 +3,9 @@
   width: 100%;
   border-bottom: 1px solid #D2D9E0;
   text-align: start;
+  z-index: 100;
+  position: sticky;
+  top: 0
 }
 
 .header_nav {
