@@ -46,3 +46,35 @@ def user_client(token):
     """Авторизованный пользователь"""
     client.credentials(HTTP_AUTHORIZATION=f'Bearer {token["access"]}')
     return client
+
+
+@pytest.fixture
+def city_1():
+    from users.models import City
+    return City.objects.create(name='Москва')
+
+
+@pytest.fixture
+def city_2():
+    from users.models import City
+    return City.objects.create(name='Санкт-Петербург')
+
+@pytest.fixture
+def profession_1():
+    from users.models import Profession
+    return Profession.objects.create(name='Дизайнер')
+
+@pytest.fixture
+def profession_2():
+    from users.models import Profession
+    return Profession.objects.create(name='Разработчик')
+
+@pytest.fixture
+def skill_1():
+    from users.models import Skill
+    return Skill.objects.create(name='Python')
+
+@pytest.fixture
+def skill_2():
+    from users.models import Skill
+    return Skill.objects.create(name='HTML')
