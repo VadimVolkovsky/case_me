@@ -1,20 +1,10 @@
 .navigation {
   display: flex;
+  align-items: center;
 }
 
 .navigation_block {
   display: none;
-}
-
-.navigation__account-logout {}
-
-.navigation__account-logged {
-  max-width: 254px;
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-  grid-template-rows: 1fr;
-  align-items: center;
-  margin-right: 80px;
 }
 
 .navigation__enter-link {
@@ -63,10 +53,12 @@
   font-size: 16px;
   line-height: 1.5;
   color: #090a0d;
+  margin-right: 80px;
+  max-height: 24px;
 }
 
 @media screen and (max-width: 1023px) {
-  .navigation__account-logged {
+  .navigation__userName {
     margin-right: 20px;
   }
   .navigation__enter-link {
@@ -75,24 +67,33 @@
 }
 
 @media screen and (max-width: 600px) {
-  .navigation__account-logged {
-    margin-right: 16px;
-  }
   .navigation__enter-link {
     font-size: 16px;
     line-height: 1.5;
     margin-right: 16px;
   }
   .navigation__btn_add {
-    margin-right: 24px;
+    margin-right: 20px;
   }
   .navigation__btn_setting {
     margin-right: 20px;
   }
   .navigation__userAvatar {
-    margin-right: 0;
+    margin-right: 16px;
   }
   .navigation__userName {
     display: none;
+  }
+}
+
+@media screen and (max-width: 329px) {
+  .navigation__btn_add {
+    margin-right: 16px;
+  }
+  .navigation__btn_setting {
+    margin-right: 16px;
+  }
+  .navigation__userAvatar {
+    margin-right: 24px;
   }
 }

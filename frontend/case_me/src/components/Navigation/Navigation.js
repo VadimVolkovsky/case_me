@@ -20,7 +20,7 @@ function Navigation ({ loggedIn }) {
       {!loggedIn && <div className={navigationStatus}>
         <Link to="/signin" className='navigation__enter-link'>Войти</Link>
       </div>}
-      {loggedIn && <div className={`navigation__account-logged ${navigationStatus}`}>
+      {loggedIn && <div className={navigationStatus} /* className={`navigation__account-logged ${navigationStatus}`} */>
         <button className="navigation__btn navigation__btn_add" type="button"></button>
         <button className="navigation__btn navigation__btn_setting" type="button"></button>
         <img className="navigation__userAvatar" src={avatar} alt="Аватар пользователя"></img>

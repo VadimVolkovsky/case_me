@@ -17,7 +17,7 @@ function App() {
 
   // Переменные состояния
 // const[isInfoTooltip, setIsInfoTooltip] = useState(false);
-const [loggedIn, setLoggedIn] = React.useState(true);
+const [loggedIn, setLoggedIn] = React.useState(false);
 
 
   return (
