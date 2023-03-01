@@ -5,13 +5,13 @@ from users.models import User
 
 class TestUsers:
     client = APIClient()
-    url_users = "/api/auth/users/"
-    url_users_me = "/api/auth/users/me/"
+    url_users = "/api/users/"
+    url_users_me = "/api/users/me/"
 
     @pytest.mark.django_db
     def test_access_users_urls_for_no_auth_client(self, client, user):
         url = self.url_users
-        code_expected = 403
+        code_expected = 401
         response = client.get(url)
         assert response.status_code == code_expected, (
             f'Убедитесь, то при GET запросе {url} для '
@@ -19,7 +19,7 @@ class TestUsers:
             f'код {code_expected}'
         )
 
-        url = f'/api/auth/users/{user.id}/'
+        url = f'/api/users/{user.id}/'
         response = client.get(url)
         code_expected = 200
         assert response.status_code == code_expected, (
@@ -30,6 +30,7 @@ class TestUsers:
 
         url = self.url_users_me
         response = client.get(url)
+        print(f'печатчаем респонс: {response}')
         code_expected = 401
         assert response.status_code == code_expected, (
             f'Убедитесь, то при GET запросе {url} для '
@@ -40,7 +41,7 @@ class TestUsers:
     @pytest.mark.django_db
     def test_user_has_correct_data(self, user_client, user):
         response = user_client.get(
-            f'/api/auth/users/{user.id}/'
+            f'/api/users/{user.id}/'
         )
         data = response.data
         assert data["username"] == user.username
@@ -83,3 +84,8 @@ class TestUsers:
 
     def test_auth_user_patch_request_with_invalid_data(self):
         pass
+
+    #тест на запрет редактирования чужого профиля
+    #тест на изменение пароля
+    #тест на сброс пароля
+    #тесты на подписки
