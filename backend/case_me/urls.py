@@ -19,7 +19,7 @@ router.register(r'posts', PostViewSet, basename='posts')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api/auth/', include('djoser.urls')),
+    path('api/', include('djoser.urls')),
     path('api/auth/', include('djoser.urls.jwt')),
     path('redoc/', TemplateView.as_view(
         template_name='redoc/redoc.html'),
