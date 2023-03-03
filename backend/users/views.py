@@ -8,7 +8,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.models import City, Follow, Profession, Skill, User
 from users.serializers import (CitySerializer, CustomTokenObtainPairSerializer,
-                               CustomUserCreateSerializer,
                                CustomUserSerializer, ProfessionSerializer,
                                SkillSerializer, SubscribeSerializer)
 
@@ -17,10 +16,16 @@ class CustomUserViewSet(UserViewSet):
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
 
-    def get_serializer_class(self):
-        if self.request.method in ['POST']:
-            return CustomUserCreateSerializer
-        return CustomUserSerializer
+    @action(
+        methods=['patch', 'get'],
+        detail=False,
+        permission_classes=(IsAuthenticated,),
+    )
+    def me(self, request):
+        """Переопределили эндпоинт 'me' для доступа
+        только авторизованным пользователям,
+        с методом patch и get"""
+        return super().me(request)
 
     @action(detail=True, methods=['post', 'delete'],
             permission_classes=[IsAuthenticated])
