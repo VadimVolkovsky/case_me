@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.models import City, Follow, Profession, Skill, User
+from users.permissions import IsAdminOrReadOnly, IsAuthorOrAdminOrReadOnly
 from users.serializers import (CitySerializer, CustomTokenObtainPairSerializer,
-                               CustomUserCreateSerializer,
                                CustomUserSerializer, ProfessionSerializer,
                                SkillSerializer, SubscribeSerializer)
 
@@ -16,11 +16,18 @@ from users.serializers import (CitySerializer, CustomTokenObtainPairSerializer,
 class CustomUserViewSet(UserViewSet):
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
+    permission_classes = (IsAuthorOrAdminOrReadOnly,)
 
-    def get_serializer_class(self):
-        if self.request.method in ['POST']:
-            return CustomUserCreateSerializer
-        return CustomUserSerializer
+    @action(
+        methods=['patch', 'get'],
+        detail=False,
+        permission_classes=(IsAuthenticated,),
+    )
+    def me(self, request):
+        """Переопределили эндпоинт 'me' для доступа
+        только авторизованным пользователям,
+        с методом patch и get"""
+        return super().me(request)
 
     @action(detail=True, methods=['post', 'delete'],
             permission_classes=[IsAuthenticated])
@@ -59,16 +66,19 @@ class CustomUserViewSet(UserViewSet):
 class CityViewSet(viewsets.ModelViewSet):
     queryset = City.objects.all()
     serializer_class = CitySerializer
+    permission_classes = (IsAdminOrReadOnly, )
 
 
 class ProfessionViewSet(viewsets.ModelViewSet):
     queryset = Profession.objects.all()
     serializer_class = ProfessionSerializer
+    permission_classes = (IsAdminOrReadOnly, )
 
 
 class SkillViewSet(viewsets.ModelViewSet):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
+    permission_classes = (IsAdminOrReadOnly, )
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):

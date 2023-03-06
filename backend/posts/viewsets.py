@@ -4,15 +4,13 @@ from .utils import MixinPermission, MixinSerializer
 
 
 class CustomPostViewSet(
-                        mixins.ListModelMixin,
-                        mixins.RetrieveModelMixin,
-                        mixins.CreateModelMixin,
-                        mixins.UpdateModelMixin,
-                        mixins.DestroyModelMixin,
-                        MixinPermission,
-                        MixinSerializer,
-                        viewsets.GenericViewSet
-                        ):
+        mixins.ListModelMixin,
+        mixins.RetrieveModelMixin,
+        mixins.CreateModelMixin,
+        mixins.UpdateModelMixin,
+        mixins.DestroyModelMixin,
+        MixinPermission,
+        MixinSerializer,
+        viewsets.GenericViewSet
+):
     ...
-
-
