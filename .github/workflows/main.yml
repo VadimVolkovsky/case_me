@@ -25,12 +25,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
         pip install -r backend/requirements.txt
-        export DJANGO_SETTINGS_MODULE=case_me.settings
     - name: Test with flake8
       run: |
         python -m flake8 
     - name: Test with Pytest
       run: |
+        export DJANGO_SETTINGS_MODULE=backend.case_me.settings
         python -m pytest
 
   send_message: 
