@@ -30,8 +30,7 @@ jobs:
         python -m flake8 
     - name: Test with Pytest
       run: |
-        python -m flake8 
-        pytest
+        python -m pytest
 
   send_message: 
     runs-on: ubuntu-latest
