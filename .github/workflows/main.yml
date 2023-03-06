@@ -31,9 +31,13 @@ jobs:
         pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
         pip install -r backend/requirements.txt
     - name: Test with flake8
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: |
         python -m flake8 
     - name: Test with Pytest
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: |
         export DJANGO_SETTINGS_MODULE=case_me.settings
         cd backend/
