@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.models import City, Follow, Profession, Skill, User
+from users.permissions import IsAdminOrReadOnly, IsAuthorOrAdminOrReadOnly
 from users.serializers import (CitySerializer, CustomTokenObtainPairSerializer,
                                CustomUserSerializer, ProfessionSerializer,
                                SkillSerializer, SubscribeSerializer)
@@ -15,6 +16,7 @@ from users.serializers import (CitySerializer, CustomTokenObtainPairSerializer,
 class CustomUserViewSet(UserViewSet):
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
+    permission_classes = (IsAuthorOrAdminOrReadOnly,)
 
     @action(
         methods=['patch', 'get'],
@@ -64,16 +66,19 @@ class CustomUserViewSet(UserViewSet):
 class CityViewSet(viewsets.ModelViewSet):
     queryset = City.objects.all()
     serializer_class = CitySerializer
+    permission_classes = (IsAdminOrReadOnly, )
 
 
 class ProfessionViewSet(viewsets.ModelViewSet):
     queryset = Profession.objects.all()
     serializer_class = ProfessionSerializer
+    permission_classes = (IsAdminOrReadOnly, )
 
 
 class SkillViewSet(viewsets.ModelViewSet):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
+    permission_classes = (IsAdminOrReadOnly, )
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
