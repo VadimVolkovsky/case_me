@@ -1,8 +1,6 @@
 import pytest
-
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
-
 
 client = APIClient()
 url_token_create = "/api/auth/jwt/create/"
@@ -15,7 +13,7 @@ def user(django_user_model):
         username="Harry_Poter 2023",
         email="harrypoter@mail.ru",
         name="Harry Poter",
-        password="destroythehagwarts@20"
+        password="destroythehagwarts@20",
     )
 
 
@@ -26,13 +24,13 @@ def user_2(django_user_model):
         username="Lord_Voldemort",
         email="Lord_Voldemort@mail.ru",
         name="Lord Voldemort",
-        password="Lor_Vold_password"
+        password="Lor_Vold_password",
     )
 
 
 @pytest.fixture
 def token(user):
-    """Получение токена"""
+    """Получение токена для пользователя"""
     refresh = RefreshToken.for_user(user)
 
     return {

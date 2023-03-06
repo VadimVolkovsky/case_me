@@ -9,10 +9,10 @@ class TestUsers:
     url_users_me = "/api/users/me/"
 
     @pytest.mark.django_db
-    def test_access_users_urls_for_no_auth_client(self, client, user):
+    def test_access_users_urls_for_no_auth_client(self, user):
         url = self.url_users
         code_expected = 401
-        response = client.get(url)
+        response = self.client.get(url)
         assert response.status_code == code_expected, (
             f'Убедитесь, то при GET запросе {url} для '
             f'неавторизованного пользователя возвращается'
@@ -20,7 +20,7 @@ class TestUsers:
         )
 
         url = f'/api/users/{user.id}/'
-        response = client.get(url)
+        response = self.client.get(url)
         code_expected = 200
         assert response.status_code == code_expected, (
             f'Убедитесь, то при GET запросе {url} для '
@@ -29,7 +29,7 @@ class TestUsers:
         )
 
         url = self.url_users_me
-        response = client.get(url)
+        response = self.client.get(url)
         print(f'печатчаем респонс: {response}')
         code_expected = 401
         assert response.status_code == code_expected, (
@@ -37,7 +37,7 @@ class TestUsers:
             f'неавторизованного пользователя возвращается'
             f'код {code_expected}'
         )
-    
+
     @pytest.mark.django_db
     def test_user_has_correct_data(self, user_client, user):
         response = user_client.get(
@@ -81,11 +81,68 @@ class TestUsers:
         assert test_user.about == valid_data["about"]
         assert test_user.vk_url == valid_data["vk_url"]
 
-
     def test_auth_user_patch_request_with_invalid_data(self):
         pass
 
-    #тест на запрет редактирования чужого профиля
-    #тест на изменение пароля
-    #тест на сброс пароля
-    #тесты на подписки
+    def test_auth_user_request_edit_another_user(
+            self, user, user_2, user_client
+    ):
+        url = f'/api/users/{user_2.id}/'
+        response = user_client.patch(url)
+        code_expected = 404
+        assert response.status_code == code_expected, (
+            f'Убедитесь, что при попытке пользователя редактировать '
+            f'профиль другого пользователя, возвращается код {code_expected}'
+        )
+
+    def test_user_subscribe(self, user, user_2, user_client):
+        url = '/api/users/subscriptions/'
+        response = self.client.get(url)
+        code_expected = 401
+        assert response.status_code == code_expected, (
+            f'Убедитесь, что при GET запросе {url} неавторизованный '
+            f'пользователь не может посмотреть свои подписки, '
+            f'и возвращается код {code_expected}'
+        )
+
+        response = user_client.get(url)
+        code_expected = 200
+        assert response.status_code == code_expected, (
+            f'Убедитесь, что при GET запросе {url} авторизованный '
+            f'пользователь может посмотреть свои подписки, '
+            f'и возвращается код {code_expected}'
+        )
+
+        test_data = response.json()
+        assert type(test_data) == list, (
+            f'Убедитесь, что при GET запросе {url} возвращается список'
+        )
+
+        url = f'/api/users/{user_2.id}/subscribe/'
+        response = user_client.post(url)
+        code_expected = 201
+        assert response.status_code == code_expected, (
+            f'Убедитесь, что при POST запросе {url} авторизованный '
+            f'пользователь успешно подписывается на другого пользователя, '
+            f'и возвращается код {code_expected}'
+        )
+
+        response = user_client.delete(url)
+        code_expected = 204
+        assert response.status_code == code_expected, (
+            f'Убедитесь, что при DELETE запросе {url} авторизованный '
+            f'пользователь успешно отписывается от другого пользователя, '
+            f'и возвращается код {code_expected}'
+        )
+
+        response = self.client.post(url)
+        code_expected = 401
+        assert response.status_code == code_expected, (
+            f'Убедитесь, что при POST запросе {url} неавторизованный '
+            f'пользователь не может подписать на другого пользователя, '
+            f'и возвращается код {code_expected}'
+        )
+
+
+    # тест на изменение пароля
+    # тест на сброс пароля
