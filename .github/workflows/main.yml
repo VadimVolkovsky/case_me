@@ -1,5 +1,10 @@
 name: backend_develop branch workflow
 
+# defaults:
+#   run:
+#     shell: bash
+#     working-directory: backend
+
 on:
   push:
     branches: [ "backend_develop" ]
@@ -30,7 +35,8 @@ jobs:
         python -m flake8 
     - name: Test with Pytest
       run: |
-        export DJANGO_SETTINGS_MODULE=backend.case_me.settings
+        export DJANGO_SETTINGS_MODULE=case_me.settings
+        cd backend/
         python -m pytest
 
   send_message: 
