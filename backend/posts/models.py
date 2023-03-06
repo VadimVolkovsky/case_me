@@ -68,7 +68,8 @@ class Post(models.Model):
     # )
 
     def __str__(self):
-        return f'owner: {self.user.username} / post: {self.title}'  # ask for front
+        return f'owner: {self.user.username} / post: {self.title}'
+    # ask for front
 
     class Meta:
         verbose_name = 'Статья'
