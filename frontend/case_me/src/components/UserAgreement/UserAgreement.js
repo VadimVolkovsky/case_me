@@ -4,7 +4,7 @@ function UserAgreement() {
 
   return (
 
-    <main className='content'>
+    <main className='content-user-agreement'>
       <h1 className='title'>Пользовательское соглашение</h1>
 
       <ul className='paragraphs'>

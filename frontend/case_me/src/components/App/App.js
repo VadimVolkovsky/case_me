@@ -17,11 +17,12 @@ function App() {
 
   // Переменные состояния
 // const[isInfoTooltip, setIsInfoTooltip] = useState(false);
+const [loggedIn, setLoggedIn] = React.useState(false);
 
 
   return (
     <div className="App">
-      <Header/>
+      <Header loggedIn = {loggedIn} />
       <Routes>
         <Route path="/signup" element={<Register />} />
         <Route path="/signin" element={<Login />} />

@@ -1,11 +1,13 @@
-.content {
+.content-registration {
   margin: 0 auto;
   width: 100%;
+  text-align: none;
+  display: flex;
 }
 
 .registration {
   min-width: 544px;
-  height: 656px;
+  min-height: 564px;
   margin: 16px auto 0;
   padding: 48px 0 0;
   box-shadow: 5px 5px 70px rgba(173, 185, 197, 0.2);
@@ -154,9 +156,6 @@
 }
 
 .registration__checkbox-form {
-  position: absolute;
-  bottom: -172px;
-  right: 0;
   display: flex;
   flex-direction: row;
   margin: 0;
@@ -167,40 +166,35 @@
 @media (max-width: 1023px) {
   .registration__checkbox-form {
     max-width: 352px;
-    bottom: -222px;
   }
 }
 @media (max-width: 600px) {
   .registration__checkbox-form {
     max-width: 291px;
-    bottom: -240px;
+    margin: 31px 0 24px 0;
   }
 }
 
 @media (max-width: 359px) {
   .registration__checkbox-form {
     max-width: 267px;
-    bottom: -267px;
+
   }
 }
 
 .registration__policy-text {
   color: #090A0D;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 28px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
   margin: 0;
   padding: 0;
-  min-width: 350px;
+  min-width: 324px;
   text-align: left;
 }
 
 @media (max-width: 1023px) {
   .registration__policy-text {
-    min-width: 232px;
-    line-height: 24px;
-    font-weight: 400;
-    font-size: 14px;
     padding-right: 12px;
   }
 }
@@ -265,24 +259,20 @@
 }
 
 .registration__submit-button {
-  position: absolute;
-  bottom: -246px;
-  right: 0;
   font-weight: 600;
   font-size: 18px;
   line-height: 24px;
   color: #E6EDF4;
   background: #11B5DD;
-  max-width: 352px;
+  max-width: 100%;
   padding: 12px 83px;
-  margin: 30px 0 0;
+  margin: 0 0 56px;
   border-radius: 8px;
   border: none;
 }
 
 @media (max-width: 1023px) {
   .registration__submit-button {
-    bottom: -292px;
   }
 }
 
@@ -290,7 +280,6 @@
   .registration__submit-button {
     font-size: 16px;
     font-weight: 500;
-    bottom: -316px;
     max-width: 288px;
     padding: 12px 62.5px;
   }
@@ -298,7 +287,6 @@
 
 @media (max-width: 359px) {
   .registration__submit-button {
-    bottom: -339px;
     max-width: 264px;
     padding: 12px 50.5px;
   }

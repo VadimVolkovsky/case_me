@@ -4,7 +4,7 @@ function PrivacyPolicy() {
 
   return (
 
-    <main className='content'>
+    <main className='content-privacy-policy'>
       <h1 className='title'>Политика в отношении обработки персональных данных </h1>
 
       <ul className='paragraphs'>
