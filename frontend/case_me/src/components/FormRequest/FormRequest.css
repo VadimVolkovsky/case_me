@@ -1,15 +1,25 @@
 .form {
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
   color: #000;
   background-color: #fefefe;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  flex-direction: column;
+  top: 80px;
 }
 
 .form_type_email {
-  padding: 188px 0 188px 0;
+   /* top: 56px; */
+  /* bottom: 188px; */
 }
 
 .form_type_password {
-  padding: 136px 0 136px 0;
+  /* top: 80px; */
+  /* bottom: 136px; */
 }
 
 .form__content {
@@ -21,6 +31,7 @@
   align-items: center;
   box-shadow: 0 0 20px rgba(173, 185, 197, 0.2);
   border-radius: 16px;
+  position: relative;
 }
 
 .form__title {
@@ -63,28 +74,37 @@
 
 @media (max-width: 1024px) {
   .form_type_email {
-    padding: 182px 0 182px 0;
+    /* top: 182px; */
+    /* bottom: 182px; */
   }
   .form_type_password {
-    padding: 130px 0 130px 0;
+    /* top: 130px; */
+    /* bottom: 130px; */
   }
 }
 
 @media (max-width: 768px) {
   .form_type_email {
-    padding: 310px 0 310px 0;
+    /* top: 310px; */
+    /* bottom: 310px; */
   }
   .form_type_password {
-    padding: 258px 0 258px 0;
+    /* top: 258px;
+    bottom: 258px; */
   }
 }
 
 @media (max-width: 600px) {
+  .form {
+    top: 72px;
+  }
   .form_type_email {
-    padding: 208px 0 208px 0;
+    /* top: 208px; */
+    /* bottom: 208px; */
   }
   .form_type_password {
-    padding: 156px 0 156px 0;
+    /* top: 156px; */
+    /* bottom: 156px; */
   }
   .form__content {
     width: 328px;

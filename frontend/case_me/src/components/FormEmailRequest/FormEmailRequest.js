@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./FormEmailRequest.css";
 import FormRequest from "../FormRequest/FormRequest";
+// import ErrorNotification from "../ErrorNotification/ErrorNotification";
 
 function FormEmailRequest() {
   //Переменные состояния
@@ -62,6 +63,7 @@ function FormEmailRequest() {
   }
 
   return (
+
     <FormRequest
       name="email"
       title="Восстановление пароля"
