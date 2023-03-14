@@ -1,5 +1,6 @@
 import pytest
 from rest_framework.test import APIClient
+
 from users.models import User
 
 
@@ -168,6 +169,5 @@ class TestUsers:
             f'данными, авторизованный пользователь не может '
             f'изменить свой пароль, и возвращается код {code_expected}'
         )
-
 
     # тест на сброс пароля (как получить ссылку из email ?)
