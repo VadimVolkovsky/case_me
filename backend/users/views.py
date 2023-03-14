@@ -26,7 +26,7 @@ class CustomUserViewSet(UserViewSet):
     def me(self, request):
         """Переопределили эндпоинт 'me' для доступа
         только авторизованным пользователям,
-        с методом patch и get"""
+        с методом patch и get """
         return super().me(request)
 
     @action(detail=True, methods=['post', 'delete'],
