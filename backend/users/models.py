@@ -130,11 +130,6 @@ class User(AbstractBaseUser):
         null=True,
         blank=True,
         verbose_name="ВКонтакте")
-    facebook_url = models.URLField(
-        max_length=256,
-        null=True,
-        blank=True,
-        verbose_name="Facebook")
     twitter_url = models.URLField(
         max_length=256,
         null=True,

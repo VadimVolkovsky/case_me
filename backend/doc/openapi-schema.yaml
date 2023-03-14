@@ -1,7 +1,7 @@
 openapi: 3.0.2
 info:
   title: CaseMe API
-  description: Документация API для проекта CaseMe (написана ручками, тестовая версия)
+  description: Документация API для проекта CaseMe (Обновлено 14.03.2023)
   contact:
     email: admin@caseme.ru
   license:
@@ -9,55 +9,56 @@ info:
   version: v1
 
 paths:
-  /api/auth/users/:
-    get:
-      security:
-       - Token: []
-      operationId: Список пользователей
-      description: ''
-      parameters:
-        - name: page
-          required: false
-          in: query
-          description: Номер страницы.
-          schema:
-            type: integer
-        - name: limit
-          required: false
-          in: query
-          description: Количество объектов на странице.
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  count:
-                    type: integer
-                    example: 123
-                    description: 'Общее количество объектов в базе'
-                  next:
-                    type: string
-                    nullable: true
-                    format: uri
-                    example: http://caseme.ru/api/users/?page=4
-                    description: 'Ссылка на следующую страницу'
-                  previous:
-                    type: string
-                    nullable: true
-                    format: uri
-                    example: http://caseme.ru/api/users/?page=2
-                    description: 'Ссылка на предыдущую страницу'
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/CustomUser'
-      tags:
-        - Пользователи
+  /api/users/:
+  # Пока отлкючено т.к. эндпоинт доступен только админам
+  #   get:
+  #     security:
+  #      - Token: []
+  #     operationId: Список пользователей
+  #     description: ''
+  #     parameters:
+  #       - name: page
+  #         required: false
+  #         in: query
+  #         description: Номер страницы.
+  #         schema:
+  #           type: integer
+  #       - name: limit
+  #         required: false
+  #         in: query
+  #         description: Количество объектов на странице.
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       '200':
+  #         description: ''
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 count:
+  #                   type: integer
+  #                   example: 123
+  #                   description: 'Общее количество объектов в базе'
+  #                 next:
+  #                   type: string
+  #                   nullable: true
+  #                   format: uri
+  #                   example: http://caseme.ru/api/users/?page=4
+  #                   description: 'Ссылка на следующую страницу'
+  #                 previous:
+  #                   type: string
+  #                   nullable: true
+  #                   format: uri
+  #                   example: http://caseme.ru/api/users/?page=2
+  #                   description: 'Ссылка на предыдущую страницу'
+  #                 results:
+  #                   type: array
+  #                   items:
+  #                     $ref: '#/components/schemas/CustomUser'
+  #     tags:
+  #       - Пользователи
     post:
       operationId: Регистрация пользователя
       description: ''
@@ -80,7 +81,7 @@ paths:
         - Пользователи
     parameters: []
 
-  /api/auth/users/{id}/:
+  /api/users/{id}/:
     get:
       operationId: Профиль пользователя
       description: ''
@@ -97,7 +98,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomUser'
+                $ref: '#/components/schemas/CustomUserResponseOnGet'
         '404':
           $ref: '#/components/responses/NotFound'
         '401':
@@ -105,7 +106,7 @@ paths:
       tags:
         - Пользователи
 
-  # /api/auth/users/activation/:
+  # /api/users/activation/:
   #   post:
   #     operationId: auth_users_activation
   #     description: ''
@@ -123,7 +124,7 @@ paths:
   #     tags:
   #       - Пользователи
   #   parameters: []
-  /api/auth/users/me/:
+  /api/users/me/:
     get:
       security:
        - Token: []
@@ -138,11 +139,32 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CustomUser'
+                  $ref: '#/components/schemas/CustomUserResponseOnGet'
       tags:
         - Пользователи
 
-  /api/auth/users/set_password/:
+    patch:
+      operationId: Обновление профиля
+      security:
+        - Token: [ ]
+      description: 'Обновление личных данных текущего пользователя'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomUserPatchRequest'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomUserResponseOnGet'
+      tags:
+        - Пользователи
+
+  /api/users/set_password/:
     post:
       security:
        - Token: []
@@ -179,26 +201,6 @@ paths:
     #         $ref: '#/components/schemas/CustomUser'
     #   tags:
     #     - Пользователи
-    patch:
-      operationId: Обновление профиля
-      security:
-        - Token: [ ]
-      description: 'Обновление личных данных текущего пользователя'
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomUser'
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomUser'
-      tags:
-        - Пользователи
     # delete:
     #   operationId: auth_users_me_delete
     #   description: ''
@@ -209,7 +211,7 @@ paths:
     #   tags:
     #     - Пользователи
     # parameters: []
-  # /api/auth/users/resend_activation/:
+  # /api/users/resend_activation/:
   #   post:
   #     operationId: auth_users_resend_activation
   #     description: ''
@@ -250,32 +252,31 @@ paths:
           - Пользователи
       parameters: []
 
-  # /api/auth/jwt/refresh/:
-  #   post:
-  #     security:
-  #      - Token: []
-  #     operationId: Обновление токена
-  #     description: |-
-  #       Takes a refresh type JSON web token and returns an access type JSON web
-  #       token if the refresh token is valid.
-  #     parameters: []
-  #     requestBody:
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: '#/components/schemas/TokenRefresh'
-  #     responses:
-  #       '201':
-  #         description: ''
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/TokenRefreshResponse'
-  #     tags:
-  #       - Пользователи
-  #   parameters: []
+  /api/auth/jwt/refresh/:
+    post:
+      security:
+       - Token: []
+      operationId: Обновление токена
+      description: |-
+        Принимает веб-токен refresh в формате JSON, и если он действителен, то возвращает новый веб-токен access в формате JSON
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefreshResponse'
+      tags:
+        - Пользователи
+    parameters: []
 
-  /api/auth/users/reset_password/:
+  /api/users/reset_password/:
     post:
       security:
        - Token: []
@@ -297,7 +298,7 @@ paths:
       tags:
         - Пользователи
     parameters: []
-  /api/auth/users/reset_password_confirm/:
+  /api/users/reset_password_confirm/:
     post:
       security:
        - Token: []
@@ -317,7 +318,7 @@ paths:
       tags:
         - Пользователи
     parameters: []
-  # /api/auth/users/reset_username/:
+  # /api/users/reset_username/:
   #   post:
   #     operationId: auth_users_reset_username
   #     description: ''
@@ -335,7 +336,7 @@ paths:
   #     tags:
   #       - Пользователи
   #   parameters: []
-  # /api/auth/users/reset_username_confirm/:
+  # /api/users/reset_username_confirm/:
   #   post:
   #     operationId: auth_users_reset_username_confirm
   #     description: ''
@@ -354,7 +355,7 @@ paths:
   #       - Пользователи
   #   parameters: []
   
-  # /api/auth/users/set_username/:
+  # /api/users/set_username/:
   #   post:
   #     operationId: auth_users_set_username
   #     description: ''
@@ -982,9 +983,8 @@ components:
     CustomUser:
       required:
         - name
-        - birthdate
+        - username
         - email
-        - phone
       type: object
       properties:
         id:
@@ -1070,12 +1070,230 @@ components:
           format: uri
           maxLength: 256
           x-nullable: true
-        facebook_url:
-          title: Facebook url
+        # facebook_url:
+        #   title: Facebook url
+        #   type: string
+        #   format: uri
+        #   maxLength: 256
+        #   x-nullable: true
+        twitter_url:
+          title: Twitter url
           type: string
           format: uri
           maxLength: 256
           x-nullable: true
+        followers_count:
+          title: Followers count
+          description: 'Количество подписчиков текущего пользователя'
+          type: integer
+          readOnly: true
+        is_subscribed:
+          title: is_subscribed
+          description: Проверяет подписку на текущего пользователя
+          type: boolean
+          readOnly: true
+
+    CustomUserResponseOnGet:
+      type: object
+      properties:
+        id:
+          title: ID
+          example: 1
+          type: integer
+          readOnly: true
+        name:
+          title: Имя и Фамилия
+          example: Вася Пупкин
+          type: string
+          maxLength: 50
+          
+        username:
+          title: Username
+          type: string
+          readOnly: true
+          
+        # birthdate:
+        #   title: Birthdate
+        #   description: Дата рождения
+        #   type: string
+        #   format: date
+        gender:
+          title: Gender
+          description: Пол
+          type: string
+          enum:
+            - M
+            - F
+          x-nullable: true
+        age:
+          title: Age
+          description: Возраст
+          type: integer
+          example: 25
+          readOnly: true
+        city:
+          title: City
+          description: Город
+          type: integer
+          example: 5
+          x-nullable: true
+        email:
+          title: Email
+          type: string
+          format: email
+          maxLength: 50
+          
+        phone:
+          title: Phone
+          example: "+79035558822"
+          type: string
+          maxLength: 128
+          
+        about:
+          title: About
+          example: 'Информация о пользователе'
+          type: string
+          maxLength: 256
+          x-nullable: true
+        profession:
+          title: Profession
+          example: 2
+          type: integer
+          x-nullable: true
+        skills:
+          description: 'Список навыков'
+          type: array
+          example: [1, 2, 3]
+          items:
+            type: integer
+            # $ref: '#/components/schemas/Skill'
+          uniqueItems: true
+        image:
+          title: Image
+          type: string
+          readOnly: true
+          format: uri
+        vk_url:
+          title: Vk url
+          type: string
+          format: uri
+          maxLength: 256
+          x-nullable: true
+        # facebook_url:
+        #   title: Facebook url
+        #   type: string
+        #   format: uri
+        #   maxLength: 256
+        #   x-nullable: true
+        twitter_url:
+          title: Twitter url
+          type: string
+          format: uri
+          maxLength: 256
+          x-nullable: true
+        followers_count:
+          title: Followers count
+          description: 'Количество подписчиков текущего пользователя'
+          type: integer
+          readOnly: true
+        is_subscribed:
+          title: is_subscribed
+          description: Проверяет подписку на текущего пользователя
+          type: boolean
+          readOnly: true
+  
+    CustomUserPatchRequest:
+      type: object
+      properties:
+        id:
+          title: ID
+          example: 1
+          type: integer
+          readOnly: true
+        name:
+          title: Имя и Фамилия
+          example: Вася Пупкин
+          type: string
+          maxLength: 50
+          
+        username:
+          title: Username
+          type: string
+          readOnly: true
+          
+        birthdate:
+          title: Birthdate
+          description: Дата рождения
+          type: string
+          format: date
+        gender:
+          title: Gender
+          description: Пол
+          type: string
+          enum:
+            - M
+            - F
+          x-nullable: true
+        # age:
+        #   title: Age
+        #   description: Возраст
+        #   type: integer
+        #   example: 25
+        #   readOnly: true
+        city:
+          title: City
+          description: Город
+          type: integer
+          example: 5
+          x-nullable: true
+        email:
+          title: Email
+          type: string
+          format: email
+          maxLength: 50
+          
+        phone:
+          title: Phone
+          example: "+79035558822"
+          type: string
+          maxLength: 128
+          
+        about:
+          title: About
+          example: 'Информация о пользователе'
+          type: string
+          maxLength: 256
+          x-nullable: true
+        profession:
+          title: Profession
+          example: 2
+          type: integer
+          x-nullable: true
+        skills:
+          description: 'Список навыков'
+          type: array
+          example: [1, 2, 3]
+          items:
+            type: integer
+            # $ref: '#/components/schemas/Skill'
+          uniqueItems: true
+        image:
+          title: Image
+          type: string
+          readOnly: true
+          format: uri
+        vk_url:
+          title: Vk url
+          type: string
+          format: uri
+          maxLength: 256
+          x-nullable: true
+        # facebook_url:
+        #   title: Facebook url
+        #   type: string
+        #   format: uri
+        #   maxLength: 256
+        #   x-nullable: true
         twitter_url:
           title: Twitter url
           type: string
