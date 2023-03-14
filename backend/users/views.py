@@ -8,6 +8,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.permissions import IsAuthorOrAdminOrReadOnly, IsAdminOrReadOnly
 from users.models import City, Follow, Profession, Skill, User
+from users.permissions import IsAdminOrReadOnly, IsAuthorOrAdminOrReadOnly
 from users.serializers import (CitySerializer, CustomTokenObtainPairSerializer,
                                CustomUserSerializer, ProfessionSerializer,
                                SkillSerializer, SubscribeSerializer)
