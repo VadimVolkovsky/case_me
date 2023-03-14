@@ -144,6 +144,7 @@ class TestUsers:
             f'и возвращается код {code_expected}'
         )
 
+
     def test_user_set_password(self, user_client):
         url = '/api/users/set_password/'
         valid_data = {
@@ -171,3 +172,4 @@ class TestUsers:
         )
 
     # тест на сброс пароля (как получить ссылку из email ?)
+
