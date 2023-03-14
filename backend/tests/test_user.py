@@ -143,6 +143,31 @@ class TestUsers:
             f'и возвращается код {code_expected}'
         )
 
+    def test_user_set_password(self, user_client):
+        url = '/api/users/set_password/'
+        valid_data = {
+            "new_password": "destroythehagwarts@20_new",
+            "current_password": "destroythehagwarts@20"
+        }
+        response = user_client.post(url, data=valid_data)
+        code_expected = 204
+        assert response.status_code == code_expected, (
+            f'Убедитесь, что при POST запросе {url} с валидными '
+            f'данными, авторизованный пользователь успешно '
+            f'изменяет свой пароль, и возвращается код {code_expected}'
+        )
 
-    # тест на изменение пароля
-    # тест на сброс пароля
+        invalid_data = {
+            "new_password": "destroythehagwarts@20_new",
+            "current_password": "destroythehagwarts@20_wrong_pswrd"
+        }
+        response = user_client.post(url, data=invalid_data)
+        code_expected = 400
+        assert response.status_code == code_expected, (
+            f'Убедитесь, что при POST запросе {url} с невалидными '
+            f'данными, авторизованный пользователь не может '
+            f'изменить свой пароль, и возвращается код {code_expected}'
+        )
+
+
+    # тест на сброс пароля (как получить ссылку из email ?)
