@@ -8,8 +8,8 @@
 .registration {
   min-width: 544px;
   min-height: 564px;
-  margin: 16px auto 0;
-  padding: 48px 0 0;
+  margin: 44px auto 0;
+  padding: 40px 0 36px;
   box-shadow: 5px 5px 70px rgba(173, 185, 197, 0.2);
   border-radius: 16px;
 }
@@ -27,6 +27,8 @@
 @media (max-width: 600px) {
   .registration {
     min-width: 328px;
+    min-height: 640px;
+    padding-bottom: 0;
   }
 }
 
@@ -64,11 +66,17 @@
 
 .registration__links {
   list-style: none;
-  padding: 8px 0 40px;
+  padding: 0 0 40px;
   margin: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+@media (max-width: 600px) {
+  .registration__links {
+    padding-bottom: 36px;
+  }
 }
 
 .registration__link {
@@ -158,7 +166,7 @@
 .registration__checkbox-form {
   display: flex;
   flex-direction: row;
-  margin: 0;
+  margin: 28px 0 0;
   padding: 0;
   max-width: 350px;
 }
@@ -166,19 +174,19 @@
 @media (max-width: 1023px) {
   .registration__checkbox-form {
     max-width: 352px;
+
   }
 }
 @media (max-width: 600px) {
   .registration__checkbox-form {
     max-width: 291px;
-    margin: 31px 0 24px 0;
+    margin-bottom: 24px;
   }
 }
 
 @media (max-width: 359px) {
   .registration__checkbox-form {
     max-width: 267px;
-
   }
 }
 
@@ -266,7 +274,7 @@
   background: #11B5DD;
   max-width: 100%;
   padding: 12px 83px;
-  margin: 0 0 56px;
+  margin: 0;
   border-radius: 8px;
   border: none;
 }

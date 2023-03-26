@@ -8,6 +8,7 @@
   background-color: rgba(102, 109, 122, 20%);
   width: 100vw;
   height: 100vh;
+  z-index: 101;
 }
 
 .popup__content {
@@ -74,12 +75,6 @@
 @media (max-width: 1024px) {
   .popup {
     padding: 274px 0 274px 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .popup {
-    padding: 396px 0 396px 0;
   }
 }
 
