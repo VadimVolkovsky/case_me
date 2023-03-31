@@ -5,8 +5,8 @@ import { NavLink, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import './Register.css';
 
-import alert from "../../img/alert-octagon.svg";
-import "../ErrorNotification/ErrorNotification.css";
+//import alert from "../../img/alert-octagon.svg";
+//import "../ErrorNotification/ErrorNotification.css";
 
 
 function Register() {
@@ -131,25 +131,20 @@ function Register() {
   }
 
   // Функция для обработки отправки формы
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formValid && isChecked) {
-      setShowPopup(true);
-    }
-  };
+  //const handleSubmit = (e) => {
+   // e.preventDefault();
+   // if (formValid && isChecked) {
+   //   setShowPopup(true);
+   // }
+  //};
 
-  const message500 = 'Отправка данных на сервер не удалась,пожалуйста, попробуйте позже'
-  const message409 = 'Неверный пароль'
+  //const message500 = 'Отправка данных на сервер не удалась,пожалуйста, попробуйте позже'
+  //const message409 = 'Неверный пароль'
 
 
 
   return (
     <div>
-          <div className="notification">
-      <img className="notification__image" src={alert} alt="Ошибка сервера" />
-      <p className="notification__text">{message500}</p>
-      {/* <p className="">{err.message}</p> */}
-    </div>
 
       <main className="content-registration">
         <div className="registration">
@@ -161,7 +156,7 @@ function Register() {
               </ul>
             </nav>
 
-            <form onSubmit={handleSubmit} noValidate>
+            <form noValidate>
               <div className="registration__input-container">
                 <label className="registration__form-label" htmlFor="nickname">Никнейм</label>
                 <input
