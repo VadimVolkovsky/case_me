@@ -5,6 +5,9 @@ import { NavLink, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import './Register.css';
 
+import alert from "../../img/alert-octagon.svg";
+import "../ErrorNotification/ErrorNotification.css";
+
 
 function Register() {
 
@@ -135,8 +138,19 @@ function Register() {
     }
   };
 
+  const message500 = 'Отправка данных на сервер не удалась,пожалуйста, попробуйте позже'
+  const message409 = 'Неверный пароль'
+
+
+
   return (
     <div>
+          <div className="notification">
+      <img className="notification__image" src={alert} alt="Ошибка сервера" />
+      <p className="notification__text">{message500}</p>
+      {/* <p className="">{err.message}</p> */}
+    </div>
+
       <main className="content-registration">
         <div className="registration">
           <section className="registration__info">

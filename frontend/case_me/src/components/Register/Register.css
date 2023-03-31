@@ -14,9 +14,8 @@
   border-radius: 16px;
 }
 
-@media (min-height: 814px) {
+@media (min-height: 973px) {
   .registration {
-    /*margin-top: 40px;*/
     position: absolute;
     top: 50%;
     left: 50%;
