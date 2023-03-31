@@ -8,7 +8,7 @@
 .registration {
   min-width: 544px;
   min-height: 564px;
-  margin: 44px auto 0;
+  margin: 20px auto 0;
   padding: 40px 0 36px;
   box-shadow: 5px 5px 70px rgba(173, 185, 197, 0.2);
   border-radius: 16px;
@@ -16,7 +16,7 @@
 
 @media (min-height: 814px) {
   .registration {
-    margin-top: 40px;
+    /*margin-top: 40px;*/
     position: absolute;
     top: 50%;
     left: 50%;
