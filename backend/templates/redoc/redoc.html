@@ -14,7 +14,13 @@
     </style>
   </head>
   <body>
-    <redoc spec-url='/doc/openapi-schema.yaml'></redoc>
+    <redoc spec-url='/docs/openapi-schema.yaml'></redoc>
     <script src="https://cdn.jsdelivr.net/npm/redoc/bundles/redoc.standalone.js"> </script>
   </body>
 </html>
+
+{% comment %} 
+Дока не работает т.к. в сеттингс есть настройка медиа
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  {% endcomment %}
+
