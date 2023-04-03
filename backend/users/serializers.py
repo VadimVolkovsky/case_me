@@ -83,8 +83,11 @@ class CustomUserCreateSerializer(UserCreateSerializer):
     class Meta:
         model = User
         fields = (
-            'name', 'username', 'email', 'password',
+            'username', 'email', 'password',
         )
+        # fields = (
+        #     'name', 'username', 'email', 'password',
+        # )
 
     def validate_username(self, value):
         username_already_exists(self, value)

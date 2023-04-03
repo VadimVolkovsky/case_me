@@ -58,7 +58,9 @@ class User(AbstractBaseUser):
 
     name = models.CharField(
         verbose_name="Имя и Фамилия",
-        max_length=50
+        max_length=50,
+        blank=True,
+        null=True
     )
     username = models.CharField(
         verbose_name="Никнейм",
