@@ -1,6 +1,4 @@
 .form {
-  width: 100%;
-  height: 100%;
   margin: 0 auto;
   color: #000;
   background-color: #fefefe;
@@ -9,23 +7,15 @@
   align-items: center;
   position: absolute;
   flex-direction: column;
-  top: 80px;
-}
-
-.form_type_email {
-   /* top: 56px; */
-  /* bottom: 188px; */
-}
-
-.form_type_password {
-  /* top: 80px; */
-  /* bottom: 136px; */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .form__content {
   width: 544px;
   padding: 48px 0 56px 0;
-  margin: 0 auto;
+  margin: 20px 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -72,40 +62,7 @@
   color: #e6edf4;
 }
 
-@media (max-width: 1024px) {
-  .form_type_email {
-    /* top: 182px; */
-    /* bottom: 182px; */
-  }
-  .form_type_password {
-    /* top: 130px; */
-    /* bottom: 130px; */
-  }
-}
-
-@media (max-width: 768px) {
-  .form_type_email {
-    /* top: 310px; */
-    /* bottom: 310px; */
-  }
-  .form_type_password {
-    /* top: 258px;
-    bottom: 258px; */
-  }
-}
-
 @media (max-width: 600px) {
-  .form {
-    top: 72px;
-  }
-  .form_type_email {
-    /* top: 208px; */
-    /* bottom: 208px; */
-  }
-  .form_type_password {
-    /* top: 156px; */
-    /* bottom: 156px; */
-  }
   .form__content {
     width: 328px;
     padding: 40px 0 52px 0;
