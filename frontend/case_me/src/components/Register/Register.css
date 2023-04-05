@@ -5,6 +5,12 @@
   display: flex;
 }
 
+@media (max-height: 740px) {
+  .content-registration {
+    position: relative;
+  }
+}
+
 .registration {
   min-width: 544px;
   min-height: 564px;
@@ -12,14 +18,15 @@
   padding: 40px 0 36px;
   box-shadow: 5px 5px 70px rgba(173, 185, 197, 0.2);
   border-radius: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-@media (min-height: 973px) {
+@media (max-height: 740px) {
   .registration {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
   }
 }
 
