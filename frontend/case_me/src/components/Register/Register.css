@@ -3,6 +3,7 @@
   width: 100%;
   text-align: none;
   display: flex;
+  
 }
 
 .registration {
@@ -12,6 +13,7 @@
   padding: 40px 0 36px;
   box-shadow: 5px 5px 70px rgba(173, 185, 197, 0.2);
   border-radius: 16px;
+  
 }
 
 @media (min-height: 973px) {
