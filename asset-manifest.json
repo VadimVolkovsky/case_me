@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/case_me/static/css/main.c9795715.css",
+    "main.js": "/case_me/static/js/main.c259f6c9.js",
+    "static/js/787.bd3f1967.chunk.js": "/case_me/static/js/787.bd3f1967.chunk.js",
+    "static/media/Manrope-Medium.woff": "/case_me/static/media/Manrope-Medium.4e55dc20921a95ef83f4.woff",
+    "static/media/Manrope-Regular.woff": "/case_me/static/media/Manrope-Regular.2046a49b5fa996c43f44.woff",
+    "static/media/Manrope-Semibold.woff": "/case_me/static/media/Manrope-Semibold.f4e54434d986b1395b3b.woff",
+    "static/media/Manrope-ExtraBold.woff": "/case_me/static/media/Manrope-ExtraBold.af754df8afbc222b77e8.woff",
+    "static/media/Manrope-Medium.woff2": "/case_me/static/media/Manrope-Medium.9cccfee0f8d3153ae547.woff2",
+    "static/media/Manrope-Regular.woff2": "/case_me/static/media/Manrope-Regular.cb78aabfaaf5d95c8665.woff2",
+    "static/media/Manrope-Semibold.woff2": "/case_me/static/media/Manrope-Semibold.0d44fe833dd4c7229544.woff2",
+    "static/media/Manrope-ExtraBold.woff2": "/case_me/static/media/Manrope-ExtraBold.a90ad203eaed8bfd3323.woff2",
+    "static/media/logo_case_me.svg": "/case_me/static/media/logo_case_me.55fdf99f6fe2386035ef13d9b203b55c.svg",
+    "static/media/settings.svg": "/case_me/static/media/settings.3a7f569204e4a66c0dd2.svg",
+    "static/media/checkbox-selected.svg": "/case_me/static/media/checkbox-selected.da85f875640e8546adf0b871654a7c24.svg",
+    "static/media/Avatar.svg": "/case_me/static/media/Avatar.1fccd3b5a2eb40ff01539679f3b62b4c.svg",
+    "index.html": "/case_me/index.html",
+    "static/media/checkbox-default.svg": "/case_me/static/media/checkbox-default.563b726049b6e44bf6924ed97489d2a2.svg",
+    "static/media/checkbox-hover.svg": "/case_me/static/media/checkbox-hover.08a6abcebd9a0ccd7513ef60bbda53ba.svg",
+    "static/media/plus-circle.svg": "/case_me/static/media/plus-circle.2a9b1e02be74d53fe582.svg",
+    "static/media/alert-octagon.svg": "/case_me/static/media/alert-octagon.97931ea3215567c8eecf0f32b61f47bc.svg",
+    "static/media/butten_сlose.svg": "/case_me/static/media/butten_сlose.da07145c9bfe0db70001.svg",
+    "main.c9795715.css.map": "/case_me/static/css/main.c9795715.css.map",
+    "main.c259f6c9.js.map": "/case_me/static/js/main.c259f6c9.js.map",
+    "787.bd3f1967.chunk.js.map": "/case_me/static/js/787.bd3f1967.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c9795715.css",
+    "static/js/main.c259f6c9.js"
+  ]
+}
