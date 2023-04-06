@@ -1,13 +1,10 @@
 import React from "react";
 import Checkbox from '../Checkbox/Checkbox';
 import PopupTooltip from "../PopupTooltip/PopupTooltip";
+import ErrorNotification from "../ErrorNotification/ErrorNotification";
 import { NavLink, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import './Register.css';
-
-//import alert from "../../img/alert-octagon.svg";
-//import "../ErrorNotification/ErrorNotification.css";
-
 
 function Register() {
 
@@ -40,6 +37,9 @@ function Register() {
 
   // переменные для попапа успешной регистрации
   const [showPopup, setShowPopup] = useState(false);
+
+  // переменные для вывода серверной ошибки
+  const [showError, setShowError] = useState(false);
 
   // общая функция для валидации инпутов и чекбокса формы
   useEffect(() => {
@@ -130,17 +130,40 @@ function Register() {
     }
   }
 
-  // Функция для обработки отправки формы
-  //const handleSubmit = (e) => {
-   // e.preventDefault();
-   // if (formValid && isChecked) {
-   //   setShowPopup(true);
-   // }
-  //};
+  // Функция для обработки отправки формы (API)
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  //const message500 = 'Отправка данных на сервер не удалась,пожалуйста, попробуйте позже'
-  //const message409 = 'Неверный пароль'
+    const registrationData = {
+      username: nickname,
+      email: email,
+      password: password
+    };
 
+    fetch('https://caseme.pythonanywhere.com/api/users/', {
+      method: 'POST',
+      body: JSON.stringify(registrationData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        console.error('Ошибка:', response.status);
+        throw new Error('Запрос не выполнен' + response.status);
+      }
+      console.log('Запрос выполнен успепшно');
+      setShowPopup(true);
+      return response.json();
+    })
+    .then(data => {
+      console.log('Получены данные:', data);
+    })
+    .catch(err => {
+      console.error('Ошибка:', err);
+      setShowError(true);
+    });
+  };
 
 
   return (
@@ -149,6 +172,7 @@ function Register() {
       <main className="content-registration">
         <div className="registration">
           <section className="registration__info">
+            {showError && (<ErrorNotification onClose={() => setShowError(false)} />)}
             <nav>
               <ul className="registration__links">
                 <NavLink to="/signin" className={activeLink}>Вход</NavLink>
@@ -156,7 +180,7 @@ function Register() {
               </ul>
             </nav>
 
-            <form noValidate>
+            <form onSubmit={handleSubmit} noValidate>
               <div className="registration__input-container">
                 <label className="registration__form-label" htmlFor="nickname">Никнейм</label>
                 <input
@@ -216,7 +240,7 @@ function Register() {
                   checked={isChecked}
                   id="checkbox"
                   name="checkbox" />
-                <p class="registration__policy-text">Я согласен с <Link class="registration__policy-link" to="/privacypolicy" target="_blank">Политикой конфиденциальности</Link>{" "}и{" "}<Link class="registration__policy-link" to="/useragreement" target="_blank">Пользовательским соглашением</Link></p>
+                <p className="registration__policy-text">Я согласен с <Link className="registration__policy-link" to="/privacypolicy" target="_blank">Политикой конфиденциальности</Link>{" "}и{" "}<Link className="registration__policy-link" to="/useragreement" target="_blank">Пользовательским соглашением</Link></p>
                 {checkboxError && <p>{checkboxError}</p>}
               </div>
 
