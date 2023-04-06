@@ -3,7 +3,7 @@
   width: 100%;
   text-align: none;
   display: flex;
-  
+
 }
 
 @media (max-height: 740px) {
@@ -28,6 +28,12 @@
 @media (max-height: 740px) {
   .registration {
     transform: translate(-50%, 0);
+  }
+}
+
+@media (min-height: 741px) and (max-height: 802px) {
+  .registration {
+    transform: translate(-50%, -45%);
   }
 }
 
