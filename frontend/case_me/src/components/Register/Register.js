@@ -38,8 +38,9 @@ function Register() {
   // переменные для попапа успешной регистрации
   const [showPopup, setShowPopup] = useState(false);
 
-  // переменные для вывода серверной ошибки
+  // переменные для вывода серверной ошибки и установки соответствующего текста ошибки
   const [showError, setShowError] = useState(false);
+  //const [errorMessage, setErrorMessage] = useState(null);
 
   // общая функция для валидации инпутов и чекбокса формы
   useEffect(() => {
