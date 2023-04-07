@@ -164,6 +164,8 @@ function Register() {
       }
       console.log('Запрос выполнен успешно');
       setShowPopup(true);
+      setShowError(false);
+      setErrorMessage(null);
       return response.json();
     })
     .then((data) => {
@@ -259,7 +261,8 @@ function Register() {
                   className={`registration__submit-button ${formValid && isChecked ? "registration__submit-button_active" : "registration__submit-button_disabled"}`}
                   disabled={!formValid || !isChecked}>Зарегистрироваться</button>
             </form>
-            {showPopup && (<PopupTooltip isOpen={true} onClose={() => setShowPopup(false)}/>)}
+            {showPopup && (<PopupTooltip isOpen={true} onClose={() => {
+            setShowPopup(false) }}/>)}
           </section>
         </div>
 
