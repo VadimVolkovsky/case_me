@@ -40,7 +40,7 @@ function Register() {
 
   // переменные для вывода серверной ошибки и установки соответствующего текста ошибки
   const [showError, setShowError] = useState(false);
-  //const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   // общая функция для валидации инпутов и чекбокса формы
   useEffect(() => {
@@ -148,19 +148,28 @@ function Register() {
         'Content-Type': 'application/json'
       }
     })
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         console.error('Ошибка:', response.status);
-        throw new Error('Запрос не выполнен' + response.status);
+        return response.json().then((data) => {
+          let errorMessage = '';
+          for (let key in data) {
+            errorMessage += `${data[key][0]}\n`
+          }
+          console.log('errorMessage:', errorMessage);
+          setErrorMessage(errorMessage);
+          setShowError(true);
+          throw new Error(errorMessage);
+        });
       }
-      console.log('Запрос выполнен успепшно');
+      console.log('Запрос выполнен успешно');
       setShowPopup(true);
       return response.json();
     })
-    .then(data => {
+    .then((data) => {
       console.log('Получены данные:', data);
     })
-    .catch(err => {
+    .catch((err) => {
       console.error('Ошибка:', err);
       setShowError(true);
     });
@@ -173,7 +182,7 @@ function Register() {
       <main className="content-registration">
         <div className="registration">
           <section className="registration__info">
-            {showError && (<ErrorNotification onClose={() => setShowError(false)} />)}
+            {showError && (<ErrorNotification errorMessage={errorMessage} />)}
             <nav>
               <ul className="registration__links">
                 <NavLink to="/signin" className={activeLink}>Вход</NavLink>
