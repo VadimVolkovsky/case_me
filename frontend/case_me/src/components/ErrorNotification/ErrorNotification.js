@@ -5,7 +5,7 @@ import "./ErrorNotification.css";
 function ErrorNotification() {
 
   // Захардкоженные ошибки пока нет API ответов
- const message500 = 'Отправка данных на сервер не удалась,пожалуйста, попробуйте позже'
+ const message500 = 'Отправка данных на сервер не удалась, пожалуйста, попробуйте позже'
  const message409 = 'Неверный пароль'
 
 

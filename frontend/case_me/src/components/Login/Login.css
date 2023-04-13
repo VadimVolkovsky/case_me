@@ -2,6 +2,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .authorize {
@@ -13,9 +14,9 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  margin: 40px auto 0;
-  position: absolute;
-  top: 50%;
+  margin: 0 auto;
+  position: fixed;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
 }

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink} from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import ErrorNotification from "../ErrorNotification/ErrorNotification";
 import "./Login.css";
 
-const setActive = ({ isActive }) => (isActive ? "authorize__title-link_active" : "authorize__title-link");
 
-function Login() {
+function Login({ onLogin }) {
 
-  /**переменные состояния*/
+  const setActive = ({ isActive }) => (isActive ? "authorize__title-link_active" : "authorize__title-link");
+
+  /**переменные состояния для валидации*/
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailDirty, setEmailDirty] = useState(false);
@@ -16,6 +18,12 @@ function Login() {
   const [formValid, setFormValid] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
+  // Переменные валидности полей при заполнении
+  const [emailValid, setEmailValid] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
+
+  // переменные для вывода серверной ошибки
+  const [showError, setShowError] = useState(false);
 
   /**изменить состояние кнопки*/
   useEffect( () => {
@@ -27,27 +35,43 @@ function Login() {
   }, [emailError, passwordError])
 
   /**изменить состояние инпутов, когда пользователь что-то вводит */
-  const emailHandler = (e) => {
+  function handleChangeEmail(e){
+    const {name, value} = e.target;
+    setState({
+    ...state,
+    [name]: value
+  });
     setEmail(e.target.value)
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if(!re.test(String(e.target.value).toLowerCase())) {
-      setEmailError("Введите корректный e-mail")
-      if(!e.target.value) {
-        setEmailError("Поле не может быть пустым")
-      }
-    } else {
-      setEmailError("")
+
+    if(e.target.value.length === 0) {
+      setEmailError("Поле не может быть пустым");
+      setEmailValid(false);
+    } else if (!re.test(String(e.target.value).toLocaleLowerCase())) {
+      setEmailError("Некорректный email");
+      setEmailValid(false);
     }
-  }
-  const passwordHandler = (e) => {
-    setPassword(e.target.value)
-    if(e.target.value.length < 8 || e.target.value.length > 50) {
-      setPasswordError("Длина пароля не может быть меньше 8 и больше 50 символов")
-      if(!e.target.value) {
-        setPasswordError("Поле не может быть пустым")
+      else {
+        setEmailError("");
+        setEmailValid(true);
       }
+  }
+  function handleChangePassword(e) {
+    setPassword(e.target.value);
+    const {name, value} = e.target;
+    setState({
+    ...state,
+    [name]: value
+  });
+    if (!e.target.value) {
+      setPasswordError("Поле не может быть пустым");
+      setPasswordValid(false);
+    } else if (e.target.value.length < 8 || e.target.value.length > 50) {
+      setPasswordError("Длина пароля не может быть меньше 8 и больше 50 символов");
+      setPasswordValid(false);
     } else {
-      setPasswordError("")
+      setPasswordError("");
+      setPasswordValid(true);
     }
   }
 
@@ -64,21 +88,37 @@ function Login() {
         break
     }
   }
+/**авторизация*/
 
-  /**отправить форму и перейти в личный кабинет
-  function handleSubmit(e) {
-    e.preventDefault();
-    if(formValid)...
-  }*/
+const [state, setState] = useState({
+  email:'',
+  password:''
+})
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const { email, password } = state;
+  if(!email || !password) return;
+
+  onLogin(email, password)
+  .catch(err => {
+    console.log(err);
+    setState({
+      ...state,
+    });
+    setShowError(true);
+  });
+}
 
   return (
     <main className="content-auth">
       <div className="authorize">
+      {showError && (<ErrorNotification onClose={() => setShowError(false)} />)}
         <div className="authorize__title-links">
           <NavLink to="/signin" className={setActive}>Вход</NavLink>
           <NavLink to="/signup" className={setActive}>Регистрация</NavLink>
         </div>
-        <form className="form-authorize" novalidate>
+        <form className="form-authorize" onSubmit={handleSubmit} novalidate>
           <fieldset className="form-authorize__set">
             <div className="form-authorize__field">
               <label className="form-authorize__input-label" for="email">E-mail</label>
@@ -88,8 +128,8 @@ function Login() {
                 id="email"
                 placeholder="Введите e-mail"
                 className={`form-authorize__input ${emailDirty && emailError ? "form-authorize__input_type_error" : ""}`}
-                value={email}
-                onChange={e => emailHandler(e)}
+                value={state.email}
+                onChange={handleChangeEmail}
                 onBlur={e => blurHandler(e)}
                 onFocus={() => setEmailFocused(true)}
                 required
@@ -104,8 +144,8 @@ function Login() {
                 id="password"
                 placeholder="Введите пароль"
                 className={`form-authorize__input ${passwordDirty && passwordError ? "form-authorize__input_type_error" : ""}`}
-                value={password}
-                onChange={e => passwordHandler(e)}
+                value={state.password}
+                onChange={handleChangePassword}
                 onBlur={e => blurHandler(e)}
                 onFocus={() => setPasswordFocused(true)}
                 required

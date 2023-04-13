@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Main from "../Main/Main";
 import Header from "../Header/Header";
@@ -12,28 +12,63 @@ import PasswordRecovery from "../PasswordRecovery/PasswordRecovery";
 import PopupTooltip from "../PopupTooltip/PopupTooltip";
 import PrivacyPolicy from "../PrivacyPolicy/PrivacyPolicy";
 import UserAgreement from "../UserAgreement/UserAgreement";
+import UserProfile from "../UserProfile/UserProfile";
+import * as auth from "../../utils/auth";
 
 function App() {
-
   // Переменные состояния
-// const[isInfoTooltip, setIsInfoTooltip] = useState(false);
-const [loggedIn, setLoggedIn] = React.useState(false);
+  // const[isInfoTooltip, setIsInfoTooltip] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({
+    email: '',
+    username: ''
+  });
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    tokenCheck();
+  }, []);
+
+  function handleLogin(email, password) {
+    return auth.authorize(email, password)
+    .then((data) => {
+      if(!data.jwt) throw new Error('Missing jwt');
+      localStorage.setItem('jwt', data.jwt);
+      setLoggedIn(true);
+    })
+  }
+
+  function tokenCheck() {
+    const jwt = localStorage.getItem('jwt');
+
+    if(!jwt) return;
+
+    auth.getContent(jwt).then((data) => {
+      setLoggedIn(true);
+      setUserData({
+        email: data.user.email,
+        username: data.user.nickname
+      });
+      navigate('/userprofile');
+    });
+  };
 
   return (
     <div className="App">
-      <Header loggedIn = {loggedIn} />
+      <Header loggedIn={loggedIn} />
       <Routes>
         <Route path="/signup" element={<Register />} />
-        <Route path="/signin" element={<Login />} />
+        <Route path="/signin" element={<Login onLogin={handleLogin}/>} />
         <Route path="/" element={<Main />} />
-        <Route path="/emailform" element={<FormEmailRequest />}/>
-        <Route path="/passwordform" element={<FormPasswordRequest/>}/>
-        <Route path="/passwordupdate" element={<PasswordUpdate />}/>
-        <Route path="/passwordrecovery" element={<PasswordRecovery/>}/>
-        <Route path="/info" element={<PopupTooltip/>}/>
-        <Route path="/privacypolicy" element={<PrivacyPolicy/>}/>
-        <Route path="/useragreement" element={<UserAgreement/>}/>
+        <Route path="/emailform" element={<FormEmailRequest />} />
+        <Route path="/passwordform" element={<FormPasswordRequest />} />
+        <Route path="/passwordupdate" element={<PasswordUpdate />} />
+        <Route path="/passwordrecovery" element={<PasswordRecovery />} />
+        <Route path="/info" element={<PopupTooltip />} />
+        <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+        <Route path="/useragreement" element={<UserAgreement />} />
+        <Route path="/userprofile" element={<UserProfile loggedIn={loggedIn} userData={userData} />}
+        />
       </Routes>
     </div>
   );
