@@ -31,14 +31,14 @@ const request = ({
 
 export const authorize = (email, password) => {
   return request({
-    url: '/api/users/',
+    url: '/api/auth/jwt/create',
     data: {email, password}
   });
 };
 
 export const getContent = (token) => {
   return request({
-    url: '/api/users/',
+    url: '/api/users/me/',
     method: 'GET',
     token
   });

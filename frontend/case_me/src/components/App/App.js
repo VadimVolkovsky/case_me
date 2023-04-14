@@ -30,27 +30,43 @@ function App() {
   }, []);
 
   function handleLogin(email, password) {
+    console.log('email, password', email, password)
     return auth.authorize(email, password)
-    .then((data) => {
-      if(!data.jwt) throw new Error('Missing jwt');
-      localStorage.setItem('jwt', data.jwt);
-      setLoggedIn(true);
-    })
+      .then((data) => {
+        console.log('data', data);
+        console.log('data.access', data.access);
+        console.log('data.refresh', data.refresh);
+        /* if(!data.jwt) throw new Error('Missing jwt'); */
+        localStorage.setItem('jwt', data.jwt);
+        setLoggedIn(true);
+        setUserData({
+          email: data.email,
+          username: data.nickname
+        });
+        console.log('setLoggedIn', loggedIn);
+        navigate('/userprofile');
+        if(!data) throw new Error('NE DATA');
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   function tokenCheck() {
     const jwt = localStorage.getItem('jwt');
+    console.log('jwt', jwt)
 
     if(!jwt) return;
 
-    auth.getContent(jwt).then((data) => {
-      setLoggedIn(true);
-      setUserData({
-        email: data.user.email,
-        username: data.user.nickname
+    auth.getContent(jwt)
+      .then((data) => {
+        setLoggedIn(true);
+        setUserData({
+          email: data.user.email,
+          username: data.user.nickname
+        });
+    /*navigate('/userprofile');*/
       });
-      navigate('/userprofile');
-    });
   };
 
   return (
