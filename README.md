@@ -1,5 +1,5 @@
-# RazCase
-(добавить описание проекта и основные фичи)
+# CaseMe
+(здесь скоро будет подробное описание проекта и основные фичи)
 
 ### Инструкция по запуску проекта
 **Клонируйте репозиторий:**
@@ -24,8 +24,14 @@ source venv/Scripts/activate
 pip install -r requirements.txt
 ```
 
+**Запустите локальный сервер:**
+```
+python manage.py runserver
+```
 
-### Команда проекта: 
+
+
+### Команда проекта (Telegram nicknames): 
 
 **Project manager:**
 
@@ -37,8 +43,6 @@ pip install -r requirements.txt
 
 - Никита @NickShinkov
 
-- Роман @RBychin
-
 - Александр @al_petrovv
 
 - Вадим @Vadim_Volkovsky
@@ -49,17 +53,14 @@ pip install -r requirements.txt
 
 - Мария @MariaGromyko
 
-- Ольга @olga948
+- Ольга @Olga948
 
 - Марина @MarinaChip
-
-- Катя @marri_nich
-
 
 
 **Дизайнеры:**
 
-- UX/UI: Егор @egvikhrov
+- UX/UI: Катя @akimova_e_a 
 
 - Графический: Елена @elenkoshe
 
@@ -76,3 +77,4 @@ pip install -r requirements.txt
 - Алсу @alsu_end
 
 - Виктория @artoriya_v
+
