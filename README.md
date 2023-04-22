@@ -57,14 +57,7 @@ python manage.py runserver
 
 - Марина @MarinaChip
 
-<<<<<<< HEAD
 
-||||||| a28cba91
-- Катя @marri_nich
-
-
-=======
->>>>>>> 33b2fad48d99e30c3dda04b1ae738bb318dcca25
 
 **Дизайнеры:**
 
