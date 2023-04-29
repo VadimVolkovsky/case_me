@@ -28,12 +28,12 @@ function FormPasswordRequest() {
       setPasswordError(
         "Длина пароля не может быть меньше 8 и больше 50 символов"
       );
-      setFormValid(false);
+       setFormValid(false);
     } else if (e.target.value.length === 0) {
       setPasswordError("Поле не может быть пустым");
-      setFormValid(false);
+       setFormValid(false);
     } else {
-      setPasswordError("");
+       setPasswordError("");
       setFormValid(true);
     }
   }
@@ -45,10 +45,10 @@ function FormPasswordRequest() {
       setPasswordRepeatError(
         "Длина пароля не может быть меньше 8 и больше 50 символов"
       );
-      setFormValid(false);
+       setFormValid(false);
     } else if (e.target.value.length === 0) {
       setPasswordRepeatError("Поле не может быть пустым");
-      setFormValid(false);
+       setFormValid(false);
     } else {
       setPasswordRepeatError("");
       setFormValid(true);
@@ -114,7 +114,7 @@ function FormPasswordRequest() {
               value={password}
               onChange={handleChangePassword}
               onBlur={blurHandler}
-              onFocus={()=> setPasswordFocused(true)}
+              onFocus={() => setPasswordFocused(true)}
               minLength={8}
               required
             />
@@ -129,11 +129,11 @@ function FormPasswordRequest() {
               id="password-repeat__input"
               placeholder="Введите новый пароль"
               className={`form__input ${(passwordRepeatDirty && passwordRepeatError && !passwordRepeatFocused) ? "form__input_type_error"
-              : ""}`}
+                : ""}`}
               value={repeatPassword}
               onChange={handleChangeRepeatPassword}
               onBlur={blurHandler}
-              onFocus={()=>setPasswordRepeatFocused(true)}
+              onFocus={() => setPasswordRepeatFocused(true)}
               minLength={8}
               required
             />

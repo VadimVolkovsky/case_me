@@ -118,10 +118,10 @@ function handleSubmit(e) {
           <NavLink to="/signin" className={setActive}>Вход</NavLink>
           <NavLink to="/signup" className={setActive}>Регистрация</NavLink>
         </div>
-        <form className="form-authorize" onSubmit={handleSubmit} novalidate>
+        <form className="form-authorize" onSubmit={handleSubmit} noValidate>
           <fieldset className="form-authorize__set">
             <div className="form-authorize__field">
-              <label className="form-authorize__input-label" for="email">E-mail</label>
+              <label className="form-authorize__input-label" htmlFor="email">E-mail</label>
               <input
                 type="email"
                 name="email"
@@ -137,7 +137,7 @@ function handleSubmit(e) {
               {(emailDirty && emailError && !emailFocused) && <span className="form-authorize__input-error email-error">{emailError}</span>}
             </div>
             <div className="form-authorize__field">
-              <label className="form-authorize__input-label" for="password">Пароль</label>
+              <label className="form-authorize__input-label" htmlFor="password">Пароль</label>
               <input
                 type="password"
                 name="password"

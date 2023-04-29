@@ -19,7 +19,10 @@ const request = ({
       if(!res.ok) return Promise.reject(res.status);
 
       return res.json()
-    });
+    })
+    .catch((err) => {
+      console.log('ошибка в auth', err)
+    })
 }
 
 /* export const register = (username, email, password) => {

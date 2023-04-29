@@ -45,10 +45,11 @@ function App() {
         });
         console.log('setLoggedIn', loggedIn);
         navigate('/userprofile');
-        if(!data) throw new Error('NE DATA');
+        if (!data) throw new Error('NE DATA');
       })
       .catch(err => {
-        console.log(err)
+        console.log('ошибка тут', err)
+        console.log('ошибка тут', err.message)
       })
   }
 
@@ -56,7 +57,7 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     console.log('jwt', jwt)
 
-    if(!jwt) return;
+    if (!jwt) return;
 
     auth.getContent(jwt)
       .then((data) => {
@@ -65,7 +66,7 @@ function App() {
           email: data.user.email,
           username: data.user.nickname
         });
-    /*navigate('/userprofile');*/
+        /*navigate('/userprofile');*/
       });
   };
 
@@ -74,7 +75,7 @@ function App() {
       <Header loggedIn={loggedIn} />
       <Routes>
         <Route path="/signup" element={<Register />} />
-        <Route path="/signin" element={<Login onLogin={handleLogin}/>} />
+        <Route path="/signin" element={<Login onLogin={handleLogin} />} />
         <Route path="/" element={<Main />} />
         <Route path="/emailform" element={<FormEmailRequest />} />
         <Route path="/passwordform" element={<FormPasswordRequest />} />

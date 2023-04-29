@@ -98,7 +98,7 @@ function Register() {
       setPasswordError('Поле не может быть пустым');
     } else if (e.target.value.length < 8 || e.target.value.length > 50 || !passwordRegex.test(e.target.value)) {
       setPasswordError('Только латиница (a-z), цифры (0-9), символы (_-), не меньше 8 и не больше 50 символов');
-    } else  {
+    } else {
       setPasswordError('');
     }
   }
@@ -148,43 +148,43 @@ function Register() {
         'Content-Type': 'application/json'
       }
     })
-    .then((response) => {
-      if (!response.ok) {
-        console.error('Ошибка:', response.status);
-        return response.json().then((data) => {
-          let errorMessage = '';
-          for (let key in data) {
-            errorMessage += `${data[key][0]}\n`
-          }
-          console.log('errorMessage:', errorMessage);
-          setErrorMessage(errorMessage);
-          setShowError(true);
-          throw new Error(errorMessage);
-        });
-      }
-      console.log('Запрос выполнен успешно');
-      setShowPopup(true);
-      setShowError(false);
-      setErrorMessage(null);
-      return response.json();
-    })
-    .then((data) => {
-      console.log('Получены данные:', data);
-    })
-    .catch((err) => {
-      console.error('Ошибка:', err);
-      setShowError(true);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          console.error('Ошибка:', response.status);
+          return response.json().then((data) => {
+            let errorMessage = '';
+            for (let key in data) {
+              errorMessage += `${data[key][0]}\n`
+            }
+            console.log('errorMessage:', errorMessage);
+            setErrorMessage(errorMessage);
+            setShowError(true);
+            throw new Error(errorMessage);
+          });
+        }
+        console.log('Запрос выполнен успешно');
+        setShowPopup(true);
+        setShowError(false);
+        setErrorMessage(null);
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Получены данные:', data);
+      })
+      .catch((err) => {
+        console.error('Ошибка:', err);
+        setShowError(true);
+      });
   };
 
 
   return (
     <div>
-
+      {showError && (<ErrorNotification errorMessage={errorMessage} />)}
       <main className="content-registration">
         <div className="registration">
           <section className="registration__info">
-            {showError && (<ErrorNotification errorMessage={errorMessage} />)}
+
             <nav>
               <ul className="registration__links">
                 <NavLink to="/signin" className={activeLink}>Вход</NavLink>
@@ -256,13 +256,14 @@ function Register() {
                 {checkboxError && <p>{checkboxError}</p>}
               </div>
 
-                <button
-                  type="submit"
-                  className={`registration__submit-button ${formValid && isChecked ? "registration__submit-button_active" : "registration__submit-button_disabled"}`}
-                  disabled={!formValid || !isChecked}>Зарегистрироваться</button>
+              <button
+                type="submit"
+                className={`registration__submit-button ${formValid && isChecked ? "registration__submit-button_active" : "registration__submit-button_disabled"}`}
+                disabled={!formValid || !isChecked}>Зарегистрироваться</button>
             </form>
             {showPopup && (<PopupTooltip isOpen={true} onClose={() => {
-            setShowPopup(false) }}/>)}
+              setShowPopup(false)
+            }} />)}
           </section>
         </div>
 
